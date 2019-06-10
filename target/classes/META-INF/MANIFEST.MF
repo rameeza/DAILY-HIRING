@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: rameez
+Build-Jdk: 11.0.2
+Implementation-Title: gs-validating-form-input
+Implementation-Version: 0.1.0
+Implementation-Vendor-Id: org.springframework
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/gs-validating-form-input
+Created-By: Maven Integration for Eclipse
+
