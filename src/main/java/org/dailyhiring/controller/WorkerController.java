@@ -1,9 +1,12 @@
-package hello;
+package org.dailyhiring.controller;
 
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.dailyhiring.Application;
+import org.dailyhiring.dao.WorkerRepository;
+import org.dailyhiring.entity.Worker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +18,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Controller
-public class WebController implements WebMvcConfigurer {
-	@Autowired
-	private UserRepository userRepository;
+public class WorkerController implements WebMvcConfigurer {
 	@Autowired
 	private WorkerRepository workerRepository;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -28,83 +29,36 @@ public class WebController implements WebMvcConfigurer {
 		registry.addViewController("/userHomePage").setViewName("userHomePage");
 	}
 	
-	@GetMapping("/RegisterUser")
-	public String showUserRegistrationForm(User user) {
-		return "userRegistrationForm";
-	}
-
-	@GetMapping("/LoginUser")
-	public String showUserLoginForm(User user) {
-		return "userLoginForm";
-	}
-
 	@GetMapping("/LoginWorker")
 	public String showWorkerLoginForm(Worker worker) {
-		return "workerLoginForm";
+		return "worker/workerLoginForm";
 	}
 	
-	@GetMapping("/userHomePage")
-	public String showUserHomePage(Job job) {
-		return "userHomePage";
-	}
-
-	@PostMapping("/LoginUser")
-	public String checkUserLoginInfo(@Valid User user, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "userLoginForm";
-		}
-		Optional<User> optionalUser = userRepository.findById(user.getEmail());
-		if (optionalUser.isPresent()) {
-			if (optionalUser.get().getPassword().equals(user.getPassword()))
-			//return "userHomePage";
-			return "redirect:/userHomePage";
-		}
-		return "userLoginFailure";
-	}
 
 	@PostMapping("/LoginWorker")
 	public String checkWorkerLoginInfo(@Valid Worker worker, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			return "workerLoginForm";
+			return "worker/workerLoginForm";
 		}
 		Optional<Worker> optionalWorker = workerRepository.findById(worker.getEmail());
 		if (optionalWorker.isPresent()) {
 			if (optionalWorker.get().getPassword().equals(worker.getPassword()))
-			return "workerHomePage";
+			return "worker/workerHomePage";
 		}
-		return "workerLoginFailure";
+		return "worker/workerLoginFailure";
 	}
 
-	@PostMapping("/RegisterUser")
-	public String checkUserRegistrationInfo(@Valid User user, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "userRegistrationForm";
-		}
-
-		if (registerUser(user) != null) {
-			return "userRegistrationSuccessful";
-		} else {
-			return "registrationFailure";
-		}
-	}
-
-	private @Valid User registerUser(@Valid User user) {
-		User retUser = userRepository.save(user);
-		log.info("----------------User saved : " + retUser + "---------------");
-		return retUser;
-
-	}
 
 	@GetMapping("/RegisterWorker")
 	public String showWorkerRegistrationForm(Worker worker) {
-		return "workerRegistrationForm";
+		return "worker/workerRegistrationForm";
 	}
 
 	@PostMapping("/RegisterWorker")
 	public String checkWorkerRegistrationInfo(@Valid Worker worker, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "workerRegistrationForm";
+			return "worker/workerRegistrationForm";
 		}
 		// fetch all users
 		/*
@@ -112,7 +66,7 @@ public class WebController implements WebMvcConfigurer {
 		 * log.info(tempUser.toString()); }
 		 */
 		if (registerWorker(worker) != null) {
-			return "workerRegistrationSuccessful";
+			return "worker/workerRegistrationSuccessful";
 		} else {
 			return "registrationFailure";
 		}
@@ -124,10 +78,4 @@ public class WebController implements WebMvcConfigurer {
 		return retWorker;
 	}
 	
-	@PostMapping("/HireAWorker")	
-	public String HireAWorker(@Valid Job job) {
-		log.info("----------------Job submitted by user : " + job + "---------------");		
-		return "userHomePage";
-		
-	}
 }

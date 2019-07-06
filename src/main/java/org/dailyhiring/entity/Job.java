@@ -1,4 +1,4 @@
-package hello;
+package org.dailyhiring.entity;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ public class Job {
 	private String jobDesignation;
 	
 	private Double hours;
-	private Date date;
+	private String date;
 	public String getJobDesignation() {
 		return jobDesignation;
 	}
@@ -24,10 +24,10 @@ public class Job {
 	public void setHours(Double hours) {
 		this.hours = hours;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	

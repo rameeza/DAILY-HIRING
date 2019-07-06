@@ -1,19 +1,20 @@
-package hello;
+package org.dailyhiring.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.validation.constraints.Email;
 
 @Entity
-public class User {
+public class Worker {
 
 	/* @NotNull(message = "Name can not be null") */
 	@Size( message = "Name must be at least 2 characters long" , min = 2, max = 60)
 	private String name;
+
 
 	/* @NotNull */
 	@Id
@@ -27,9 +28,19 @@ public class User {
 	
 	@Pattern(regexp="^[0-9]{10}$", message="Enter a valid 10 Digit phone no")
 	private String phoneNumber;
+	
+	@Pattern(regexp="^(?!NothingSelected).*$", message="Please choose one of the options")
+	private String jobDesignation;
+	
+	
+	public String getJobDesignation() {
+		return jobDesignation;
+	}
 
-	
-	
+	public void setJobDesignation(String jobDesignation) {
+		this.jobDesignation = jobDesignation;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -65,6 +76,6 @@ public class User {
 
 	public String toString() {
 		return "Person(Name: " + this.name + ", Email: " + this.email + " , Password: " + this.password 
-				+ " , PhoneNumber: " + this.phoneNumber + ")";
+				+ " , PhoneNumber: " + this.phoneNumber +  " , JobDesignation: " + this.jobDesignation + ")";
 	}
 }

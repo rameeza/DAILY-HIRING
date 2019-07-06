@@ -1,5 +1,7 @@
-package hello;
+package org.dailyhiring.service;
 
+import org.dailyhiring.dao.WorkerRepository;
+import org.dailyhiring.entity.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class WorkerService {
