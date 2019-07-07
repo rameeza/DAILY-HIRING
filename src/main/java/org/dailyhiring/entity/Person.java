@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class Person {
 	@Id @GeneratedValue
-	private String id;
+	private Integer id;
 	private String organisation;
 	private String firstName;
 	private String lastName;
@@ -36,14 +36,14 @@ public class Person {
 		this.idProof = idProof;
 	}
 
-
-
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getOrganisation() {
 		return organisation;
 	}
@@ -98,6 +98,4 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
 }

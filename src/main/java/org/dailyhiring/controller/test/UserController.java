@@ -1,4 +1,4 @@
-package org.dailyhiring.controller;
+package org.dailyhiring.controller.test;
 
 import java.util.Optional;
 

@@ -9,13 +9,13 @@ public class Certificate {
 	private String name;
 	
 	@Id @GeneratedValue
-	private String id;
+	private Integer id;
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

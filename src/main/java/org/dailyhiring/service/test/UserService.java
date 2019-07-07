@@ -1,4 +1,4 @@
-package org.dailyhiring.service;
+package org.dailyhiring.service.test;
 
 import org.dailyhiring.dao.test.UserRepository;
 import org.dailyhiring.entity.test.User;

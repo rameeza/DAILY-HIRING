@@ -1,5 +1,6 @@
 package org.dailyhiring.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +9,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class JobOffer {
 	@Id @GeneratedValue
-	private String jobId;
+	private Integer jobId;
 	private String jobTitle;
 	private String responsibility; // refers to all responsibilities associated with job.
 	private Integer jobOpenings; 
@@ -29,14 +30,15 @@ public class JobOffer {
 	@OneToOne
 	private Certificate certificate; // requires this certificate
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Education education; // requires this education
 	
 	public JobOffer() {
 		super();
 	}
 	
-	public JobOffer(String jobTitle, String responsibility, Integer jobOpenings, String datePosted, Double workHours,
+	public JobOffer(String jobTitle, String responsibility, Integer jobOpenings, String datePosted, 
+			Double workHours,
 			String validThrough, String currency, Double experienceYears, Integer recommendation,
 			Double competencyLevel, Education education) {
 		super();
@@ -121,12 +123,15 @@ public class JobOffer {
 	public void setEmployer(Employer employer) {
 		this.employer = employer;
 	}
-	public String getJobId() {
+
+	public Integer getJobId() {
 		return jobId;
 	}
-	public void setJobId(String jobId) {
+
+	public void setJobId(Integer jobId) {
 		this.jobId = jobId;
 	}
+
 	public String getValidThrough() {
 		return validThrough;
 	}

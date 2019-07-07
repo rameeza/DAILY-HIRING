@@ -8,15 +8,15 @@ import javax.persistence.Id;
 public class Education {
 	
 	@Id @GeneratedValue
-	private String id;
+	private Integer id;
 	
 	private Integer yearsOfEducation;
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
