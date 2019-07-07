@@ -1,6 +1,6 @@
 package org.dailyhiring.service;
 
-import org.dailyhiring.dao.UserRepository;
+import org.dailyhiring.dao.test.UserRepository;
 import org.dailyhiring.entity.test.User;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,4 +1,4 @@
-package org.dailyhiring.dao;
+package org.dailyhiring.dao.test;
 
 import org.dailyhiring.entity.test.User;
 import org.springframework.data.repository.CrudRepository;

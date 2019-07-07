@@ -1,16 +1,16 @@
 package org.dailyhiring.service;
 
-import org.dailyhiring.dao.WorkerRepository;
-import org.dailyhiring.entity.test.Worker;
+import org.dailyhiring.dao.test.Worker2Repository;
+import org.dailyhiring.entity.test.Worker2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class WorkerService {
 	@Autowired
-	private WorkerRepository workerRepository;
+	private Worker2Repository workerRepository;
 
-	public Boolean registerWorker(Worker worker) {
+	public Boolean registerWorker(Worker2 worker) {
 		System.out.println("I am in registerWorker");
-		Worker temp = workerRepository.save(worker);
+		Worker2 temp = workerRepository.save(worker);
 		if (temp != null)
 			return true;
 		else

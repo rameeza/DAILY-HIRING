@@ -1,4 +1,4 @@
-package org.dailyhiring.dao;
+package org.dailyhiring.dao.test;
 
 import java.util.List;
 

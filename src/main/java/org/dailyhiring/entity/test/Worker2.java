@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Worker {
+public class Worker2 {
 
 	/* @NotNull(message = "Name can not be null") */
 	@Size( message = "Name must be at least 2 characters long" , min = 2, max = 60)

@@ -5,8 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
-import org.dailyhiring.dao.WorkerRepository;
-import org.dailyhiring.entity.test.Worker;
+import org.dailyhiring.dao.test.Worker2Repository;
+import org.dailyhiring.entity.test.Worker2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Controller
-public class WorkerController implements WebMvcConfigurer {
+public class Worker2Controller implements WebMvcConfigurer {
 	@Autowired
-	private WorkerRepository workerRepository;
+	private Worker2Repository workerRepository;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	@Override
@@ -30,18 +30,18 @@ public class WorkerController implements WebMvcConfigurer {
 	}
 	
 	@GetMapping("/LoginWorker")
-	public String showWorkerLoginForm(Worker worker) {
+	public String showWorkerLoginForm(Worker2 worker) {
 		return "worker/workerLoginForm";
 	}
 	
 
 	@PostMapping("/LoginWorker")
-	public String checkWorkerLoginInfo(@Valid Worker worker, BindingResult bindingResult) {
+	public String checkWorkerLoginInfo(@Valid Worker2 worker, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return "worker/workerLoginForm";
 		}
-		Optional<Worker> optionalWorker = workerRepository.findById(worker.getEmail());
+		Optional<Worker2> optionalWorker = workerRepository.findById(worker.getEmail());
 		if (optionalWorker.isPresent()) {
 			if (optionalWorker.get().getPassword().equals(worker.getPassword()))
 			return "worker/workerHomePage";
@@ -51,12 +51,12 @@ public class WorkerController implements WebMvcConfigurer {
 
 
 	@GetMapping("/RegisterWorker")
-	public String showWorkerRegistrationForm(Worker worker) {
+	public String showWorkerRegistrationForm(Worker2 worker) {
 		return "worker/workerRegistrationForm";
 	}
 
 	@PostMapping("/RegisterWorker")
-	public String checkWorkerRegistrationInfo(@Valid Worker worker, BindingResult bindingResult) {
+	public String checkWorkerRegistrationInfo(@Valid Worker2 worker, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "worker/workerRegistrationForm";
 		}
@@ -72,8 +72,8 @@ public class WorkerController implements WebMvcConfigurer {
 		}
 	}
 
-	private Object registerWorker(@Valid Worker worker) {
-		Worker retWorker = workerRepository.save(worker);
+	private Object registerWorker(@Valid Worker2 worker) {
+		Worker2 retWorker = workerRepository.save(worker);
 		log.info("----------------User saved : " + retWorker + "---------------");
 		return retWorker;
 	}
