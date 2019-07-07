@@ -32,8 +32,8 @@ public class Diploma extends Education{
 		this.yearOfPassing = yearOfPassing;
 	}
 
-	public Diploma(String name, String nameOfCollege, Double yearOfPassing) {
-		super();
+	public Diploma(Integer yearsOfEducation, String name, String nameOfCollege, Double yearOfPassing) {
+		super(yearsOfEducation);
 		this.name = name;
 		this.nameOfCollege = nameOfCollege;
 		this.yearOfPassing = yearOfPassing;

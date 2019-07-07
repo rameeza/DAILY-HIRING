@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 @Entity
 public class Training extends Education{
 	private String name;
-	private Double period; // years
 	private String nameOfCompanyOrInstitute;
 	
 	public String getNameOfCompanyOrInstitute() {
@@ -24,18 +23,10 @@ public class Training extends Education{
 		this.name = name;
 	}
 
-	public Double getPeriod() {
-		return period;
-	}
 
-	public void setPeriod(Double period) {
-		this.period = period;
-	}
-
-	public Training(String name, Double period, String nameOfCompanyOrInstitute) {
-		super();
+	public Training(Integer yearsOfEducation, String name, String nameOfCompanyOrInstitute) {
+		super(yearsOfEducation);
 		this.name = name;
-		this.period = period;
 		this.nameOfCompanyOrInstitute = nameOfCompanyOrInstitute;
 	}
 

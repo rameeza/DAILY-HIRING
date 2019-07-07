@@ -9,7 +9,8 @@ public class Person {
 	@Id @GeneratedValue
 	private String id;
 	private String organisation;
-	private String name;
+	private String firstName;
+	private String lastName;
 	private Integer age;
 	private String gender;
 	private String email;
@@ -20,11 +21,13 @@ public class Person {
 	public Person() {
 		super();
 	}
-	public Person(String organisation, String name, Integer age, String gender, String email, String phoneNo,
-			String address, String idProof) {
+
+	public Person(String organisation, String firstName, String lastName, Integer age, String gender, String email,
+			String phoneNo, String address, String idProof) {
 		super();
 		this.organisation = organisation;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.age = age;
 		this.gender = gender;
 		this.email = email;
@@ -32,7 +35,9 @@ public class Person {
 		this.address = address;
 		this.idProof = idProof;
 	}
-	
+
+
+
 	public String getId() {
 		return id;
 	}
@@ -44,12 +49,6 @@ public class Person {
 	}
 	public void setOrganisation(String organisation) {
 		this.organisation = organisation;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public Integer getAge() {
 		return age;
@@ -87,4 +86,18 @@ public class Person {
 	public void setIdProof(String idProof) {
 		this.idProof = idProof;
 	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	
 }

@@ -8,11 +8,11 @@ public class Worker extends Person {
 	private Double costPerUnit;
 	private String currency;
 	// todo- make it unique
-	private Integer workerId;
+	// private Integer workerId; // it is unique. so, we can use the 'id' field of person class for this.
 	private String jobTitle;
-	private Double experience;	// years
-	private String recommendation; // todo- ask what is it
-	private String competencyLevel;
+	private Double experienceYears;	// years
+	private Integer recommendation; // 
+	private Double competencyLevel;
 
 	@OneToOne
 	private Skill skill;
@@ -25,18 +25,18 @@ public class Worker extends Person {
 	public Worker() {
 		super();
 	}
-	public Worker(String organisation, String name, Integer age, String gender, String email, String phoneNo,
-			String address, String idProof,
-			Double costPerUnit, String currency, String jobTitle, Double experience, String recommendation,
-			String competencyLevel) {
-		super(organisation, name, age, gender, email, phoneNo, address, idProof);
+
+
+	public Worker(Double costPerUnit, String currency, String jobTitle, Double experienceYears,
+			Integer recommendation) {
+		super();
 		this.costPerUnit = costPerUnit;
 		this.currency = currency;
 		this.jobTitle = jobTitle;
-		this.experience = experience;
+		this.experienceYears = experienceYears;
 		this.recommendation = recommendation;
-		this.competencyLevel = competencyLevel;
 	}
+
 	public Double getCostPerUnit() {
 		return costPerUnit;
 	}
@@ -49,36 +49,28 @@ public class Worker extends Person {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	public Integer getWorkerId() {
-		return workerId;
-	}
-	public void setWorkerId(Integer workerId) {
-		this.workerId = workerId;
-	}
+
 	public String getJobTitle() {
 		return jobTitle;
 	}
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
-	public Double getExperience() {
-		return experience;
+	public Double getexperienceYears() {
+		return experienceYears;
 	}
-	public void setExperience(Double experience) {
-		this.experience = experience;
+	public void setexperienceYears(Double experienceYears) {
+		this.experienceYears = experienceYears;
 	}
-	public String getRecommendation() {
+
+	public Integer getRecommendation() {
 		return recommendation;
 	}
-	public void setRecommendation(String recommendation) {
+
+	public void setRecommendation(Integer recommendation) {
 		this.recommendation = recommendation;
 	}
-	public String getCompetencyLevel() {
-		return competencyLevel;
-	}
-	public void setCompetencyLevel(String competencyLevel) {
-		this.competencyLevel = competencyLevel;
-	}
+
 	public Skill getSkill() {
 		return skill;
 	}
@@ -97,5 +89,23 @@ public class Worker extends Person {
 	public void setEducation(Education education) {
 		this.education = education;
 	}
-	
+
+
+	public Double getExperienceYears() {
+		return experienceYears;
+	}
+
+
+	public void setExperienceYears(Double experienceYears) {
+		this.experienceYears = experienceYears;
+	}
+
+
+	public Double getCompetencyLevel() {
+		if (this.education == null) {
+			return this.recommendation + this.experienceYears;
+		}
+		return this.recommendation + this.experienceYears + this.education.getYearsOfEducation();
+	}
+
 }

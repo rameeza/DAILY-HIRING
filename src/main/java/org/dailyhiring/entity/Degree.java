@@ -12,8 +12,8 @@ public class Degree extends Education{
 		super();
 	}
 
-	public Degree(String name, String yearOfPassing, String nameOfCollege) {
-		super();
+	public Degree(Integer yearsOfEducation, String name, String yearOfPassing, String nameOfCollege) {
+		super( yearsOfEducation);
 		this.name = name;
 		this.yearOfPassing = yearOfPassing;
 		this.nameOfCollege = nameOfCollege;

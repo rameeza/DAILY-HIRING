@@ -5,15 +5,18 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Employer extends Person {
+	
+	private String currency;
 	@OneToOne
 	private JobOffer jobOffer; // provides this job offer. todo- check if it is one to many
 
 	public Employer() {
 	}
 
-	public Employer(String organisation, String name, Integer age, String gender, String email, String phoneNo,
-			String address, String idProof) {
-		super(organisation, name, age, gender, email, phoneNo, address, idProof);
+	public Employer(String organisation, String firstName, String lastName, Integer age, String gender, String email,
+			String phoneNo, String address, String idProof, String currency ) {
+		super(organisation, firstName, lastName, age, gender, email, phoneNo, address, idProof);
+		this.currency = currency;
 	}
 
 	public JobOffer getJobOffer() {
@@ -23,5 +26,15 @@ public class Employer extends Person {
 	public void setJobOffer(JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	
+	
 	
 }

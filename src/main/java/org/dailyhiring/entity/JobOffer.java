@@ -10,14 +10,17 @@ public class JobOffer {
 	@Id @GeneratedValue
 	private String jobId;
 	private String jobTitle;
-	private String responsibility;
-	private Integer jobOpenings; // todo- ask if it is no of openings
-	private String datePosted;
-	private Double workHours;
-	private String validity; // todo- ask what it is
-	private String currency; // todo- ask what is it
-	private Double experience; // in years 
-
+	private String responsibility; // refers to all responsibilities associated with job.
+	private Integer jobOpenings; 
+	private String datePosted; // date on which job was posted
+	private Double workHours; // no. of hours of work required per day.
+	private String validThrough; // date up to which the job is valid
+	private String currency; // in which payment wll be made
+	
+	private Double experienceYears;	// years
+	private Integer recommendation; // 
+	private Double competencyLevel;
+	
 	@OneToOne (mappedBy = "jobOffer")
 	private Employer employer; // todo - make it bidirectonal mapping 
 	@OneToOne
@@ -32,17 +35,26 @@ public class JobOffer {
 	public JobOffer() {
 		super();
 	}
+	
 	public JobOffer(String jobTitle, String responsibility, Integer jobOpenings, String datePosted, Double workHours,
-			String validity, String currency) {
+			String validThrough, String currency, Double experienceYears, Integer recommendation,
+			Double competencyLevel, Education education) {
 		super();
 		this.jobTitle = jobTitle;
 		this.responsibility = responsibility;
 		this.jobOpenings = jobOpenings;
 		this.datePosted = datePosted;
 		this.workHours = workHours;
-		this.validity = validity;
+		this.validThrough = validThrough;
 		this.currency = currency;
+		this.experienceYears = experienceYears;
+		this.recommendation = recommendation;
+		this.competencyLevel = competencyLevel;
+		this.education = education;
 	}
+
+
+
 	public String getJobTitle() {
 		return jobTitle;
 	}
@@ -73,23 +85,17 @@ public class JobOffer {
 	public void setWorkHours(Double workHours) {
 		this.workHours = workHours;
 	}
-	public String getValidity() {
-		return validity;
-	}
-	public void setValidity(String validity) {
-		this.validity = validity;
-	}
 	public String getCurrency() {
 		return currency;
 	}
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	public Double getExperience() {
-		return experience;
+	public Double getexperienceYears() {
+		return experienceYears;
 	}
-	public void setExperience(Double experience) {
-		this.experience = experience;
+	public void setexperienceYears(Double experienceYears) {
+		this.experienceYears = experienceYears;
 	}
 	public FieldOfWork getFieldOfWork() {
 		return fieldOfWork;
@@ -114,6 +120,36 @@ public class JobOffer {
 	}
 	public void setEmployer(Employer employer) {
 		this.employer = employer;
+	}
+	public String getJobId() {
+		return jobId;
+	}
+	public void setJobId(String jobId) {
+		this.jobId = jobId;
+	}
+	public String getValidThrough() {
+		return validThrough;
+	}
+	public void setValidThrough(String validThrough) {
+		this.validThrough = validThrough;
+	}
+	public Double getExperienceYears() {
+		return experienceYears;
+	}
+	public void setExperienceYears(Double experienceYears) {
+		this.experienceYears = experienceYears;
+	}
+	public Integer getRecommendation() {
+		return recommendation;
+	}
+	public void setRecommendation(Integer recommendation) {
+		this.recommendation = recommendation;
+	}
+	public Double getCompetencyLevel() {
+		return competencyLevel;
+	}
+	public void setCompetencyLevel(Double competencyLevel) {
+		this.competencyLevel = competencyLevel;
 	}
 	
 }
