@@ -16,9 +16,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 	}
 
 	@Override
-	public void save(JobOffer jobOffer) {
-		jobOfferRepository.save(jobOffer);
-		
+	public JobOffer save(JobOffer jobOffer) {
+		JobOffer tempJobOffer = jobOfferRepository.save(jobOffer);
+		return tempJobOffer;
 	}
 	
 }

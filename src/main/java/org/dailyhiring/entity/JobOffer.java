@@ -22,8 +22,10 @@ public class JobOffer {
 	private Integer recommendation; // 
 	private Double competencyLevel;
 	
+
 	@OneToOne (mappedBy = "jobOffer")
 	private Employer employer; // todo - make it bidirectonal mapping 
+
 	@OneToOne
 	private FieldOfWork fieldOfWork; // offers this field of work
 	
@@ -35,6 +37,8 @@ public class JobOffer {
 	
 	public JobOffer() {
 		super();
+		System.out.println("----------Rameez: SMALL CONSTRUCTOR CALLED!!!---------");
+		
 	}
 	
 	public JobOffer(String jobTitle, String responsibility, Integer jobOpenings, String datePosted, 
@@ -42,6 +46,7 @@ public class JobOffer {
 			String validThrough, String currency, Double experienceYears, Integer recommendation,
 			Double competencyLevel, Education education) {
 		super();
+		System.out.println("----------Rameez: BIG CONSTRUCTOR CALLED!!!---------");
 		this.jobTitle = jobTitle;
 		this.responsibility = responsibility;
 		this.jobOpenings = jobOpenings;
@@ -54,8 +59,6 @@ public class JobOffer {
 		this.competencyLevel = competencyLevel;
 		this.education = education;
 	}
-
-
 
 	public String getJobTitle() {
 		return jobTitle;

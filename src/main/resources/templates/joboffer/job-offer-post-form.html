@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<h2>Post a new Job Offer</h2>
+		<br>
+
+		<form action="#" th:action="@{/postJobOffer}" th:object="${jobOffer}"
+			method="post">
+	<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">I am a:</label>
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="jobTitle" name="jobTitle" th:field="*{jobTitle}">
+					<option value="NothingSelected">choose</option>
+					<option value="Plumber">Plumber</option>
+					<option value="Painter">Painter</option>
+					<option value="Driver">Driver</option>
+					<option value="Cook">Cook</option>
+					<option value="Carpenter">Carpenter</option>
+					<option value="Labourer">Labourer</option>
+				</select>
+				</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('jobTitle')}"
+						th:errors="*{jobTitle}">JobDesignation Error</div>
+				</div>
+				
+	<!-- responsibility -->			
+				<div class="form-group row">
+					<label for="name" class="col-sm-2 col-form-label">Responsibility:</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="responsibility"
+							placeholder="Enter responsibility" name="responsibility" th:field="*{responsibility}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('responsibility')}"
+						th:errors="*{responsibility}">Responsibility Error</div>
+				</div>
+
+	<!-- jobOpenings -->
+				<div class="form-group row">
+					<label for="jobOpenings" class="col-sm-2 col-form-label">No. of Openings:</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="jobOpenings"
+							placeholder="Enter no. of openings" name="jobOpenings" th:field="*{jobOpenings}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('jobOpenings')}"
+						th:errors="*{jobOpenings}">JobOpenings Error</div>
+				</div>
+	
+	<!-- datePosted -->	
+				<div class="form-group row">
+					<label for="datePosted" class="col-sm-2 col-form-label">Date of Posting:</label>
+					<div class="col-sm-2.5">
+						<input type="date" class="form-control" id="datePosted"
+							placeholder="Enter date of posting" name="datePosted" th:field="*{datePosted}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('datePosted')}"
+						th:errors="*{datePosted}">DatePosted Error</div>
+				</div>
+	<!-- workHours -->
+				<div class="form-group row">
+					<label for="workHours" class="col-sm-2 col-form-label">Work Hours:</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="workHours"
+							placeholder="Enter work hours" name="workHours"
+							th:field="*{workHours}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('workHours')}"
+						th:errors="*{workHours}">WorkHours Error</div>
+				</div>
+
+	<!-- validThrough -->	
+				<div class="form-group row">
+					<label for="validThrough" class="col-sm-2 col-form-label">Job is Valid upto:</label>
+					<div class="col-sm-2.5">
+						<input type="date" class="form-control" id="validThrough"
+							placeholder="Enter date until which it is valid" name="validThrough" th:field="*{validThrough}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('validThrough')}"
+						th:errors="*{validThrough}">ValidThrough Error</div>
+				</div>
+
+	<!-- currency -->
+			<div class="form-group row">
+				<label for="currency" class="col-sm-2 col-form-label">Currency:</label>
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="currency" name="currency" th:field="*{currency}">
+					<option value="NothingSelected">choose</option>
+					<option value="Rupee">Rupee</option>
+					<option value="Dollar">Dollar</option>
+					<option value="Lira">Lira</option>
+					<option value="Yuan">Yuan</option>
+				</select>
+				</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('currency')}"
+						th:errors="*{currency}">Currency Error</div>
+				</div>
+
+<!-- experienceYears -->
+				<div class="form-group row">
+					<label for="experienceYears" class="col-sm-2 col-form-label">Experience required (years):</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="experienceYears"
+							placeholder="Enter experience required" name="experienceYears"
+							th:field="*{experienceYears}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('experienceYears')}"
+						th:errors="*{experienceYears}">ExperienceYears Error</div>
+				</div>
+
+<!-- recommendation -->
+				<div class="form-group row">
+					<label for="recommendation" class="col-sm-2 col-form-label">Recommendation required:</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="recommendation"
+							placeholder="Enter recommendations required" name="recommendation"
+							th:field="*{recommendation}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('recommendation')}"
+						th:errors="*{recommendation}">Recommendation Error</div>
+				</div>
+
+<!-- competencyLevel -->
+				<div class="form-group row">
+					<label for="competencyLevel" class="col-sm-2 col-form-label">
+						Competency Level required:
+					</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="competencyLevel"
+							placeholder="Enter competencyLevel required" name="competencyLevel"
+							th:field="*{competencyLevel}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('competencyLevel')}"
+						th:errors="*{competencyLevel}">ExperienceYears Error</div>
+				</div>
+
+<!-- 
+				<div class="form-group row">
+					<label for="phoneNumber" class="col-sm-2 col-form-label">Phone
+						no:</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="phoneNumber"
+							placeholder="Enter phone no" name="phoneNumber"
+							th:field="*{phoneNumber}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('phoneNumber')}"
+						th:errors="*{phoneNumber}">PhoneNumber Error</div>
+				</div>
+
+ -->
+ 
+ 
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+		</form>
+	</div>
+</body>
+</html>

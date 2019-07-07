@@ -4,6 +4,6 @@ import org.dailyhiring.entity.JobOffer;
 
 public interface JobOfferService {
 	
-	public void save(JobOffer jobOffer);
+	public JobOffer save(JobOffer jobOffer);
 
 }
