@@ -1,7 +1,7 @@
 package org.dailyhiring.service;
 
 import org.dailyhiring.dao.UserRepository;
-import org.dailyhiring.entity.User;
+import org.dailyhiring.entity.test.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserService {

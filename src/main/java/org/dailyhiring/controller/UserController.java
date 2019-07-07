@@ -6,8 +6,8 @@ import javax.validation.Valid;
 
 import org.dailyhiring.Application;
 import org.dailyhiring.dao.UserRepository;
-import org.dailyhiring.entity.Job;
-import org.dailyhiring.entity.User;
+import org.dailyhiring.entity.test.Job;
+import org.dailyhiring.entity.test.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

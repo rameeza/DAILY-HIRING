@@ -1,4 +1,4 @@
-package org.dailyhiring.entity;
+package org.dailyhiring.entity.test;
 
 import java.util.Date;
 
