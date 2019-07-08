@@ -30,25 +30,25 @@ public class UserController implements WebMvcConfigurer {
 		registry.addViewController("/userHomePage").setViewName("userHomePage");
 	}
 	
-	@GetMapping("/RegisterUser")
+	@GetMapping("/registerUser")
 	public String showUserRegistrationForm(User user) {
-		return "user/userRegistrationForm";
+		return "test/user/user-registration-form";
 	}
 
-	@GetMapping("/LoginUser")
+	@GetMapping("/loginUser")
 	public String showUserLoginForm(User user) {
-		return "user/userLoginForm";
+		return "test/user/user-login-form";
 	}
 
 	@GetMapping("/userHomePage")
 	public String showUserHomePage(Job job) {
-		return "user/userHomePage";
+		return "test/user/user-home-page";
 	}
 
-	@PostMapping("/LoginUser")
+	@PostMapping("/loginUser")
 	public String checkUserLoginInfo(@Valid User user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "user/userLoginForm";
+			return "test/user/user-login-form";
 		}
 		Optional<User> optionalUser = userRepository.findById(user.getEmail());
 		if (optionalUser.isPresent()) {
@@ -56,19 +56,19 @@ public class UserController implements WebMvcConfigurer {
 			//return "userHomePage";
 			return "redirect:/userHomePage";
 		}
-		return "user/userLoginFailure";
+		return "test/user/user-login-failure";
 	}
 
-	@PostMapping("/RegisterUser")
+	@PostMapping("/registerUser")
 	public String checkUserRegistrationInfo(@Valid User user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "user/userRegistrationForm";
+			return "test/user/user-registration-form";
 		}
 
 		if (registerUser(user) != null) {
-			return "user/userRegistrationSuccessful";
+			return "test/user/user-registration-successful";
 		} else {
-			return "registrationFailure";
+			return "registration-failure";
 		}
 	}
 
@@ -80,10 +80,10 @@ public class UserController implements WebMvcConfigurer {
 	}
 
 	
-	@PostMapping("/HireAWorker")	
-	public String HireAWorker(@Valid Job job) {
+	@PostMapping("/hireAWorker")	
+	public String hireAWorker(@Valid Job job) {
 		log.info("----------------Job submitted by user : " + job + "---------------");		
-		return "user/userHomePage";
+		return "test/user/user-home-page";
 		
 	}
 }

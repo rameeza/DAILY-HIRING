@@ -34,7 +34,5 @@ public class Employer extends Person {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
-	
-	
+
 }

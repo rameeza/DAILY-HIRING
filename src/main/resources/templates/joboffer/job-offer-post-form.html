@@ -151,6 +151,47 @@
 						th:errors="*{competencyLevel}">ExperienceYears Error</div>
 				</div>
 
+<!-- fieldOfWork.name -->
+				<div class="form-group row">
+					<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
+						Field Of Work:
+					</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="fieldOfWork_name"
+							placeholder="Enter field Of Work" name="fieldOfWork_name"
+							th:field="*{fieldOfWork.name}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('fieldOfWork.name')}"
+						th:errors="*{fieldOfWork.name}">FieldOfWork.Name Error</div>
+				</div>
+
+<!-- certificate.name -->
+				<div class="form-group row">
+					<label for="certificate_name" class="col-sm-2 col-form-label">
+						Cretificate required:
+					</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="certificate_name"
+							placeholder="Enter certificate name" name="certificate_name"
+							th:field="*{certificate.name}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('certificate.name')}"
+						th:errors="*{certificate.name}">Certificate.Name Error</div>
+				</div>
+
+<!-- education.yearsOfEducation -->
+				<div class="form-group row">
+					<label for="education_yearsOfEducation" class="col-sm-2 col-form-label">
+						Years of Education required:</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="education.yearsOfEducation"
+							placeholder="Enter years of education" name="education.yearsOfEducation"
+							th:field="*{education.yearsOfEducation}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
+						th:errors="*{education.yearsOfEducation}">Education.YearsOfEducation Error</div>
+				</div>
+
 <!-- 
 				<div class="form-group row">
 					<label for="phoneNumber" class="col-sm-2 col-form-label">Phone

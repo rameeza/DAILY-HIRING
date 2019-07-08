@@ -26,10 +26,10 @@ public class JobOffer {
 	@OneToOne (mappedBy = "jobOffer")
 	private Employer employer; // todo - make it bidirectonal mapping 
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private FieldOfWork fieldOfWork; // offers this field of work
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Certificate certificate; // requires this certificate
 	
 	@OneToOne(cascade = {CascadeType.ALL})

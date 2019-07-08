@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Controller
 public class Worker2Controller implements WebMvcConfigurer {
 	@Autowired
-	private Worker2Repository workerRepository;
+	private Worker2Repository worker2Repository;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	@Override
@@ -29,53 +29,54 @@ public class Worker2Controller implements WebMvcConfigurer {
 		registry.addViewController("/userHomePage").setViewName("userHomePage");
 	}
 	
-	@GetMapping("/LoginWorker")
-	public String showWorkerLoginForm(Worker2 worker) {
-		return "worker/workerLoginForm";
+	@GetMapping("/loginWorker2")
+	public String showWorker2LoginForm(Worker2 worker2) {
+		return "test/worker2/worker2-login-form";
 	}
 	
 
-	@PostMapping("/LoginWorker")
-	public String checkWorkerLoginInfo(@Valid Worker2 worker, BindingResult bindingResult) {
+	@PostMapping("/loginWorker2")
+	public String checkWorker2LoginInfo(@Valid Worker2 worker2, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			return "worker/workerLoginForm";
+			return "test/worker2/worker2-login-form";
 		}
-		Optional<Worker2> optionalWorker = workerRepository.findById(worker.getEmail());
-		if (optionalWorker.isPresent()) {
-			if (optionalWorker.get().getPassword().equals(worker.getPassword()))
-			return "worker/workerHomePage";
+		Optional<Worker2> optionalWorker2 = worker2Repository.findById(worker2.getEmail());
+		if (optionalWorker2.isPresent()) {
+			if (optionalWorker2.get().getPassword().equals(worker2.getPassword()))
+			return "test/worker2/worker2-home-page";
 		}
-		return "worker/workerLoginFailure";
+		return "test/worker2/worker2-login-failure";
 	}
 
-
-	@GetMapping("/RegisterWorker")
-	public String showWorkerRegistrationForm(Worker2 worker) {
-		return "worker/workerRegistrationForm";
+	@GetMapping("/registerWorker2")
+	public String showWorker2RegistrationForm(Worker2 worker2) {
+		return "test/worker2/worker2-registration-form";
 	}
 
-	@PostMapping("/RegisterWorker")
-	public String checkWorkerRegistrationInfo(@Valid Worker2 worker, BindingResult bindingResult) {
+	@PostMapping("/registerWorker2")
+	public String checkWorker2RegistrationInfo(@Valid Worker2 worker2, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "worker/workerRegistrationForm";
+			return "test/worker2/worker2-registration-form";
 		}
 		// fetch all users
 		/*
-		 * for (User tempUser : userRepository.findAll()) {
-		 * log.info(tempUser.toString()); }
+		 * for (User testUser : userRepository.findAll()) {
+		 * log.info(testUser.toString()); }
 		 */
-		if (registerWorker(worker) != null) {
-			return "worker/workerRegistrationSuccessful";
+		if (registerWorker2(worker2) != null) {
+			System.out.println("--------------1----------");
+			return "test/worker2/worker2-registration-successful";
 		} else {
-			return "registrationFailure";
+			System.out.println("--------------2----------");
+			return "registration-failure";
 		}
 	}
 
-	private Object registerWorker(@Valid Worker2 worker) {
-		Worker2 retWorker = workerRepository.save(worker);
-		log.info("----------------User saved : " + retWorker + "---------------");
-		return retWorker;
+	private Object registerWorker2(@Valid Worker2 worker2) {
+		Worker2 retWorker2 = worker2Repository.save(worker2);
+		log.info("----------------Worker saved : " + retWorker2 + "---------------");
+		return retWorker2;
 	}
 	
 }

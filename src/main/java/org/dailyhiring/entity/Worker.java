@@ -108,4 +108,8 @@ public class Worker extends Person {
 		return this.recommendation + this.experienceYears + this.education.getYearsOfEducation();
 	}
 
+	public void setCompetencyLevel(Double competencyLevel) {
+		this.competencyLevel = competencyLevel;
+	}
+
 }

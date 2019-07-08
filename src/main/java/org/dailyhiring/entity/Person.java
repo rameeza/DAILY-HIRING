@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Person {
 	@Id @GeneratedValue
 	private Integer id;
-	private String organisation;
+	private String organization;
 	private String firstName;
 	private String lastName;
 	private Integer age;
@@ -17,15 +17,15 @@ public class Person {
 	private String phoneNo;
 	private String address;
 	private String idProof;
-	
+	private String password;
 	public Person() {
 		super();
 	}
 
-	public Person(String organisation, String firstName, String lastName, Integer age, String gender, String email,
+	public Person(String organization, String firstName, String lastName, Integer age, String gender, String email,
 			String phoneNo, String address, String idProof) {
 		super();
-		this.organisation = organisation;
+		this.organization = organization;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -44,11 +44,11 @@ public class Person {
 		this.id = id;
 	}
 
-	public String getOrganisation() {
-		return organisation;
+	public String getOrganization() {
+		return organization;
 	}
-	public void setOrganisation(String organisation) {
-		this.organisation = organisation;
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 	public Integer getAge() {
 		return age;
@@ -98,4 +98,13 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }
