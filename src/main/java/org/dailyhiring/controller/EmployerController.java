@@ -30,6 +30,11 @@ public class EmployerController {
 		return "employer/employer-login-form";
 	}
 
+	@GetMapping("/employerHomePage")
+	public String showEmployerHomePage(Employer employer) {
+		return "employer/employer-home-page";
+	}
+	
 	@PostMapping("/loginEmployer")
 	public String checkEmployerLoginInfo(@Valid Employer employer, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

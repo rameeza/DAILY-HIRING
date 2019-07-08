@@ -1,14 +1,14 @@
 package org.dailyhiring.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-import org.dailyhiring.entity.Degree;
-import org.dailyhiring.entity.Education;
 import org.dailyhiring.entity.JobOffer;
-import org.dailyhiring.entity.test.Worker2;
 import org.dailyhiring.service.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,18 @@ public class JobOfferController {
 	@GetMapping("/postJobOffer")
 	public String showJobOfferPostForm(JobOffer jobOffer) {
 		return "joboffer/job-offer-post-form";
-	}	
+	}
+	
+	@GetMapping("/showAllJobs")
+	public String showAllJobs(Model theModel){
+		// get jobs from db
+		List<JobOffer> theJobOffers = jobOfferService.findAll();
+		
+		// add to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+		
+		return "joboffer/show-all-jobs";
+	}
 	
 	@PostMapping("/postJobOffer")
 	private String postJobOffer(@Valid JobOffer jobOffer, BindingResult bindingResult) {

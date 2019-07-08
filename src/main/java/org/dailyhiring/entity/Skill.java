@@ -1,5 +1,6 @@
 package org.dailyhiring.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,9 +10,9 @@ import javax.persistence.OneToOne;
 public class Skill {
 	private String name;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private FieldOfWork fieldOfWork;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private PayBy payBy; // todo- check if it can be one to many
 	
 	@Id @GeneratedValue

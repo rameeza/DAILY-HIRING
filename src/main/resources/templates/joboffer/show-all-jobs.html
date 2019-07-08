@@ -18,12 +18,31 @@
 <body>
 
 	<div class="container-fluid">
-		<br>
-		<h2>Home Page</h2><br>
-		<br>
+			<h2>All available jobs</h2><br><br>
+	<hr>
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Job ID</th>
+				<th>Title</th>
+				<th>Responsibility</th>
+				<th>Openings</th>
+			</tr>
+		</thead>
 		
-		<a href="showAllJobs">viewJobs</a>
-		
+		<tbody>
+			<tr th:each="tempJob : ${jobs}">
+			
+				<td th:text="${tempJob.jobId}" />	
+				<td th:text="${tempJob.jobTitle}" />	
+				<td th:text="${tempJob.responsibility}" />	
+				<td th:text="${tempJob.jobOpenings}" />	
+				
+			</tr>
+		</tbody>		
+	</table>
+	
+
 
 	</div>
 </body>

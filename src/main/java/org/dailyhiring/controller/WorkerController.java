@@ -47,6 +47,7 @@ public class WorkerController {
 
 	@GetMapping("/registerWorker")
 	public String showWorkerRegistrationForm(Worker worker) {
+		//worker.getEducation().setYearsOfEducation(0);
 		return "worker/worker-registration-form";
 	}
 

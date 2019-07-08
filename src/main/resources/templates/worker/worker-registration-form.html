@@ -23,9 +23,36 @@
 		<form action="#" th:action="@{/registerWorker}" th:object="${worker}"
 			method="post">
 
+<!-- skill.fieldOfWork.name -->
+				<div class="form-group row">
+					<label for="skill_fieldOfWork_name" class="col-sm-2 col-form-label">
+						Field Of Work:
+					</label>
+
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="skill_fieldOfWork_name" 
+						name="skill_fieldOfWork_name"	th:field="*{skill.fieldOfWork.name}">
+					<option value="Construction">Construction</option>
+					<option value="Driver">Driver</option>
+					<option value="Painter">Painter</option>
+					<option value="Plumbery">Plumbery</option>
+					<option value="Security">Security</option>
+					<option value="Cook">Cook</option>
+					<option value="Carpenter">Carpenter</option>
+					<option value="Labourer">Labourer</option>
+				</select>
+				</div>
+
+				<div class="col-sm-5" th:if="${#fields.hasErrors('skill.fieldOfWork.name')}"
+					th:errors="*{skill.fieldOfWork.name}">Skill.FieldOfWork.Name Error</div>
+				</div>
+
+
+
 <!-- organization -->
 				<div class="form-group row">
-					<label for="name" class="col-sm-2 col-form-label">Name:</label>
+					<label for="name" class="col-sm-2 col-form-label">Organization Name:</label>
 					<div class="col-sm-2.5">
 						<input type="text" class="form-control" id="organization"
 							placeholder="Enter organization" name="organization" th:field="*{organization}">
@@ -54,6 +81,132 @@
 					</div>
 					<div class="col-sm-5" th:if="${#fields.hasErrors('lastName')}"
 						th:errors="*{lastName}">LastName Error</div>
+				</div>
+
+<!-- Double costPerUnit -->
+				<div class="form-group row">
+					<label for="costPerUnit" class="col-sm-2 col-form-label">Cost per unit(/hour):</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="costPerUnit"
+							placeholder="Enter costPerUnit" name="costPerUnit" th:field="*{costPerUnit}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('costPerUnit')}"
+						th:errors="*{costPerUnit}">CostPerUnit Error</div>
+				</div>
+
+
+
+<!-- currency -->
+			<div class="form-group row">
+				<label for="currency" class="col-sm-2 col-form-label">Currency:</label>
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="currency" name="currency" th:field="*{currency}">
+					<option value="Rupee">Rupee</option>
+					<option value="Dollar">Dollar</option>
+					<option value="Lira">Lira</option>
+					<option value="Yuan">Yuan</option>
+				</select>
+				</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('currency')}"
+						th:errors="*{currency}">Currency Error</div>
+				</div>
+
+
+
+<!-- skill.name -->
+				<div class="form-group row">
+					<label for="skill_name" class="col-sm-2 col-form-label">
+						Skill Name:
+					</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="skill_name"
+							placeholder="Enter skill name" name="skill_name"
+							th:field="*{skill.name}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('skill.name')}"
+						th:errors="*{skill.name}">Skill.Name Error</div>
+				</div>
+
+<!-- skill.payBy.name -->
+				<div class="form-group row">
+					<label for="skill_payBy_name" class="col-sm-2 col-form-label">
+						Receive payment by:
+					</label>
+
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="skill_payBy_name" 
+						name="skill_payBy_name"	th:field="*{skill.payBy.name}">
+					<option value="Cash">Cash</option>
+					<option value="PhonePe">PhonePe</option>
+					<option value="TransferToBankAccount">TransferToBankAccount</option>
+				</select>
+				</div>
+
+				<div class="col-sm-5" th:if="${#fields.hasErrors('skill.payBy.name')}"
+					th:errors="*{skill.payBy.name}">Skill.FieldOfWork.Name Error</div>
+				</div>
+
+
+
+
+<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">Job title:</label>
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="jobTitle"
+							placeholder="Enter jobTitle" name="jobTitle" 
+								th:field="*{jobTitle}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('jobTitle')}"
+						th:errors="*{jobTitle}">JobTitle Error</div>
+				</div>
+
+<!-- education.yearsOfEducation -->
+				<div class="form-group row">
+					<label for="education_yearsOfEducation" class="col-sm-2 col-form-label">
+						Years of Education:</label>
+					<div class="col-sm-2.5">
+						<input type="number" min="0" value="0" class="form-control" id="education.yearsOfEducation"
+							placeholder="Enter years of education" name="education.yearsOfEducation"
+							th:field="*{education.yearsOfEducation}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
+						th:errors="*{education.yearsOfEducation}">Education.YearsOfEducation Error</div>
+				</div>
+
+<!-- certificate.name -->
+				<div class="form-group row">
+					<label for="certificate_name" class="col-sm-2 col-form-label">
+						Certificate possessed:
+					</label>
+					<div class="col-sm-2.5"> 
+					<select
+						class="form-control" id="certificate_name" name="certificate_name" 
+							th:field="*{certificate.name}">
+						<option value="Certificate-1">Certificate-1</option>
+						<option value="Certificate-2">Certificate-2</option>
+						<option value="Certificate-3">Certificate-3</option>
+						<option value="Certificate-4">Certificate-4</option>
+						<option value="Certificate-5">Certificate-5</option>
+					</select>
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('certificate.name')}"
+						th:errors="*{certificate.name}">Certificate.Name Error</div>
+				</div>
+
+
+<!-- Double experienceYears -->
+				<div class="form-group row">
+					<label for="experienceYears" class="col-sm-2 col-form-label">
+						Experience (in years):</label>
+					<div class="col-sm-2.5">
+						<input type="number" class="form-control" id="experienceYears"
+							placeholder="Enter experienceYears" name="experienceYears" th:field="*{experienceYears}">
+					</div>
+					<div class="col-sm-5" th:if="${#fields.hasErrors('experienceYears')}"
+						th:errors="*{experienceYears}">ExperienceYears Error</div>
 				</div>
 
 
@@ -121,10 +274,10 @@
 
 <!-- idProof -->
 				<div class="form-group row">
-					<label for="name" class="col-sm-2 col-form-label">ID Proof No:</label>
+					<label for="name" class="col-sm-2 col-form-label">ID Proof(Aadhaar) No:</label>
 					<div class="col-sm-2.5">
 						<input type="text" class="form-control" id="idProof"
-							placeholder="Enter idProof" name="idProof" th:field="*{idProof}">
+							placeholder="Enter idProof no" name="idProof" th:field="*{idProof}">
 					</div>
 					<div class="col-sm-5" th:if="${#fields.hasErrors('idProof')}"
 						th:errors="*{idProof}">IdProof Error</div>

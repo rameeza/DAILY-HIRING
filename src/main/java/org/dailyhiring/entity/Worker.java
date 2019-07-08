@@ -1,5 +1,6 @@
 package org.dailyhiring.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -14,12 +15,12 @@ public class Worker extends Person {
 	private Integer recommendation; // 
 	private Double competencyLevel;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Skill skill;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Certificate certificate; // todo- see if it will be one to many
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Education education; // has this education
 	
 	public Worker() {

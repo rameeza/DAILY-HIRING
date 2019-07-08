@@ -1,5 +1,7 @@
 package org.dailyhiring.service;
 
+import java.util.List;
+
 import org.dailyhiring.dao.JobOfferRepository;
 import org.dailyhiring.entity.JobOffer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,11 @@ public class JobOfferServiceImpl implements JobOfferService {
 	public JobOffer save(JobOffer jobOffer) {
 		JobOffer tempJobOffer = jobOfferRepository.save(jobOffer);
 		return tempJobOffer;
+	}
+
+	@Override
+	public List<JobOffer> findAll() {
+		return jobOfferRepository.findAllByOrderByJobIdAsc();
 	}
 	
 }

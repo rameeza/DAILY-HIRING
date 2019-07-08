@@ -24,21 +24,15 @@
 			method="post">
 	<!-- jobTitle -->
 			<div class="form-group row">
-				<label for="jobTitle" class="col-sm-2 col-form-label">I am a:</label>
-				<div class="col-sm-2.5"> 
-				<select
-					class="form-control" id="jobTitle" name="jobTitle" th:field="*{jobTitle}">
-					<option value="NothingSelected">choose</option>
-					<option value="Plumber">Plumber</option>
-					<option value="Painter">Painter</option>
-					<option value="Driver">Driver</option>
-					<option value="Cook">Cook</option>
-					<option value="Carpenter">Carpenter</option>
-					<option value="Labourer">Labourer</option>
-				</select>
-				</div>
+				<label for="jobTitle" class="col-sm-2 col-form-label">Job title:</label>
+
+					<div class="col-sm-2.5">
+						<input type="text" class="form-control" id="jobTitle"
+							placeholder="Enter jobTitle" name="jobTitle" 
+								th:field="*{jobTitle}">
+					</div>
 					<div class="col-sm-5" th:if="${#fields.hasErrors('jobTitle')}"
-						th:errors="*{jobTitle}">JobDesignation Error</div>
+						th:errors="*{jobTitle}">JobTitle Error</div>
 				</div>
 				
 	<!-- responsibility -->			
@@ -102,7 +96,6 @@
 				<div class="col-sm-2.5"> 
 				<select
 					class="form-control" id="currency" name="currency" th:field="*{currency}">
-					<option value="NothingSelected">choose</option>
 					<option value="Rupee">Rupee</option>
 					<option value="Dollar">Dollar</option>
 					<option value="Lira">Lira</option>
@@ -156,24 +149,41 @@
 					<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
 						Field Of Work:
 					</label>
-					<div class="col-sm-2.5">
-						<input type="text" class="form-control" id="fieldOfWork_name"
-							placeholder="Enter field Of Work" name="fieldOfWork_name"
-							th:field="*{fieldOfWork.name}">
-					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('fieldOfWork.name')}"
-						th:errors="*{fieldOfWork.name}">FieldOfWork.Name Error</div>
+
+				<div class="col-sm-2.5"> 
+				<select
+					class="form-control" id="fieldOfWork_name" name="fieldOfWork_name" 
+						th:field="*{fieldOfWork.name}">
+					<option value="Construction">Construction</option>
+					<option value="Driver">Driver</option>
+					<option value="Painter">Painter</option>
+					<option value="Plumbery">Plumbery</option>
+					<option value="Security">Security</option>
+					<option value="Cook">Cook</option>
+					<option value="Carpenter">Carpenter</option>
+					<option value="Labourer">Labourer</option>
+				</select>
+				</div>
+
+				<div class="col-sm-5" th:if="${#fields.hasErrors('fieldOfWork.name')}"
+					th:errors="*{fieldOfWork.name}">FieldOfWork.Name Error</div>
 				</div>
 
 <!-- certificate.name -->
 				<div class="form-group row">
 					<label for="certificate_name" class="col-sm-2 col-form-label">
-						Cretificate required:
+						Certificate required:
 					</label>
-					<div class="col-sm-2.5">
-						<input type="text" class="form-control" id="certificate_name"
-							placeholder="Enter certificate name" name="certificate_name"
+					<div class="col-sm-2.5"> 
+					<select
+						class="form-control" id="certificate_name" name="certificate_name" 
 							th:field="*{certificate.name}">
+						<option value="Certificate-1">Certificate-1</option>
+						<option value="Certificate-2">Certificate-2</option>
+						<option value="Certificate-3">Certificate-3</option>
+						<option value="Certificate-4">Certificate-4</option>
+						<option value="Certificate-5">Certificate-5</option>
+					</select>
 					</div>
 					<div class="col-sm-5" th:if="${#fields.hasErrors('certificate.name')}"
 						th:errors="*{certificate.name}">Certificate.Name Error</div>
