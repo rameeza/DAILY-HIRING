@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class JobOffer {
@@ -12,12 +13,14 @@ public class JobOffer {
 	private Integer jobId;
 	private String jobTitle;
 	private String responsibility; // refers to all responsibilities associated with job.
+	@NotNull
 	private Integer jobOpenings; 
 	private String datePosted; // date on which job was posted
+	@NotNull
 	private Double workHours; // no. of hours of work required per day.
 	private String validThrough; // date up to which the job is valid
 	private String currency; // in which payment wll be made
-	
+	@NotNull
 	private Double experienceYears;	// years
 	private Integer recommendation; // 
 	private Double competencyLevel;

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<title>show jobs</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,25 +19,33 @@
 <body>
 
 	<div class="container-fluid">
-			<h2>All available jobs</h2><br><br>
+			<br>
+			<h2>Available jobs</h2><br>
 	<hr>
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
 				<th>Job ID</th>
+				<th>Field of work</th>
 				<th>Title</th>
 				<th>Responsibility</th>
 				<th>Openings</th>
+				<th>Work Hours</th>
+				<th>Experience required</th>
+				<th>Certificate required</th>
 			</tr>
 		</thead>
-		
 		<tbody>
 			<tr th:each="tempJob : ${jobs}">
 			
 				<td th:text="${tempJob.jobId}" />	
+				<td th:text="${tempJob.fieldOfWork.name}" />	
 				<td th:text="${tempJob.jobTitle}" />	
 				<td th:text="${tempJob.responsibility}" />	
 				<td th:text="${tempJob.jobOpenings}" />	
+				<td th:text="${tempJob.workHours}" />	
+				<td th:text="${tempJob.experienceYears}" />	
+				<td th:text="${tempJob.certificate.name}" />	
 				
 			</tr>
 		</tbody>		

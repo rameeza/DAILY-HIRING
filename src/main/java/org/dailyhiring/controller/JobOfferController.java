@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class JobOfferController {
@@ -37,6 +38,35 @@ public class JobOfferController {
 		
 		return "joboffer/show-all-jobs";
 	}
+
+
+	@GetMapping("/showJobsMatchingFieldOfWork")
+	public String showJobsMatchingFieldOfWork(@RequestParam("workerId") int theWorkerId,
+			Model theModel){
+		// get jobs from db
+		List<JobOffer> theJobOffers = jobOfferService.findAllJobsMatchingFieldOfWork(theWorkerId);
+		System.out.println("---------------" + getClass() + "----> showMatchingJobs ()"
+				+ " ----> theJobOffers = " + theJobOffers );
+		// add to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+		
+		return "joboffer/show-all-jobs";
+	}
+	
+	@GetMapping("/showJobsMatchingCertificate")
+	public String showJobsMatchingCertificate(@RequestParam("workerId") int theWorkerId,
+			Model theModel){
+		// get jobs from db
+		List<JobOffer> theJobOffers = jobOfferService.findAllJobsMatchingCertificate(theWorkerId);
+		System.out.println("---------------" + getClass() + "----> showMatchingJobs ()"
+				+ " ----> theJobOffers = " + theJobOffers );
+		// add to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+		
+		return "joboffer/show-all-jobs";
+	}
+
+	
 	
 	@PostMapping("/postJobOffer")
 	private String postJobOffer(@Valid JobOffer jobOffer, BindingResult bindingResult) {

@@ -10,4 +10,8 @@ public interface JobOfferService {
 
 	public List<JobOffer> findAll();
 
+	public List<JobOffer> findAllJobsMatchingFieldOfWork(int theWorkerId);
+
+	public List<JobOffer> findAllJobsMatchingCertificate(int theWorkerId);
+
 }
