@@ -5,27 +5,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+<link rel="stylesheet" 
+	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
+  	
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script 
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
+<script 
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->    
+
 </head>
 
 <body>
 	<div class="container-fluid">
-		<h2>worker2 Registration</h2>
+		<h2 style="text-align:center">worker2 Registration</h2>
 		<br>
 
 		<form action="#" th:action="@{/registerWorker2}" th:object="${worker2}"
 			method="post">
 
 			<div class="form-group row">
-				<label for="jobDesignation" class="col-sm-1 col-form-label">I am a:</label>
-				<div class="col-sm-2.5"> 
+				<label style="visibility:hidden" for="jobDesignation" class="col-sm-1 col-form-label">I am a:</label>
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="jobDesignation" name="jobDesignation" th:field="*{jobDesignation}">
 					<option value="NothingSelected">choose</option>
@@ -37,49 +42,49 @@
 					<option value="Labourer">Labourer</option>
 				</select>
 				</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('jobDesignation')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('jobDesignation')}"
 						th:errors="*{jobDesignation}">JobDesignation Error</div>
 				</div>
 				<div class="form-group row">
-					<label for="name" class="col-sm-1 col-form-label">Name:</label>
-					<div class="col-sm-2.5">
+					<label style="visibility:hidden" for="name" class="col-sm-1 col-form-label">Name:</label>
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="name"
 							placeholder="Enter name" name="name" th:field="*{name}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('name')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}">Name Error</div>
 				</div>
 
 				<div class="form-group row">
-					<label for="email" class="col-sm-1 col-form-label">E-mail:</label>
-					<div class="col-sm-2.5">
+					<label style="visibility:hidden" for="email" class="col-sm-1 col-form-label">E-mail:</label>
+					<div class="col-sm-3">
 						<input type="email" class="form-control" id="email"
 							placeholder="Enter email" name="email" th:field="*{email}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('email')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}">Email Error</div>
 				</div>
 
 				<div class="form-group row">
-					<label for="password" class="col-sm-1 col-form-label">Password:</label>
-					<div class="col-sm-2.5">
+					<label style="visibility:hidden" for="password" class="col-sm-1 col-form-label">Password:</label>
+					<div class="col-sm-3">
 						<input type="password" class="form-control" id="password"
 							placeholder="Enter password" name="password"
 							th:field="*{password}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('password')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
 						th:errors="*{password}">Password Error</div>
 				</div>
 
 				<div class="form-group row">
-					<label for="phoneNumber" class="col-sm-1 col-form-label">Phone
+					<label style="visibility:hidden" for="phoneNumber" class="col-sm-1 col-form-label">Phone
 						no:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="phoneNumber"
 							placeholder="Enter phone no" name="phoneNumber"
 							th:field="*{phoneNumber}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('phoneNumber')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('phoneNumber')}"
 						th:errors="*{phoneNumber}">PhoneNumber Error</div>
 				</div>
 

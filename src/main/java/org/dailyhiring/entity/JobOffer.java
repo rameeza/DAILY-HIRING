@@ -18,6 +18,7 @@ public class JobOffer {
 	private String datePosted; // date on which job was posted
 	@NotNull
 	private Double workHours; // no. of hours of work required per day.
+	@NotNull
 	private String validThrough; // date up to which the job is valid
 	private String currency; // in which payment wll be made
 	@NotNull
@@ -40,7 +41,6 @@ public class JobOffer {
 	
 	public JobOffer() {
 		super();
-		System.out.println("----------Rameez: SMALL CONSTRUCTOR CALLED!!!---------");
 		
 	}
 	
@@ -49,7 +49,6 @@ public class JobOffer {
 			String validThrough, String currency, Double experienceYears, Integer recommendation,
 			Double competencyLevel, Education education) {
 		super();
-		System.out.println("----------Rameez: BIG CONSTRUCTOR CALLED!!!---------");
 		this.jobTitle = jobTitle;
 		this.responsibility = responsibility;
 		this.jobOpenings = jobOpenings;

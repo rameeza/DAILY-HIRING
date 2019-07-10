@@ -1,5 +1,6 @@
 package org.dailyhiring.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,69 +17,73 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class JobOfferController {
-	
-	private JobOfferService jobOfferService;
+
 	@Autowired
-	public JobOfferController(JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
-	}
+	private JobOfferService jobOfferService;
+
+	/*
+	 * @Autowired public JobOfferController(JobOfferService jobOfferService) {
+	 * this.jobOfferService = jobOfferService; }
+	 */
+
+	/*
+	 * @GetMapping("/postJobOffer") public String showJobOfferPostForm(JobOffer
+	 * jobOffer) { return "joboffer/job-offer-post-form"; }
+	 * 
+	 */
 
 	@GetMapping("/postJobOffer")
-	public String showJobOfferPostForm(JobOffer jobOffer) {
+	public String showJobOfferPostForm(Model theModel) {
+		// set initial values in job-post-form
+		JobOffer jobOffer = new JobOffer();
+		jobOffer.setexperienceYears(10.0); jobOffer.setJobTitle("daily worker");
+		theModel.addAttribute("jobOffer", jobOffer);
+
+		// return view
 		return "joboffer/job-offer-post-form";
 	}
-	
+
 	@GetMapping("/showAllJobs")
-	public String showAllJobs(Model theModel){
+	public String showAllJobs(Model theModel) {
 		// get jobs from db
 		List<JobOffer> theJobOffers = jobOfferService.findAll();
-		
+
 		// add to the spring model
 		theModel.addAttribute("jobs", theJobOffers);
-		
+
 		return "joboffer/show-all-jobs";
 	}
-
 
 	@GetMapping("/showJobsMatchingFieldOfWork")
-	public String showJobsMatchingFieldOfWork(@RequestParam("workerId") int theWorkerId,
-			Model theModel){
+	public String showJobsMatchingFieldOfWork(@RequestParam("workerId") int theWorkerId, Model theModel) {
+
 		// get jobs from db
 		List<JobOffer> theJobOffers = jobOfferService.findAllJobsMatchingFieldOfWork(theWorkerId);
-		System.out.println("---------------" + getClass() + "----> showMatchingJobs ()"
-				+ " ----> theJobOffers = " + theJobOffers );
-		// add to the spring model
+
+		// add jobs to the spring model
 		theModel.addAttribute("jobs", theJobOffers);
-		
-		return "joboffer/show-all-jobs";
-	}
-	
-	@GetMapping("/showJobsMatchingCertificate")
-	public String showJobsMatchingCertificate(@RequestParam("workerId") int theWorkerId,
-			Model theModel){
-		// get jobs from db
-		List<JobOffer> theJobOffers = jobOfferService.findAllJobsMatchingCertificate(theWorkerId);
-		System.out.println("---------------" + getClass() + "----> showMatchingJobs ()"
-				+ " ----> theJobOffers = " + theJobOffers );
-		// add to the spring model
-		theModel.addAttribute("jobs", theJobOffers);
-		
+
 		return "joboffer/show-all-jobs";
 	}
 
-	
-	
+	@GetMapping("/showJobsMatchingCertificate")
+	public String showJobsMatchingCertificate(@RequestParam("workerId") int theWorkerId, Model theModel) {
+
+		// get jobs from db
+		List<JobOffer> theJobOffers = jobOfferService.findAllJobsMatchingCertificate(theWorkerId);
+
+		// add jobs to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+
+		return "joboffer/show-all-jobs";
+	}
+
 	@PostMapping("/postJobOffer")
 	private String postJobOffer(@Valid JobOffer jobOffer, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "joboffer/job-offer-post-form";
 		}
-		
-		/*
-		 * Education ed = new Degree (); Education ed2 = new Degree(5, "class 5",
-		 * "2015", "smvdu"); JobOffer jobOffer = new JobOffer("watchman", "stay awake",
-		 * 10, "2018-10-10", 10.0, "2018-12-12", "Dollar", 2.5, 3, 8.0, ed);
-		 */		
+
 		JobOffer tempJobOffer = jobOfferService.save(jobOffer);
 		if (tempJobOffer == null) {
 			return "joboffer/job-offer-post-failure";

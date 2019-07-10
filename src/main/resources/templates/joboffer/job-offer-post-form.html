@@ -6,20 +6,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+<link rel="stylesheet" 
+	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
+  	
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script 
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
+<script 
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->    
+
 </head>
 
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid" >
 		<br>
-		<h2>Post a new Job Offer</h2>
+		<h2 style="text-align:center">Post a new Job Offer</h2>
 		<br>
 
 		<form action="#" th:action="@{/postJobOffer}" th:object="${jobOffer}"
@@ -31,7 +36,7 @@
 						Field Of Work (*):
 					</label>
 
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="fieldOfWork_name" name="fieldOfWork_name" 
 						th:field="*{fieldOfWork.name}">
@@ -47,7 +52,7 @@
 				</select>
 				</div>
 
-				<div class="col-sm-5" th:if="${#fields.hasErrors('fieldOfWork.name')}"
+				<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('fieldOfWork.name')}"
 					th:errors="*{fieldOfWork.name}">FieldOfWork.Name Error</div>
 				</div>
 
@@ -57,23 +62,23 @@
 			<div class="form-group row">
 				<label for="jobTitle" class="col-sm-2 col-form-label">Job title:</label>
 
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="jobTitle"
 							placeholder="Enter jobTitle" name="jobTitle" 
 								th:field="*{jobTitle}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('jobTitle')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('jobTitle')}"
 						th:errors="*{jobTitle}">JobTitle Error</div>
 				</div>
 				
 	<!-- responsibility -->			
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Responsibility:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="responsibility"
 							placeholder="Enter responsibility" name="responsibility" th:field="*{responsibility}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('responsibility')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('responsibility')}"
 						th:errors="*{responsibility}">Responsibility Error</div>
 				</div>
 
@@ -81,52 +86,52 @@
 				<div class="form-group row">
 					<label for="jobOpenings" class="col-sm-2 col-form-label">
 							No. of Openings (*):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="1" class="form-control" id="jobOpenings"
 							placeholder="Enter no. of openings" name="jobOpenings" th:field="*{jobOpenings}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('jobOpenings')}"
+					<div class="col-sm-5"  style="color:red"  th:if="${#fields.hasErrors('jobOpenings')}"
 						th:errors="*{jobOpenings}">JobOpenings Error</div>
 				</div>
 	
 	<!-- datePosted -->	
 				<div class="form-group row">
 					<label for="datePosted" class="col-sm-2 col-form-label">Date of Posting:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="date" class="form-control" id="datePosted"
 							placeholder="Enter date of posting" name="datePosted" th:field="*{datePosted}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('datePosted')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('datePosted')}"
 						th:errors="*{datePosted}">DatePosted Error</div>
 				</div>
 	<!-- workHours -->
 				<div class="form-group row">
 					<label for="workHours" class="col-sm-2 col-form-label">
 							Work Hours (*):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" class="form-control" id="workHours"
 							placeholder="Enter work hours" name="workHours"
 							th:field="*{workHours}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('workHours')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('workHours')}"
 						th:errors="*{workHours}">WorkHours Error</div>
 				</div>
 
 	<!-- validThrough -->	
 				<div class="form-group row">
-					<label for="validThrough" class="col-sm-2 col-form-label">Job is Valid upto:</label>
-					<div class="col-sm-2.5">
+					<label for="validThrough" class="col-sm-2 col-form-label">Job is Valid upto (*):</label>
+					<div class="col-sm-3">
 						<input type="date" class="form-control" id="validThrough"
 							placeholder="Enter date until which it is valid" name="validThrough" th:field="*{validThrough}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('validThrough')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('validThrough')}"
 						th:errors="*{validThrough}">ValidThrough Error</div>
 				</div>
 
 	<!-- currency -->
 			<div class="form-group row">
 				<label for="currency" class="col-sm-2 col-form-label">Currency:</label>
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="currency" name="currency" th:field="*{currency}">
 					<option value="Rupee">Rupee</option>
@@ -135,7 +140,7 @@
 					<option value="Yuan">Yuan</option>
 				</select>
 				</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('currency')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('currency')}"
 						th:errors="*{currency}">Currency Error</div>
 				</div>
 
@@ -143,24 +148,24 @@
 				<div class="form-group row">
 					<label for="experienceYears" class="col-sm-2 col-form-label">
 						Experience required (years) (*):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" class="form-control" id="experienceYears"
 							placeholder="Enter experience required" name="experienceYears"
 							th:field="*{experienceYears}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('experienceYears')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('experienceYears')}"
 						th:errors="*{experienceYears}">ExperienceYears Error</div>
 				</div>
 
 <!-- recommendation -->
 				<div class="form-group row">
 					<label for="recommendation" class="col-sm-2 col-form-label">Recommendation required:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" class="form-control" id="recommendation"
 							placeholder="Enter recommendations required" name="recommendation"
 							th:field="*{recommendation}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('recommendation')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('recommendation')}"
 						th:errors="*{recommendation}">Recommendation Error</div>
 				</div>
 
@@ -169,12 +174,12 @@
 					<label for="competencyLevel" class="col-sm-2 col-form-label">
 						Competency Level required:
 					</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" class="form-control" id="competencyLevel"
 							placeholder="Enter competencyLevel required" name="competencyLevel"
 							th:field="*{competencyLevel}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('competencyLevel')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('competencyLevel')}"
 						th:errors="*{competencyLevel}">ExperienceYears Error</div>
 				</div>
 
@@ -184,7 +189,7 @@
 					<label for="certificate_name" class="col-sm-2 col-form-label">
 						Certificate required:
 					</label>
-					<div class="col-sm-2.5"> 
+					<div class="col-sm-3"> 
 					<select
 						class="form-control" id="certificate_name" name="certificate_name" 
 							th:field="*{certificate.name}">
@@ -195,7 +200,7 @@
 						<option value="Certificate-5">Certificate-5</option>
 					</select>
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('certificate.name')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('certificate.name')}"
 						th:errors="*{certificate.name}">Certificate.Name Error</div>
 				</div>
 
@@ -203,18 +208,19 @@
 				<div class="form-group row">
 					<label for="education_yearsOfEducation" class="col-sm-2 col-form-label">
 						Years of Education required:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" class="form-control" id="education.yearsOfEducation"
 							placeholder="Enter years of education" name="education.yearsOfEducation"
 							th:field="*{education.yearsOfEducation}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
 						th:errors="*{education.yearsOfEducation}">Education.YearsOfEducation Error</div>
 				</div>
 
 				<div class="form-group row">
-					<div class="col-sm-10">
-						<button type="submit" class="btn btn-primary">Submit</button>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-primary btn-md">Submit</button>
 					</div>
 				</div>
 		</form>

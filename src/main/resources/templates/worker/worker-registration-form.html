@@ -19,7 +19,7 @@
 <body>
 	<div class="container-fluid">
 		<br>
-		<h2>Worker Registration</h2>
+		<h2 style="text-align:center">Worker Registration</h2>
 		<br>
 
 		<form action="#" th:action="@{/registerWorker}" th:object="${worker}"
@@ -31,7 +31,7 @@
 						Field Of Work:
 					</label>
 
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="skill_fieldOfWork_name" 
 						name="skill_fieldOfWork_name"	th:field="*{skill.fieldOfWork.name}">
@@ -47,7 +47,7 @@
 				</select>
 				</div>
 
-				<div class="col-sm-5" th:if="${#fields.hasErrors('skill.fieldOfWork.name')}"
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('skill.fieldOfWork.name')}"
 					th:errors="*{skill.fieldOfWork.name}">Skill.FieldOfWork.Name Error</div>
 				</div>
 
@@ -56,44 +56,44 @@
 <!-- organization -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Organization Name:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="organization"
 							placeholder="Enter organization" name="organization" th:field="*{organization}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('organization')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('organization')}"
 						th:errors="*{organization}">Organization Error</div>
 				</div>
 
 <!-- firstName -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">First Name:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="firstName"
 							placeholder="Enter firstName" name="firstName" th:field="*{firstName}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('firstName')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('firstName')}"
 						th:errors="*{firstName}">FirstName Error</div>
 				</div>
 
 <!-- lastName -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Last Name:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="lastName"
 							placeholder="Enter lastName" name="lastName" th:field="*{lastName}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('lastName')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('lastName')}"
 						th:errors="*{lastName}">LastName Error</div>
 				</div>
 
 <!-- Double costPerUnit -->
 				<div class="form-group row">
 					<label for="costPerUnit" class="col-sm-2 col-form-label">Cost per unit(/hour):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" class="form-control" id="costPerUnit"
 							placeholder="Enter costPerUnit" name="costPerUnit" th:field="*{costPerUnit}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('costPerUnit')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('costPerUnit')}"
 						th:errors="*{costPerUnit}">CostPerUnit Error</div>
 				</div>
 
@@ -102,7 +102,7 @@
 <!-- currency -->
 			<div class="form-group row">
 				<label for="currency" class="col-sm-2 col-form-label">Currency:</label>
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="currency" name="currency" th:field="*{currency}">
 					<option value="Rupee">Rupee</option>
@@ -111,7 +111,7 @@
 					<option value="Yuan">Yuan</option>
 				</select>
 				</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('currency')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('currency')}"
 						th:errors="*{currency}">Currency Error</div>
 				</div>
 
@@ -122,12 +122,12 @@
 					<label for="skill_name" class="col-sm-2 col-form-label">
 						Skill Name:
 					</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="skill_name"
 							placeholder="Enter skill name" name="skill_name"
 							th:field="*{skill.name}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('skill.name')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('skill.name')}"
 						th:errors="*{skill.name}">Skill.Name Error</div>
 				</div>
 
@@ -137,7 +137,7 @@
 						Receive payment by:
 					</label>
 
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="skill_payBy_name" 
 						name="skill_payBy_name"	th:field="*{skill.payBy.name}">
@@ -147,7 +147,7 @@
 				</select>
 				</div>
 
-				<div class="col-sm-5" th:if="${#fields.hasErrors('skill.payBy.name')}"
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('skill.payBy.name')}"
 					th:errors="*{skill.payBy.name}">Skill.FieldOfWork.Name Error</div>
 				</div>
 
@@ -157,12 +157,12 @@
 <!-- jobTitle -->
 			<div class="form-group row">
 				<label for="jobTitle" class="col-sm-2 col-form-label">Job title:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="jobTitle"
 							placeholder="Enter jobTitle" name="jobTitle" 
 								th:field="*{jobTitle}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('jobTitle')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('jobTitle')}"
 						th:errors="*{jobTitle}">JobTitle Error</div>
 				</div>
 
@@ -170,12 +170,12 @@
 				<div class="form-group row">
 					<label for="education_yearsOfEducation" class="col-sm-2 col-form-label">
 						Years of Education:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" min="0" value="0" class="form-control" id="education.yearsOfEducation"
 							placeholder="Enter years of education" name="education.yearsOfEducation"
 							th:field="*{education.yearsOfEducation}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
 						th:errors="*{education.yearsOfEducation}">Education.YearsOfEducation Error</div>
 				</div>
 
@@ -184,7 +184,7 @@
 					<label for="certificate_name" class="col-sm-2 col-form-label">
 						Certificate possessed:
 					</label>
-					<div class="col-sm-2.5"> 
+					<div class="col-sm-3"> 
 					<select
 						class="form-control" id="certificate_name" name="certificate_name" 
 							th:field="*{certificate.name}">
@@ -195,7 +195,7 @@
 						<option value="Certificate-5">Certificate-5</option>
 					</select>
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('certificate.name')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('certificate.name')}"
 						th:errors="*{certificate.name}">Certificate.Name Error</div>
 				</div>
 
@@ -204,11 +204,11 @@
 				<div class="form-group row">
 					<label for="experienceYears" class="col-sm-2 col-form-label">
 						Experience (in years):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" class="form-control" id="experienceYears"
 							placeholder="Enter experienceYears" name="experienceYears" th:field="*{experienceYears}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('experienceYears')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('experienceYears')}"
 						th:errors="*{experienceYears}">ExperienceYears Error</div>
 				</div>
 
@@ -216,36 +216,36 @@
 <!-- Integer age -->
 				<div class="form-group row">
 					<label for="age" class="col-sm-2 col-form-label">Age (years):</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="number" class="form-control" id="age"
 							placeholder="Enter age" name="age" th:field="*{age}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('age')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('age')}"
 						th:errors="*{age}">Age Error</div>
 				</div>
 
 <!-- gender -->
 			<div class="form-group row">
 				<label for="gender" class="col-sm-2 col-form-label">Gender:</label>
-				<div class="col-sm-2.5"> 
+				<div class="col-sm-3"> 
 				<select
 					class="form-control" id="gender" name="gender" th:field="*{gender}">
 					<option value="Male">Male</option>
 					<option value="Female">Female</option>
 				</select>
 				</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('gender')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('gender')}"
 						th:errors="*{gender}">Gender Error</div>
 				</div>
 
 <!-- email -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Email:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="email" class="form-control" id="email"
 							placeholder="Enter email" name="email" th:field="*{email}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('email')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}">Email Error</div>
 				</div>
 
@@ -254,11 +254,11 @@
 <!-- phoneNo -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Phone No:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="phoneNo"
 							placeholder="Enter phoneNo" name="phoneNo" th:field="*{phoneNo}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('phoneNo')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('phoneNo')}"
 						th:errors="*{phoneNo}">PhoneNo Error</div>
 				</div>
 
@@ -266,11 +266,11 @@
 <!-- address -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">Address:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="address"
 							placeholder="Enter address" name="address" th:field="*{address}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('address')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('address')}"
 						th:errors="*{address}">Address Error</div>
 				</div>
 
@@ -278,30 +278,31 @@
 <!-- idProof -->
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">ID Proof(Aadhaar) No:</label>
-					<div class="col-sm-2.5">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="idProof"
 							placeholder="Enter idProof no" name="idProof" th:field="*{idProof}">
 					</div>
-					<div class="col-sm-5" th:if="${#fields.hasErrors('idProof')}"
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('idProof')}"
 						th:errors="*{idProof}">IdProof Error</div>
 				</div>
 
 <!-- password -->
 			<div class="form-group row">
 				<label for="password" class="col-sm-2 col-form-label">Password:</label>
-				<div class="col-sm-2.5">
+				<div class="col-sm-3">
 					<input type="password" class="form-control" id="password"
 						placeholder="Enter password" name="password"
 						th:field="*{password}">
 				</div>
-				<div class="col-sm-5" th:if="${#fields.hasErrors('password')}"
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
 					th:errors="*{password}">Password Error</div>
 			</div>
 
 
 				<div class="form-group row">
-					<div class="col-sm-10">
-						<button type="submit" class="btn btn-primary">Register</button>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-primary btn-md">Register</button>
 					</div>
 				</div>
 		</form>

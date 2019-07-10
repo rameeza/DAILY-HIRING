@@ -1,6 +1,5 @@
 package org.dailyhiring.controller;
 
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,14 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EmployerController {
+	@Autowired
 	private EmployerService employerService;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	@Autowired
-	public EmployerController(EmployerService employerService) {
-		this.employerService = employerService;
-	}
-
+	/*
+	 * @Autowired public EmployerController(EmployerService employerService) {
+	 * this.employerService = employerService; }
+	 * 
+	 */	
 	@GetMapping("/loginEmployer")
 	public String showEmployerLoginForm(Employer employer) {
 		return "employer/employer-login-form";
@@ -40,7 +40,6 @@ public class EmployerController {
 		if (bindingResult.hasErrors()) {
 			return "employer/employer-login-form";
 		}
-		System.out.println("-------------------------employer.getId() : " + employer.getId());
 		Employer tempEmployer= employerService.
 				findById(employer.getId());
 		if (tempEmployer == null) {
@@ -62,11 +61,6 @@ public class EmployerController {
 		if (bindingResult.hasErrors()) {
 			return "employer/employer-registration-form";
 		}
-		// fetch all users
-		/*
-		 * for (User tempUser : userRepository.findAll()) {
-		 * log.info(tempUser.toString()); }
-		 */
 		if (registerEmployer(employer) != null) {
 			return "employer/employer-registration-successful";
 		} else {
