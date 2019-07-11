@@ -23,7 +23,31 @@
 
 <body>
 
+	<!-- redirect if session expired -->
+	<div th:if = "${session.employerEmail == null}"> 
+			<script >
+    			window.location.replace("http://localhost:8080/loginEmployer");
+			</script>
+	</div>
+
+
 	<div class="container-fluid">
+	<!-- show email (of employer logged in) and logout button -->
+
+		<div class="row">
+				<div class="col-sm-10" >			
+					<span  th:text="${session.employerEmail}" class="text-primary"> span one </span>	
+				</div>
+				<div class="col-sm-2">
+					<div class="row">
+						<div class="col-sm-6"></div>
+						<a  href="logoutEmployer" class="btn btn-danger">Logout</a>
+					</div>
+				</div>
+				
+		</div>
+	
+	
 			<h2 style="text-align:center">Job Offer posted Successfully</h2><br><br>
 
     <div style="text-align:center">

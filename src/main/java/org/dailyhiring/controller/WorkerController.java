@@ -1,6 +1,7 @@
 package org.dailyhiring.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
@@ -34,7 +35,8 @@ public class WorkerController {
 	}
 	
 	@PostMapping("/loginWorker")
-	public String checkWorkerLoginInfo(@Valid Worker worker, BindingResult bindingResult) {
+	public String checkWorkerLoginInfo(@Valid Worker worker, 
+			BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-login-form";
 		}
@@ -44,9 +46,26 @@ public class WorkerController {
 			return "worker/worker-login-failure";
 		}
 		if (tempWorker.getPassword().equals(worker.getPassword())) {
-			return "worker/worker-home-page";		
+			request.getSession().setAttribute("workerEmail", tempWorker.getEmail());
+			/*
+				put worker in session as once redirected, it can't be 
+				accessed using model. id of worker is required in home page.
+			*/
+			request.getSession().setAttribute("worker", worker);
+			/*
+			 PRG(post/redirect/get) pattern -> 
+				redirect to avoid multiple form submissions on page refresh
+			*/	
+			return "redirect:/worker-home-page";		
 		}
 		return "worker/worker-login-failure";
+	}
+
+
+	@GetMapping("/worker-home-page")
+	public String showHomePage() {
+		return "worker/worker-home-page";
+		
 	}
 
 	
@@ -86,6 +105,12 @@ public class WorkerController {
 		Worker retWorker = workerService.save(worker);
 		log.info("----------------User saved : " + retWorker + "---------------");
 		return retWorker;
+	}
+	
+	@GetMapping("/logoutWorker")
+	public String logoutWorker(HttpServletRequest request) {
+		request.getSession().invalidate(); 
+		return "redirect:/loginWorker";
 	}
 	
 }

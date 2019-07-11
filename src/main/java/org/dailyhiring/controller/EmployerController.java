@@ -1,6 +1,7 @@
 package org.dailyhiring.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
@@ -36,7 +37,8 @@ public class EmployerController {
 	}
 	
 	@PostMapping("/loginEmployer")
-	public String checkEmployerLoginInfo(@Valid Employer employer, BindingResult bindingResult) {
+	public String checkEmployerLoginInfo(@Valid Employer employer, 
+				BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return "employer/employer-login-form";
 		}
@@ -46,11 +48,26 @@ public class EmployerController {
 			return "employer/employer-login-failure";
 		}
 		if (tempEmployer.getPassword().equals(employer.getPassword())) {
-			return "employer/employer-home-page";		
+			// start session and add email to it
+			request.getSession().setAttribute("employerEmail", tempEmployer.getEmail());
+			System.out.println("-------------" + getClass() + ";  "
+					+ "employer.getEmail() = " +  tempEmployer.getEmail());
+			
+			/*
+			 PRG(post/redirect/get) pattern -> 
+				redirect to avoid multiple form submissions on page refresh
+			*/	
+			return "redirect:/employer-home-page"; 		
 		}
 		return "employer/employer-login-failure";
 	}
 
+	@GetMapping("/employer-home-page")
+	public String showHomePage() {
+		return "employer/employer-home-page";
+		
+	}
+	
 	@GetMapping("/registerEmployer")
 	public String showEmployerRegistrationForm(Employer employer) {
 		return "employer/employer-registration-form";
@@ -73,4 +90,12 @@ public class EmployerController {
 		log.info("----------------User saved : " + retEmployer + "---------------");
 		return retEmployer;
 	}
+	
+	
+	@GetMapping("/logoutEmployer")
+	public String logoutEmployer(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/loginEmployer";
+	}
+	
 }
