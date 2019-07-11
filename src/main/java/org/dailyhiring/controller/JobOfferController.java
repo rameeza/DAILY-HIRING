@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.service.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,12 +80,14 @@ public class JobOfferController {
 	}
 
 	@PostMapping("/postJobOffer")
-	private String postJobOffer(@Valid JobOffer jobOffer, BindingResult bindingResult) {
+	private String postJobOffer(@Valid JobOffer jobOffer, BindingResult bindingResult, 
+					HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return "joboffer/job-offer-post-form";
 		}
 
-		JobOffer tempJobOffer = jobOfferService.save(jobOffer);
+		JobOffer tempJobOffer = jobOfferService.save(jobOffer, Integer.parseInt(
+				request.getSession().getAttribute("employerId").toString()));
 		if (tempJobOffer == null) {
 			return "joboffer/job-offer-post-failure";
 		}

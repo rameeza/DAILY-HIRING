@@ -50,6 +50,9 @@ public class EmployerController {
 		if (tempEmployer.getPassword().equals(employer.getPassword())) {
 			// start session and add email to it
 			request.getSession().setAttribute("employerEmail", tempEmployer.getEmail());
+			
+			request.getSession().setAttribute("employerId", tempEmployer.getId());
+			
 			System.out.println("-------------" + getClass() + ";  "
 					+ "employer.getEmail() = " +  tempEmployer.getEmail());
 			

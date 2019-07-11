@@ -54,6 +54,7 @@
 		<thead class="thead-dark">
 			<tr>
 				<th>Job ID</th>
+				<th>Employer ID</th>
 				<th>Field of work</th>
 				<th>Title</th>
 				<th>Responsibility</th>
@@ -67,6 +68,7 @@
 			<tr th:each="tempJob : ${jobs}">
 			
 				<td th:text="${tempJob.jobId}" />	
+				<td th:text="${tempJob.employer.id}" />	
 				<td th:text="${tempJob.fieldOfWork.name}" />	
 				<td th:text="${tempJob.jobTitle}" />	
 				<td th:text="${tempJob.responsibility}" />	

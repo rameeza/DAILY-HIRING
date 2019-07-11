@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -26,10 +27,28 @@ public class JobOffer {
 	private Integer recommendation; // 
 	private Double competencyLevel;
 	
+	/*
+	@OneToOne (mappedBy = "jobOffer") private Employer employer; // todo - make it bidirectonal mapping
+ 
+	public Employer getEmployer() {
+		return employer;
+	}
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
+	*/
+	
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, 
+							CascadeType.PERSIST, CascadeType.REFRESH})
+	private Employer employer;
+	public Employer getEmployer() {
+		return employer;
+	}
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
 
-	@OneToOne (mappedBy = "jobOffer")
-	private Employer employer; // todo - make it bidirectonal mapping 
-
+	
 	@OneToOne(cascade = {CascadeType.ALL})
 	private FieldOfWork fieldOfWork; // offers this field of work
 	
@@ -121,12 +140,6 @@ public class JobOffer {
 	}
 	public void setEducation(Education education) {
 		this.education = education;
-	}
-	public Employer getEmployer() {
-		return employer;
-	}
-	public void setEmployer(Employer employer) {
-		this.employer = employer;
 	}
 
 	public Integer getJobId() {

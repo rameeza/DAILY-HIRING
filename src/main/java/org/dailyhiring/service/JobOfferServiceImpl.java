@@ -4,8 +4,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.dailyhiring.dao.EmployerRepository;
 import org.dailyhiring.dao.JobOfferRepository;
 import org.dailyhiring.dao.WorkerRepository;
+import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.entity.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 	private JobOfferRepository jobOfferRepository;
 	@Autowired
 	private WorkerRepository workerRepository;
+	@Autowired
+	private EmployerRepository employerRepository;
 
 	@Autowired
 	public JobOfferServiceImpl(JobOfferRepository jobOfferRepository) {
@@ -63,6 +69,19 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 		}
 		return jobOffers;
+	}
+
+	@Override
+	public JobOffer save(@Valid JobOffer jobOffer, int employerId) {
+		Optional<Employer> optionalEmployer =  employerRepository.findById(employerId);
+		Employer employer = null;
+		if (optionalEmployer.isPresent()){
+			employer = optionalEmployer.get();
+			employer.add(jobOffer);
+			employerRepository.save(employer);
+		}
+		
+		return jobOffer;
 	}
 	
 }
