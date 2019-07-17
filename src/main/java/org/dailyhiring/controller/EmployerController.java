@@ -40,6 +40,9 @@ public class EmployerController {
 	public String checkEmployerLoginInfo(@Valid Employer employer, 
 				BindingResult bindingResult, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
+			System.out.println("--------------->"+getClass() + "; inside if (bindingResult.hasErrors())");
+			System.out.println("--------------->"+bindingResult.getErrorCount());
+			System.out.println("--------------->"+bindingResult.toString());
 			return "employer/employer-login-form";
 		}
 		Employer tempEmployer= employerService.

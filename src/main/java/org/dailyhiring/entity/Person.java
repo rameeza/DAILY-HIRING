@@ -4,14 +4,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Person {
 	@Id @GeneratedValue
 	private Integer id;
 	private String organization;
+
+	// 	adding validation here in base class Person, works for child 
+	//	classes Employer and Worker as well. 
+	// login fails after adding validation. test Login after adding validation.
+	/*
+	 * @NotNull
+	 * 
+	 * @Size( message = "Name must be at least 2 characters long" , min = 2, max =
+	 * 60)
+	 */	
 	private String firstName;
 	private String lastName;
+	// login fails after adding validation. test Login after adding validation.
+	/*
+	 * @NotNull
+	 */
 	private Integer age;
 	private String gender;
 	private String email;
