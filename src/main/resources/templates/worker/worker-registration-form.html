@@ -16,14 +16,26 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="getLocation()">
 	<div class="container-fluid">
+	
+		<!-- Shows error message if geolocation is not supported by the browser. -->	
+		<p id="demo"></p>
+	
 		<br>
 		<h2 style="text-align:center">Worker Registration</h2>
 		<br>
 
 		<form action="#" th:action="@{/registerWorker}" th:object="${worker}"
 			method="post">
+
+<!-- Add latitude and longitude -->
+			<input type="hidden"  id="latitude"
+				 name="latitude" th:field="*{latitude}" value="">
+
+			<input type="hidden"  id="longitude"
+				 name="longitude" th:field="*{longitude}" value=""> 
+
 
 <!-- skill.fieldOfWork.name -->
 				<div class="form-group row">
@@ -307,5 +319,43 @@
 				</div>
 		</form>
 	</div>
+ 	<script>
+	var x = document.getElementById("demo");
+	
+	function showError(error) {
+	  switch(error.code) {
+	    case error.PERMISSION_DENIED:
+	      x.innerHTML = "User denied the request for Geolocation."
+	      break;
+	    case error.POSITION_UNAVAILABLE:
+	      x.innerHTML = "Location information is unavailable."
+	      break;
+	    case error.TIMEOUT:
+	      x.innerHTML = "The request to get user location timed out."
+	      break;
+	    case error.UNKNOWN_ERROR:
+	      x.innerHTML = "An unknown error occurred."
+	      break;
+	  }
+	}
+	
+	function getLocation() {
+	  if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(getPositionInFormFields, showError);
+	  } else { 
+	    x.innerHTML = "Geolocation is not supported by this browser.";
+	  }
+	}
+	
+	 
+	function getPositionInFormFields(position) {
+		document.getElementById("latitude").value = position.coords.latitude;
+		document.getElementById("longitude").value = position.coords.longitude;
+	/* 	  x.innerHTML = "Latitude: " + position.coords.latitude + 
+	  "<br>Longitude: " + position.coords.longitude; */
+	}
+	
+	</script>
+
 </body>
 </html>

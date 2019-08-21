@@ -11,6 +11,8 @@ public class Person {
 	@Id @GeneratedValue
 	private Integer id;
 	private String organization;
+	private Double latitude;
+	private Double longitude;
 
 	// 	adding validation here in base class Person, works for child 
 	//	classes Employer and Worker as well. 
@@ -121,6 +123,22 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 	
 }
