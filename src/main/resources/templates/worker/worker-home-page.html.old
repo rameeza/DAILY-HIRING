@@ -65,12 +65,67 @@
 			show All Jobs
 		</a>
 		<hr>
+			<!-- Add button/link to show all Jobs within 50 km-->
+		<a href="showAllJobs" class="btn btn-info btn-sm">
+			show All Jobs (within 50 km)
+		</a>
+		<hr>
+			<!-- Add button/link to show all Jobs  within 100 km-->
+		<a href="showAllJobs" class="btn btn-info btn-sm">
+			show All Jobs (within 100 km)
+		</a>
+		<hr>
 
-			<!-- Add button/link to show all matching Jobs (certificate, fieldOfWork)
-			and are within 50km distance.-->
-		<a th:href="@{/showAllMatchingJobs(workerId=${session.worker.id})}"
+			<!-- Add button/link to show Jobs matching Field of work-->
+		<a th:href="@{/showJobsMatchingFieldOfWork(workerId=${session.worker.id})}"
 		   class="btn btn-info btn-sm">
-			Show All Matching Jobs
+			Show jobs for my field of work
+		</a>
+		<hr>
+
+			<!-- Add button/link to show Jobs matching Field of work (within 50 km)-->
+		<a th:href="@{/showJobsMatchingFieldOfWork(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs for my field of work (within 50 km)
+		</a>
+		<hr>
+			<!-- Add button/link to show Jobs matching Field of work (within 100 km)-->
+		<a th:href="@{/showJobsMatchingFieldOfWork(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs for my field of work (within 100 km)
+		</a>
+		<hr>
+
+		 
+			<!-- Add button/link to show Jobs matching Certificate-->
+		<a th:href="@{/showJobsMatchingCertificate(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs that demand my certificate
+		</a>
+		<hr>
+			<!-- Add button/link to show Jobs matching Certificate (within 50 km)-->
+		<a th:href="@{/showJobsMatchingCertificate(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs that demand my certificate (within 50 km)
+		</a>
+		<hr>
+			<!-- Add button/link to show Jobs matching Certificate (within 100 km)-->
+		<a th:href="@{/showJobsMatchingCertificate(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs that demand my certificate (within 100 km)
+		</a>
+		<hr>
+			<!-- Add button/link to show Jobs matching Certificate (within 50 km)-->
+		<a th:href="@{/showJobsMatchingCertificate(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs of my field of work, that demand my certificate (within 50 km)
+		</a>
+		<hr>
+
+			<!-- Add button/link to show Jobs matching Certificate (within 50 km)-->
+		<a th:href="@{/showJobsMatchingCertificate(workerId=${session.worker.id})}"
+		   class="btn btn-info btn-sm">
+			Show jobs of my field of work, that demand my certificate (within 100 km)
 		</a>
 		<hr>
 

@@ -15,6 +15,8 @@ public interface JobOfferService {
 	public List<JobOffer> findAllJobsMatchingFieldOfWork(int theWorkerId);
 
 	public List<JobOffer> findAllJobsMatchingCertificate(int theWorkerId);
+	
+	public List<JobOffer> findAllMatchingJobs(int theWorkerId);
 
 	public JobOffer save(@Valid JobOffer jobOffer, int employerId);
 

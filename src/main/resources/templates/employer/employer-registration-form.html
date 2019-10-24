@@ -191,7 +191,7 @@
 	  }
 	}
 	
-	function getLocation() {
+/* 	function getLocation() {
 	  if (navigator.geolocation) {
 	    navigator.geolocation.getCurrentPosition(getPositionInFormFields, showError);
 	  } else { 
@@ -206,7 +206,27 @@
 	 	  x.innerHTML = "Latitude: " + position.coords.latitude + 
 	  "<br>Longitude: " + position.coords.longitude; 
 	}
+ */
+ 
+	function getLocation() {
+	  if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(getPositionInFormFields, showError);
+	  } else { 
+	    x.innerHTML = "Geolocation is not supported by this browser.";
+	  }
+	}
 	
+	 
+	function getPositionInFormFields(position) {
+		document.getElementById("latitude").value = position.coords.latitude;
+		document.getElementById("longitude").value = position.coords.longitude;
+	/* 	  x.innerHTML = "Latitude: " + position.coords.latitude + 
+	  "<br>Longitude: " + position.coords.longitude; */
+	}
+
+ 
+ 
+ 
 	</script>
 </body>
 </html>

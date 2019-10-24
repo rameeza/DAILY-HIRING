@@ -44,11 +44,23 @@ public class JobOfferController {
 		return "joboffer/job-offer-post-form";
 	}
 
+	@GetMapping("/showAllMatchingJobs")
+	public String showAllMatchingJobs(@RequestParam("workerId") int theWorkerId, 
+			Model theModel) {
+			// get jobs from db
+		List<JobOffer> theJobOffers = jobOfferService.findAllMatchingJobs(theWorkerId);   
+
+			// add jobs to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+		return "joboffer/show-all-jobs";
+	}
+	
+	
 	@GetMapping("/showAllJobs")
 	public String showAllJobs(Model theModel) {
 		// get jobs from db
 		List<JobOffer> theJobOffers = jobOfferService.findAll();
-
+		System.out.println("----------->>>>>>"+theModel);
 		// add to the spring model
 		theModel.addAttribute("jobs", theJobOffers);
 
@@ -93,4 +105,8 @@ public class JobOfferController {
 		}
 		return "joboffer/job-offer-post-successful";
 	}
+	
+	
+	
+	
 }

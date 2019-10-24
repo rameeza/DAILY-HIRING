@@ -81,6 +81,8 @@ public class EmployerController {
 
 	@PostMapping("/registerEmployer")
 	public String checkEmployerRegistrationInfo(@Valid Employer employer, BindingResult bindingResult) {
+		System.out.println("\t\t>>>>>>>>>>>>"+this.getClass() );
+		System.out.println("\t\t>>>>>>>>>>>>Latitude of Employer got from form : "+employer.getLatitude());
 		if (bindingResult.hasErrors()) {
 			return "employer/employer-registration-form";
 		}
