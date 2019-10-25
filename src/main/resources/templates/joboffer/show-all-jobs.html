@@ -64,6 +64,7 @@
 				<th>Work Hours</th>
 				<th>Experience required</th>
 				<th>Certificate required</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -78,7 +79,7 @@
 				<td th:text="${tempJob.workHours}" />	
 				<td th:text="${tempJob.experienceYears}" />	
 				<td th:text="${tempJob.certificate.name}" />	
-				
+				<td ><a th:href = "@{/applyInThisJob(jobId=${tempJob.jobId})}">Apply</a></td>
 			</tr>
 		</tbody>		
 	</table>

@@ -1,7 +1,12 @@
 package org.dailyhiring.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -22,6 +27,11 @@ public class Worker extends Person {
 
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Education education; // has this education
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.DETACH, CascadeType.MERGE,
+					CascadeType.PERSIST, CascadeType.REFRESH})
+	private List<JobOffer> jobsAppliedIn;
 	
 	public Worker() {
 		super();
@@ -113,4 +123,22 @@ public class Worker extends Person {
 		this.competencyLevel = competencyLevel;
 	}
 
+
+	public List<JobOffer> getJobsAppliedIn() {
+		return jobsAppliedIn;
+	}
+
+
+	public void setJobsAppliedIn(List<JobOffer> jobsAppliedIn) {
+		this.jobsAppliedIn = jobsAppliedIn;
+	}
+	
+	// utility method
+	public void applyInThisJob(JobOffer jobOffer) {
+		if (jobsAppliedIn == null) {
+			jobsAppliedIn = new ArrayList<JobOffer>();
+		}
+		jobsAppliedIn.add(jobOffer);
+	}
+	
 }

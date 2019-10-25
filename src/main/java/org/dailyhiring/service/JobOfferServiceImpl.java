@@ -89,8 +89,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		Optional<Worker> optionalWorker = workerRepository.findById(theWorkerId);
 		Worker worker = optionalWorker.get();
 		System.out.println("\t\t>>>>>>>>>" + this.getClass());
-		System.out.println("\t\t>>>>>>>>> Latitude of worker retrieved from db is : " 
-				+ worker.getLatitude());
+		System.out.println("\t\t>>>>>>>>> Latitude of worker retrieved from db is : " + worker.getLatitude());
 		// Matching field of work
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
@@ -125,6 +124,24 @@ public class JobOfferServiceImpl implements JobOfferService {
 				iterator.remove();
 			}
 		}
+
+		// Remove Jobs in which worker has already applied
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+
+			List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn();
+			for (Iterator<JobOffer> jobsAppliedInIterator = jobsAppliedIn.iterator(); jobsAppliedInIterator
+					.hasNext();) {
+				JobOffer nextJobAppliedIn = jobsAppliedInIterator.next();
+
+				if (nextJobOffer.getJobId() == nextJobAppliedIn.getJobId()) {
+					iterator.remove();
+					break;
+				}
+			}
+
+		}
+
 		return jobOffers;
 	}
 
@@ -135,26 +152,28 @@ public class JobOfferServiceImpl implements JobOfferService {
 	 * convenient because each minute (1/60th of a degree) is approximately one
 	 * [nautical] mile.
 	 * 
-	 */	
-	
-	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::                                                                         :*/
-	/*::  This routine calculates the distance between two points (given the     :*/
-	/*::  latitude/longitude of those points). It is being used to calculate     :*/
-	/*::  the distance between two locations using GeoDataSource (TM) products  :*/
-	/*::                                                                         :*/
-	/*::  Definitions:                                                           :*/
-	/*::    South latitudes are negative, east longitudes are positive           :*/
-	/*::                                                                         :*/
-	/*::  Passed to function:                                                    :*/
-	/*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
-	/*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
-	/*::    unit = the unit you desire for results                               :*/
-	/*::           where: 'M' is statute miles (default)                         :*/
-	/*::                  'K' is kilometers                                      :*/
-	/*::                  'N' is nautical miles                                  :*/
-	/*::                                                                         :*/
-	
+	 */
+
+	/*
+	 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	 */
+	/* :: : */
+	/* :: This routine calculates the distance between two points (given the : */
+	/* :: latitude/longitude of those points). It is being used to calculate : */
+	/* :: the distance between two locations using GeoDataSource (TM) products : */
+	/* :: : */
+	/* :: Definitions: : */
+	/* :: South latitudes are negative, east longitudes are positive : */
+	/* :: : */
+	/* :: Passed to function: : */
+	/* :: lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees) : */
+	/* :: lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees) : */
+	/* :: unit = the unit you desire for results : */
+	/* :: where: 'M' is statute miles (default) : */
+	/* :: 'K' is kilometers : */
+	/* :: 'N' is nautical miles : */
+	/* :: : */
+
 	private Double calculateDistanceUsingLocation(double lat1, double lon1, double lat2, double lon2, String unit) {
 		if ((lat1 == lat2) && (lon1 == lon2)) {
 			return 0.0;

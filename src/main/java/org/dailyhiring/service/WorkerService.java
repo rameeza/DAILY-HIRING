@@ -7,4 +7,6 @@ public interface WorkerService {
 	public Worker save(Worker worker);
 
 	public Worker findById(int id);
+
+	public void applyInJob(Integer workerId, Integer theJobId);
 }
