@@ -36,6 +36,22 @@ public class EmployerController {
 		return "employer/employer-home-page";
 	}
 	
+	@GetMapping("/employerProfilePage")
+	public String showEmployerProfilePage() {
+		return "employer/employer-profile-page";
+	}
+
+	@GetMapping("/employerPostedJobsPage")
+	public String showEmployerPostedJobsPage() {
+		return "employer/employer-posted-jobs-page";
+	}
+
+	@GetMapping("/employerAboutPage")
+	public String showEmployerAboutPage() {
+		return "employer/employer-about-page";
+	}
+	
+	
 	@PostMapping("/loginEmployer")
 	public String checkEmployerLoginInfo(@Valid Employer employer, 
 				BindingResult bindingResult, HttpServletRequest request) {

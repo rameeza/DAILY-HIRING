@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.dailyhiring.Application;
 import org.dailyhiring.entity.Education;
+import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.Worker;
 import org.dailyhiring.service.WorkerService;
 import org.slf4j.Logger;
@@ -56,18 +57,32 @@ public class WorkerController {
 			 PRG(post/redirect/get) pattern -> 
 				redirect to avoid multiple form submissions on page refresh
 			*/	
-			return "redirect:/worker-home-page";		
+			return "redirect:/workerHomePage";		
 		}
 		return "worker/worker-login-failure";
 	}
 
 
-	@GetMapping("/worker-home-page")
+	@GetMapping("/workerHomePage")
 	public String showHomePage() {
 		return "worker/worker-home-page";
 		
 	}
 
+	@GetMapping("/workerProfilePage")
+	public String showWorkerProfilePage() {
+		return "worker/worker-profile-page";
+	}
+
+	@GetMapping("/workerAssignedJobsPage")
+	public String showWorkerAssignedJobsPage() {
+		return "worker/worker-assigned-jobs-page";
+	}
+	
+	@GetMapping("/workerAboutPage")
+	public String showWorkerAboutPage() {
+		return "worker/worker-about-page";
+	}
 	
 	/*
 	 * @GetMapping("/registerWorker") public String

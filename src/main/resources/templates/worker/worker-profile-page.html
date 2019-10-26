@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>show jobs</title>
+<title>Worker Home Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +10,7 @@
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
 <link rel="stylesheet" 
 	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
-<link rel="stylesheet" href="style.css">
-  	
+<link rel="stylesheet" href="style.css">  	
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script 
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -23,8 +22,8 @@
 </head>
 
 <body onload="getLocation()">
-	<p id="demo"></p>
 
+<p id="demo"></p>
 
 	<!-- redirect if session expired -->
 	<div th:if = "${session.workerEmail == null}"> 
@@ -32,6 +31,7 @@
     			window.location.replace("http://localhost:8080/loginWorker");
 			</script>
 	</div>
+
 
 		<!-- Create Menubar-->
 		
@@ -56,11 +56,15 @@
 		    </ul>
 
 		</nav>		
-		
 
 
-
-	<div class="container-fluid">
+	<!-- 
+		following part won't be shown if session has expired. thus, 
+		no exception while rendering session.worker.id  
+	-->
+	
+	<div class="container-fluid" th:if = "${session.workerEmail != null}" >
+	
 	<!-- show email (of worker logged in) and logout button -->
 
 		<div class="row">
@@ -74,46 +78,17 @@
 					</div>
 				</div>
 		</div>
-	
-			<br>
-			<h2 style="text-align:center">Available jobs</h2><br>
-	<hr>
-	<table class="table table-bordered table-striped">
-		<thead class="thead-dark">
-			<tr>
-				<th>Job ID</th>
-				<th>Employer ID</th>
-				<th>Field of work</th>
-				<th>Title</th>
-				<th>Responsibility</th>
-				<th>Openings</th>
-				<th>Work Hours</th>
-				<th>Experience required</th>
-				<th>Certificate required</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="tempJob : ${jobs}">
-			
-				<td th:text="${tempJob.jobId}" />	
-				<td th:text="${tempJob.employer.id}" />	
-				<td th:text="${tempJob.fieldOfWork.name}" />	
-				<td th:text="${tempJob.jobTitle}" />	
-				<td th:text="${tempJob.responsibility}" />	
-				<td th:text="${tempJob.jobOpenings}" />	
-				<td th:text="${tempJob.workHours}" />	
-				<td th:text="${tempJob.experienceYears}" />	
-				<td th:text="${tempJob.certificate.name}" />	
-				<td ><a th:href = "@{/applyInThisJob(jobId=${tempJob.jobId})}">Apply</a></td>
-			</tr>
-		</tbody>		
-	</table>
-	
 
+		<div style="text-align:center">
 
-	</div>
-	<script>
+		<br>
+		<h2 >Profile</h2><br>
+		<br>
+
+		
+		</div>		 	
+ </div>
+ 	<script>
 	var x = document.getElementById("demo");
 	
 	
@@ -160,7 +135,7 @@
 	}
 	
 	</script>
-	
-	
+ 
+ 
 </body>
 </html>
