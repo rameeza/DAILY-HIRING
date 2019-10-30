@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Employer Home Page</title>
@@ -8,126 +8,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
-<link rel="stylesheet" 
-	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
+<link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css">
-  	
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script 
+<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script 
+<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
 
- 
+
 <body onload="getLocation()">
 	<p id="demo"></p>
 
-		<!-- Create Menubar-->
-		
-		<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-			<a class="navbar-brand" href="#">Daily-Hiring</a>
-
-		    <ul class="navbar-nav">
-		      <li class="nav-item active">
-		      		<a href="employerHomePage" class="nav-link">Home</a>
-		      </li>
-		      
-		      <li class="nav-item">
-		      		<a class="nav-link" href="employerProfilePage">Profile</a>
-		      </li>
-		      
-		      <li class="nav-item">
-		      		<a class="nav-link" href="employerPostedJobsPage">Posted-Jobs</a>
-		      </li>
-		      <li class="nav-item">
-		      		<a class="nav-link" href="employerAboutPage">About</a>
-		      </li>
-		    </ul>
-
-		</nav>		
-		
-
-
-<!-- 	
+	<!-- redirect if session expired -->
 	<div th:if = "${session.employerEmail == null}"> 
 			<script >
     			window.location.replace("http://localhost:8080/loginEmployer");
 			</script>
 	</div>
+
+	<!-- Create Menubar-->
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+		<a class="navbar-brand" href="#">Daily-Hiring</a>
+
+		<ul class="navbar-nav">
+			<li class="nav-item"><a href="employerHomePage"
+				class="nav-link">Home</a></li>
+
+			<li class="nav-item"><a class="nav-link"
+				href="employerProfilePage">Profile</a></li>
+
+			<li class="nav-item"><a class="nav-link"
+				href="employerPostedJobsPage">Posted-Jobs</a></li>
+			<li class="nav-item active"><a class="nav-link"
+				href="employerAboutPage">About</a></li>
+		</ul>
+
+	</nav>
+
+
 	
- -->	
 	<div class="container-fluid">
-	
-			<div class="row">
-				<div class="col-sm-10" >			
-					<span  th:text="${session.employerEmail}" class="text-primary"> span one </span>	
-				</div>
-				<div class="col-sm-2">
-					<div class="row">
-						<div class="col-sm-6"></div>
-						<a  href="logoutEmployer" class="btn btn-danger">Logout</a>
-					</div>
-				</div>
-				
+
+		<div class="row">
+			<div class="col-sm-10">
+				<span th:text="${session.employerEmail}" class="text-primary">
+					span one </span>
 			</div>
-			
+			<div class="col-sm-2">
+				<div class="row">
+					<div class="col-sm-6"></div>
+					<a href="logoutEmployer" class="btn btn-danger">Logout</a>
+				</div>
+			</div>
+
+		</div>
+		<div style="text-align: center">
 			<br>
-			<h2 style="text-align:center">About Page</h2><br>
-						
-			
+			<h2 style="text-align: center">About</h2>
+			<hr>
+			Daily Hiring is a great platform for you to get your daily Jobs done
+			by a single Click.<br> Life Made Simple...
+		</div>
 	</div>
 
- 	<script>
-	var x = document.getElementById("demo");
-	
-	
-	/* function showPosition(position) {
-		  var latlon = position.coords.latitude + "," + position.coords.longitude;
-	
-		  var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=
-		  "+latlon+"&zoom=14&size=400x300&sensor=false&key=YOUR_:KEY";
-	
-		  document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-	}
-	 */
-	
-	function showError(error) {
-	  switch(error.code) {
-	    case error.PERMISSION_DENIED:
-	      x.innerHTML = "User denied the request for Geolocation."
-	      break;
-	    case error.POSITION_UNAVAILABLE:
-	      x.innerHTML = "Location information is unavailable."
-	      break;
-	    case error.TIMEOUT:
-	      x.innerHTML = "The request to get user location timed out."
-	      break;
-	    case error.UNKNOWN_ERROR:
-	      x.innerHTML = "An unknown error occurred."
-	      break;
-	  }
-	}
-	
-	
-	function getLocation() {
-	  if (navigator.geolocation) {
-	    navigator.geolocation.getCurrentPosition(showPosition, showError);
-	  } else { 
-	    x.innerHTML = "Geolocation is not supported by this browser.";
-	  }
-	}
-	
-	 
-	function showPosition(position) {
-	  x.innerHTML = "Latitude: " + position.coords.latitude + 
-	  "<br>Longitude: " + position.coords.longitude;
-	}
-	
+	<script>
+		var x = document.getElementById("demo");
+
+		/* function showPosition(position) {
+			  var latlon = position.coords.latitude + "," + position.coords.longitude;
+		
+			  var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=
+			  "+latlon+"&zoom=14&size=400x300&sensor=false&key=YOUR_:KEY";
+		
+			  document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+		}
+		 */
+
+		function showError(error) {
+			switch (error.code) {
+			case error.PERMISSION_DENIED:
+				x.innerHTML = "User denied the request for Geolocation."
+				break;
+			case error.POSITION_UNAVAILABLE:
+				x.innerHTML = "Location information is unavailable."
+				break;
+			case error.TIMEOUT:
+				x.innerHTML = "The request to get user location timed out."
+				break;
+			case error.UNKNOWN_ERROR:
+				x.innerHTML = "An unknown error occurred."
+				break;
+			}
+		}
+
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition,
+						showError);
+			} else {
+				x.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+
+		function showPosition(position) {
+			x.innerHTML = "Latitude: " + position.coords.latitude
+					+ "<br>Longitude: " + position.coords.longitude;
+		}
 	</script>
-	
+
 </body>
 </html>

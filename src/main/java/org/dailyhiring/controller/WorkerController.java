@@ -1,13 +1,17 @@
 package org.dailyhiring.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
 import org.dailyhiring.entity.Education;
 import org.dailyhiring.entity.Employer;
+import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.entity.Worker;
+import org.dailyhiring.service.JobOfferService;
 import org.dailyhiring.service.WorkerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WorkerController {
+	@Autowired
+	private JobOfferService jobOfferService;
+	
 	@Autowired
 	private WorkerService workerService;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -52,7 +59,8 @@ public class WorkerController {
 				put worker in session as once redirected, it can't be 
 				accessed using model. id of worker is required in home page.
 			*/
-			request.getSession().setAttribute("worker", worker);
+			request.getSession().setAttribute("worker", tempWorker);
+			request.getSession().setMaxInactiveInterval(300); // In seconds
 			/*
 			 PRG(post/redirect/get) pattern -> 
 				redirect to avoid multiple form submissions on page refresh
@@ -75,7 +83,14 @@ public class WorkerController {
 	}
 
 	@GetMapping("/workerAssignedJobsPage")
-	public String showWorkerAssignedJobsPage() {
+	public String showWorkerAssignedJobsPage(HttpServletRequest request, Model theModel) {
+		
+		List<JobOffer> theJobOffers = jobOfferService.findAllJobsAppliedBy(
+				((Worker)request.getSession().getAttribute("worker")).getId());
+
+		// add jobs to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
+		
 		return "worker/worker-assigned-jobs-page";
 	}
 	
@@ -97,6 +112,7 @@ public class WorkerController {
 		Worker worker = new Worker();
 		worker.setCostPerUnit(200.0);
 		worker.setEducation(new Education(0));
+		worker.setexperienceYears(1.0);
 		
 		// add worker to model
 		theModel.addAttribute("worker", worker);

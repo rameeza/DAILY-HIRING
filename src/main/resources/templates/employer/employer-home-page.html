@@ -26,6 +26,14 @@
 <body onload="getLocation()">
 	<p id="demo"></p>
 
+
+	<!-- redirect if session expired -->
+	<div th:if = "${session.employerEmail == null}"> 
+			<script >
+    			window.location.replace("http://localhost:8080/loginEmployer");
+			</script>
+	</div>
+
 		<!-- Create Menubar-->
 		
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -51,15 +59,7 @@
 		</nav>		
 		
 
-
-<!-- 	
-	<div th:if = "${session.employerEmail == null}"> 
-			<script >
-    			window.location.replace("http://localhost:8080/loginEmployer");
-			</script>
-	</div>
 	
- -->	
 	<div class="container-fluid">
 	
 			<div class="row">

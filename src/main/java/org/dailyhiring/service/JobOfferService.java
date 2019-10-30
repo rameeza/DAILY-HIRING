@@ -20,4 +20,8 @@ public interface JobOfferService {
 
 	public JobOffer save(@Valid JobOffer jobOffer, int employerId);
 
+	public List<JobOffer> findAllJobsPostedBy(Integer employerId);
+
+	public List<JobOffer> findAllJobsAppliedBy(Integer workerId);
+
 }

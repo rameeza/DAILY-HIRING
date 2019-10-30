@@ -1,22 +1,30 @@
 package org.dailyhiring.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
 import org.dailyhiring.entity.Employer;
+import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.service.EmployerService;
+import org.dailyhiring.service.JobOfferService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EmployerController {
+	@Autowired
+	private JobOfferService jobOfferService;
+	
 	@Autowired
 	private EmployerService employerService;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -42,7 +50,13 @@ public class EmployerController {
 	}
 
 	@GetMapping("/employerPostedJobsPage")
-	public String showEmployerPostedJobsPage() {
+	public String showEmployerPostedJobsPage(HttpServletRequest request, Model theModel) {
+		
+		List<JobOffer> theJobOffers = jobOfferService.findAllJobsPostedBy(
+				((Employer)request.getSession().getAttribute("employer")).getId());
+
+		// add jobs to the spring model
+		theModel.addAttribute("jobs", theJobOffers);
 		return "employer/employer-posted-jobs-page";
 	}
 
@@ -71,6 +85,8 @@ public class EmployerController {
 			request.getSession().setAttribute("employerEmail", tempEmployer.getEmail());
 			
 			request.getSession().setAttribute("employerId", tempEmployer.getId());
+			request.getSession().setAttribute("employer", tempEmployer);
+			request.getSession().setMaxInactiveInterval(300); // In seconds
 			
 			System.out.println("-------------" + getClass() + ";  "
 					+ "employer.getEmail() = " +  tempEmployer.getEmail());

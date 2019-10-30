@@ -39,7 +39,7 @@
 			<a class="navbar-brand" href="#">Daily-Hiring</a>
 
 		    <ul class="navbar-nav">
-		      <li class="nav-item active">
+		      <li class="nav-item">
 		      		<a href="workerHomePage" class="nav-link">Home</a>
 		      </li>
 		      
@@ -47,7 +47,7 @@
 		      		<a class="nav-link" href="workerProfilePage">Profile</a>
 		      </li>
 		      
-		      <li class="nav-item">
+		      <li class="nav-item active">
 		      		<a class="nav-link" href="workerAssignedJobsPage">Assigned-Jobs</a>
 		      </li>
 		      <li class="nav-item">
@@ -83,7 +83,38 @@
 
 		<br>
 		<h2 >Jobs Assigned to Me</h2><br>
-		<br>
+	
+		<hr>
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Job ID</th>
+				<th>Employer ID</th>
+				<th>Field of work</th>
+				<th>Title</th>
+				<th>Responsibility</th>
+				<th>Openings</th>
+				<th>Work Hours</th>
+				<th>Experience required</th>
+				<th>Certificate required</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tempJob : ${jobs}">
+			
+				<td th:text="${tempJob.jobId}" />	
+				<td th:text="${tempJob.employer.id}" />	
+				<td th:text="${tempJob.fieldOfWork.name}" />	
+				<td th:text="${tempJob.jobTitle}" />	
+				<td th:text="${tempJob.responsibility}" />	
+				<td th:text="${tempJob.jobOpenings}" />	
+				<td th:text="${tempJob.workHours}" />	
+				<td th:text="${tempJob.experienceYears}" />	
+				<td th:text="${tempJob.certificate.name}" />	
+			</tr>
+		</tbody>		
+	</table>
+			
 
 		
 		</div>		 	

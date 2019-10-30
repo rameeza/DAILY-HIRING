@@ -90,6 +90,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		Worker worker = optionalWorker.get();
 		System.out.println("\t\t>>>>>>>>>" + this.getClass());
 		System.out.println("\t\t>>>>>>>>> Latitude of worker retrieved from db is : " + worker.getLatitude());
+
 		// Matching field of work
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
@@ -98,6 +99,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 
 		}
+
 		// Matching Certificate
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
@@ -106,6 +108,16 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 		}
 
+		// Matching Experience Requirement
+		if (worker.getexperienceYears() != null) {
+			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+				JobOffer nextJobOffer = iterator.next();
+				if (nextJobOffer.getexperienceYears() > worker.getexperienceYears()) {
+					iterator.remove();
+				}
+			}
+		}		
+		
 		// Matching Location to be less than 50 km
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
@@ -124,6 +136,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 				iterator.remove();
 			}
 		}
+		
 
 		// Remove Jobs in which worker has already applied
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
@@ -193,6 +206,38 @@ public class JobOfferServiceImpl implements JobOfferService {
 			return (dist);
 		}
 
+	}
+
+	@Override
+	public List<JobOffer> findAllJobsPostedBy(Integer employerId) {
+		List<JobOffer> jobOffers = jobOfferRepository.findAllByOrderByJobIdAsc();
+
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getEmployer().getId() != employerId) {
+				iterator.remove();
+			}
+		}
+		return jobOffers;
+	}
+
+	@Override
+	public List<JobOffer> findAllJobsAppliedBy(Integer workerId) {
+		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " starts!" );
+		List<JobOffer> jobOffers = jobOfferRepository.findAllByOrderByJobIdAsc();
+		Optional<Worker> optionalWorker = workerRepository.findById(workerId);
+		Worker worker = optionalWorker.get();
+
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (!(nextJobOffer.getApplicantWorkers().contains(worker))) {
+				System.out.println("Job with id = " + nextJobOffer.getJobId() + " is getting removed!");
+				iterator.remove();
+			}
+		}
+		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " ends!" );
+		
+		return jobOffers;
 	}
 
 }
