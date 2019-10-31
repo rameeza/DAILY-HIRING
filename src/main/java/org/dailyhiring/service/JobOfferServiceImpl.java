@@ -40,35 +40,30 @@ public class JobOfferServiceImpl implements JobOfferService {
 		return jobOfferRepository.findAllByOrderByJobIdAsc();
 	}
 
-	@Override
-	public List<JobOffer> findAllJobsMatchingFieldOfWork(int theWorkerId) {
-		List<JobOffer> jobOffers = jobOfferRepository.findAllByOrderByJobIdAsc();
-		Optional<Worker> optionalWorker = workerRepository.findById(theWorkerId);
-		Worker worker = optionalWorker.get();
-
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (!(nextJobOffer.getFieldOfWork().getName().equals(worker.getSkill().getFieldOfWork().getName()))) {
-				iterator.remove();
-			}
-		}
-		return jobOffers;
-	}
-
-	@Override
-	public List<JobOffer> findAllJobsMatchingCertificate(int theWorkerId) {
-		List<JobOffer> jobOffers = jobOfferRepository.findAllByOrderByJobIdAsc();
-		Optional<Worker> optionalWorker = workerRepository.findById(theWorkerId);
-		Worker worker = optionalWorker.get();
-
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().getName()))) {
-				iterator.remove();
-			}
-		}
-		return jobOffers;
-	}
+	/*
+	 * @Override public List<JobOffer> findAllJobsMatchingFieldOfWork(int
+	 * theWorkerId) { List<JobOffer> jobOffers =
+	 * jobOfferRepository.findAllByOrderByJobIdAsc(); Optional<Worker>
+	 * optionalWorker = workerRepository.findById(theWorkerId); Worker worker =
+	 * optionalWorker.get();
+	 * 
+	 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+	 * { JobOffer nextJobOffer = iterator.next(); if
+	 * (!(nextJobOffer.getFieldOfWork().getName().equals(worker.getSkill().
+	 * getFieldOfWork().getName()))) { iterator.remove(); } } return jobOffers; }
+	 */
+	/*
+	 * @Override public List<JobOffer> findAllJobsMatchingCertificate(int
+	 * theWorkerId) { List<JobOffer> jobOffers =
+	 * jobOfferRepository.findAllByOrderByJobIdAsc(); Optional<Worker>
+	 * optionalWorker = workerRepository.findById(theWorkerId); Worker worker =
+	 * optionalWorker.get();
+	 * 
+	 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+	 * { JobOffer nextJobOffer = iterator.next(); if
+	 * (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().
+	 * getName()))) { iterator.remove(); } } return jobOffers; }
+	 */
 
 	@Override
 	public JobOffer save(@Valid JobOffer jobOffer, int employerId) {
@@ -103,6 +98,9 @@ public class JobOfferServiceImpl implements JobOfferService {
 		// Matching Certificate
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getCertificate().getName().equals("None")){
+				continue;
+			}
 			if (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().getName()))) {
 				iterator.remove();
 			}
@@ -117,6 +115,40 @@ public class JobOfferServiceImpl implements JobOfferService {
 				}
 			}
 		}		
+		
+		// Matching Degree Requirement
+			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+				JobOffer nextJobOffer = iterator.next();
+				if (nextJobOffer.getDegree().getName().equals("None")){
+					continue;
+				}				
+				if (!(nextJobOffer.getDegree().getName().equals(worker.getDegree().getName()))){
+					iterator.remove();					
+				}
+			}
+
+		// Matching Diploma Requirement
+			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+				JobOffer nextJobOffer = iterator.next();
+				if (nextJobOffer.getDiploma().getName().equals("None")){
+					continue;
+				}				
+				if (!(nextJobOffer.getDiploma().getName().equals(worker.getDiploma().getName()))){
+					iterator.remove();					
+				}
+			}
+
+		// Matching Training Requirement
+			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+				JobOffer nextJobOffer = iterator.next();
+				if (nextJobOffer.getTraining().getName().equals("None")){
+					continue;
+				}
+				
+				if (!(nextJobOffer.getTraining().getName().equals(worker.getTraining().getName()))){
+					iterator.remove();					
+				}
+			}		
 		
 		// Matching Location to be less than 50 km
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {

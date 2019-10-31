@@ -59,7 +59,40 @@ public class JobOffer {
 	private Certificate certificate; // requires this certificate
 
 	@OneToOne(cascade = { CascadeType.ALL })
+	private Degree degree; // requires this degree
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	private Diploma diploma; // requires this education
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	private Training training; // requires this education
+
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Education education; // requires this education
+	
+	public Degree getDegree() {
+		return degree;
+	}
+
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
+
+	public Diploma getDiploma() {
+		return diploma;
+	}
+
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
+	}
+
+	public Training getTraining() {
+		return training;
+	}
+
+	public void setTraining(Training training) {
+		this.training = training;
+	}
 
 	@ManyToMany (fetch = FetchType.LAZY, 
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,

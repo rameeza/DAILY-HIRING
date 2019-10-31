@@ -183,18 +183,6 @@
 						th:errors="*{jobTitle}">JobTitle Error</div>
 				</div>
 
-<!-- education.yearsOfEducation -->
-				<div class="form-group row">
-					<label for="education_yearsOfEducation" class="col-sm-2 col-form-label">
-						Years of Education:</label>
-					<div class="col-sm-3">
-						<input type="number" min="0" value="0" class="form-control" id="education.yearsOfEducation"
-							placeholder="Enter years of education" name="education.yearsOfEducation"
-							th:field="*{education.yearsOfEducation}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('education.yearsOfEducation')}"
-						th:errors="*{education.yearsOfEducation}">Education.YearsOfEducation Error</div>
-				</div>
 
 <!-- certificate.name -->
 				<div class="form-group row">
@@ -205,6 +193,7 @@
 					<select
 						class="form-control" id="certificate_name" name="certificate_name" 
 							th:field="*{certificate.name}">
+						<option value="None"></option>							
 						<option value="Certificate-1">Certificate-1</option>
 						<option value="Certificate-2">Certificate-2</option>
 						<option value="Certificate-3">Certificate-3</option>
@@ -215,6 +204,72 @@
 					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('certificate.name')}"
 						th:errors="*{certificate.name}">Certificate.Name Error</div>
 				</div>
+
+
+<!-- degree.name -->
+				<div class="form-group row">
+					<label for="degree_name" class="col-sm-2 col-form-label">
+						Degree possessed:
+					</label>
+					<div class="col-sm-3"> 
+					<select
+						class="form-control" id="degree_name" name="degree_name" 
+							th:field="*{degree.name}">
+						<option value="None"></option>							
+						<option value="Degree-1">Degree-1</option>
+						<option value="Degree-2">Degree-2</option>
+						<option value="Degree-3">Degree-3</option>
+						<option value="Degree-4">Degree-4</option>
+						<option value="Degree-5">Degree-5</option>
+					</select>
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('degree.name')}"
+						th:errors="*{degree.name}">Degree.Name Error</div>
+				</div>
+
+
+<!-- diploma.name -->
+				<div class="form-group row">
+					<label for="diploma_name" class="col-sm-2 col-form-label">
+						Diploma possessed:
+					</label>
+					<div class="col-sm-3"> 
+					<select
+						class="form-control" id="diploma_name" name="diploma_name" 
+							th:field="*{diploma.name}">
+						<option value="None"></option>							
+						<option value="Diploma-1">Diploma-1</option>
+						<option value="Diploma-2">Diploma-2</option>
+						<option value="Diploma-3">Diploma-3</option>
+						<option value="Diploma-4">Diploma-4</option>
+						<option value="Diploma-5">Diploma-5</option>
+					</select>
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('diploma.name')}"
+						th:errors="*{diploma.name}">Diploma.Name Error</div>
+				</div>
+
+<!-- training.name -->
+				<div class="form-group row">
+					<label for="training_name" class="col-sm-2 col-form-label">
+						Training possessed:
+					</label>
+					<div class="col-sm-3"> 
+					<select
+						class="form-control" id="training_name" name="training_name" 
+							th:field="*{training.name}">
+						<option value="None"></option>							
+						<option value="Training-1">Training-1</option>
+						<option value="Training-2">Training-2</option>
+						<option value="Training-3">Training-3</option>
+						<option value="Training-4">Training-4</option>
+						<option value="Training-5">Training-5</option>
+					</select>
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('training.name')}"
+						th:errors="*{training.name}">Training.Name Error</div>
+				</div>
+
 
 
 <!-- Double experienceYears -->

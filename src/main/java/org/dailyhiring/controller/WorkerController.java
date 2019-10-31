@@ -111,7 +111,7 @@ public class WorkerController {
 		// set initial values in registration form
 		Worker worker = new Worker();
 		worker.setCostPerUnit(200.0);
-		worker.setEducation(new Education(0));
+		worker.setEducation(new Education());
 		worker.setexperienceYears(1.0);
 		
 		// add worker to model

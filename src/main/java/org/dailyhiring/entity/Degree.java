@@ -1,6 +1,8 @@
 package org.dailyhiring.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Degree extends Education{
@@ -8,12 +10,12 @@ public class Degree extends Education{
 	private String yearOfPassing;
 	private String nameOfCollege;
 
+	
 	public Degree() {
 		super();
 	}
 
-	public Degree(Integer yearsOfEducation, String name, String yearOfPassing, String nameOfCollege) {
-		super( yearsOfEducation);
+	public Degree(String name, String yearOfPassing, String nameOfCollege) {
 		this.name = name;
 		this.yearOfPassing = yearOfPassing;
 		this.nameOfCollege = nameOfCollege;

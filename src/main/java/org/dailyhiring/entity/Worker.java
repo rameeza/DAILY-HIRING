@@ -28,6 +28,16 @@ public class Worker extends Person {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Education education; // has this education
 	
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Degree degree; // has this education
+
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Diploma diploma; // has this education
+
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Training training; // has this education
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.PERSIST, CascadeType.REFRESH})
@@ -116,7 +126,7 @@ public class Worker extends Person {
 		if (this.education == null) {
 			return this.recommendation + this.experienceYears;
 		}
-		return this.recommendation + this.experienceYears + this.education.getYearsOfEducation();
+		return this.recommendation + this.experienceYears ;
 	}
 
 	public void setCompetencyLevel(Double competencyLevel) {
@@ -133,6 +143,37 @@ public class Worker extends Person {
 		this.jobsAppliedIn = jobsAppliedIn;
 	}
 	
+	
+	public Degree getDegree() {
+		return degree;
+	}
+
+
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
+
+
+	public Diploma getDiploma() {
+		return diploma;
+	}
+
+
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
+	}
+
+
+	public Training getTraining() {
+		return training;
+	}
+
+
+	public void setTraining(Training training) {
+		this.training = training;
+	}
+
+
 	// utility method
 	public void applyInThisJob(JobOffer jobOffer) {
 		if (jobsAppliedIn == null) {

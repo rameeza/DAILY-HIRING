@@ -97,6 +97,10 @@
 				<th>Work Hours</th>
 				<th>Experience required</th>
 				<th>Certificate required</th>
+				<th>Degree required</th>
+				<th>Diploma required</th>
+				<th>Training required</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -111,6 +115,10 @@
 				<td th:text="${tempJob.workHours}" />	
 				<td th:text="${tempJob.experienceYears}" />	
 				<td th:text="${tempJob.certificate.name}" />	
+				<td th:text="${tempJob.degree.name}" />
+				<td th:text="${tempJob.diploma.name}" />
+				<td th:text="${tempJob.training.name}" />
+
 			</tr>
 		</tbody>		
 	</table>
