@@ -105,7 +105,12 @@ public class JobOfferController {
 		if (bindingResult.hasErrors()) {
 			return "joboffer/job-offer-post-form";
 		}
-
+		jobOffer.setJobOpeningsAlreadyFilled(0);
+		jobOffer.setDatePosted(new Date().toString());
+		/*
+		 * if (jobOffer.getValidThrough() == null) { jobOffer.setValidThrough(new
+		 * Date()); }
+		 */		
 		JobOffer tempJobOffer = jobOfferService.save(jobOffer,
 				Integer.parseInt(request.getSession().getAttribute("employerId").toString()));
 		if (tempJobOffer == null) {

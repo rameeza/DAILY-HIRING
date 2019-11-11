@@ -22,6 +22,7 @@ public class JobOffer {
 	private String responsibility; // refers to all responsibilities associated with job.
 	@NotNull
 	private Integer jobOpenings;
+	private Integer jobOpeningsAlreadyFilled;	
 	private String datePosted; // date on which job was posted
 	@NotNull
 	private Double workHours; // no. of hours of work required per day.
@@ -92,6 +93,14 @@ public class JobOffer {
 
 	public void setTraining(Training training) {
 		this.training = training;
+	}
+
+	public Integer getJobOpeningsAlreadyFilled() {
+		return jobOpeningsAlreadyFilled;
+	}
+
+	public void setJobOpeningsAlreadyFilled(Integer jobOpeningsAlreadyFilled) {
+		this.jobOpeningsAlreadyFilled = jobOpeningsAlreadyFilled;
 	}
 
 	@ManyToMany (fetch = FetchType.LAZY, 
@@ -255,5 +264,6 @@ public class JobOffer {
 			applicantWorkers = new ArrayList<Worker>();
 		}
 		applicantWorkers.add(worker);
+		this.jobOpeningsAlreadyFilled++;
 	}
 }

@@ -1,5 +1,8 @@
 package org.dailyhiring.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -94,17 +97,19 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 
 		}
+		System.out.println("After matching field of work -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Certificate
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getCertificate().getName().equals("None")){
+			if (nextJobOffer.getCertificate().getName().equals("None")) {
 				continue;
 			}
 			if (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().getName()))) {
 				iterator.remove();
 			}
 		}
+		System.out.println("After matching certificate -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Experience Requirement
 		if (worker.getexperienceYears() != null) {
@@ -114,43 +119,47 @@ public class JobOfferServiceImpl implements JobOfferService {
 					iterator.remove();
 				}
 			}
-		}		
-		
+		}
+		System.out.println("After matching experience -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
 		// Matching Degree Requirement
-			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-				JobOffer nextJobOffer = iterator.next();
-				if (nextJobOffer.getDegree().getName().equals("None")){
-					continue;
-				}				
-				if (!(nextJobOffer.getDegree().getName().equals(worker.getDegree().getName()))){
-					iterator.remove();					
-				}
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getDegree().getName().equals("None")) {
+				continue;
 			}
+			if (!(nextJobOffer.getDegree().getName().equals(worker.getDegree().getName()))) {
+				iterator.remove();
+			}
+		}
+		System.out.println("After matching degree requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Diploma Requirement
-			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-				JobOffer nextJobOffer = iterator.next();
-				if (nextJobOffer.getDiploma().getName().equals("None")){
-					continue;
-				}				
-				if (!(nextJobOffer.getDiploma().getName().equals(worker.getDiploma().getName()))){
-					iterator.remove();					
-				}
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getDiploma().getName().equals("None")) {
+				continue;
 			}
+			if (!(nextJobOffer.getDiploma().getName().equals(worker.getDiploma().getName()))) {
+				iterator.remove();
+			}
+		}
+		System.out.println("After matching diploma requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Training Requirement
-			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-				JobOffer nextJobOffer = iterator.next();
-				if (nextJobOffer.getTraining().getName().equals("None")){
-					continue;
-				}
-				
-				if (!(nextJobOffer.getTraining().getName().equals(worker.getTraining().getName()))){
-					iterator.remove();					
-				}
-			}		
-		
-		// Matching Location to be less than 50 km
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getTraining().getName().equals("None")) {
+				continue;
+			}
+
+			if (!(nextJobOffer.getTraining().getName().equals(worker.getTraining().getName()))) {
+				iterator.remove();
+			}
+		}
+		System.out.println("After matching training requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
+		// Matching Location to be less than 100 km
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
 			/*
@@ -164,11 +173,13 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 			Double distanceBetweenEmployerAndWorker = calculateDistanceUsingLocation(employerLatitude,
 					employerLongitude, workerLatitude, workerLongitude, "K");
-			if (distanceBetweenEmployerAndWorker > 50) {
+			// System.out.println("Distance between Employer and Worker:
+			// "+distanceBetweenEmployerAndWorker + "km");
+			if (distanceBetweenEmployerAndWorker > 100) {
 				iterator.remove();
 			}
 		}
-		
+		System.out.println("After matching location -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Remove Jobs in which worker has already applied
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
@@ -186,6 +197,44 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 
 		}
+		System.out.println(
+				"After removing where worker has already applied -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
+		// Remove Jobs where all the jobOpenings have been filled (ie
+		// that many workers have already applied)
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getJobOpenings() == nextJobOffer.getJobOpeningsAlreadyFilled()) {
+				iterator.remove();
+				break;
+			}
+
+		}
+		System.out.println(
+				"After removing where Job openings have been filled -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
+		// Remove Jobs where Job Valid period (date) has already passed
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+
+			if (nextJobOffer.getValidThrough() != null  && !nextJobOffer.getValidThrough().isEmpty() ) {
+
+				try {
+					Date todaysDate = new Date();
+					todaysDate.setHours(0);
+					Date validThroughDate = new SimpleDateFormat("yyyy-MM-dd").parse(nextJobOffer.getValidThrough());
+					validThroughDate.setHours(1);
+					if (validThroughDate.before(todaysDate)) {
+						System.out.print("validThroughDate -> "+validThroughDate);
+						System.out.println(" | todaysDate -> "+todaysDate);
+						iterator.remove();
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("After removing where Job validity has passed -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		return jobOffers;
 	}
@@ -255,7 +304,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Override
 	public List<JobOffer> findAllJobsAppliedBy(Integer workerId) {
-		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " starts!" );
+		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " starts!");
 		List<JobOffer> jobOffers = jobOfferRepository.findAllByOrderByJobIdAsc();
 		Optional<Worker> optionalWorker = workerRepository.findById(workerId);
 		Worker worker = optionalWorker.get();
@@ -267,8 +316,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 				iterator.remove();
 			}
 		}
-		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " ends!" );
-		
+		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " ends!");
+
 		return jobOffers;
 	}
 
