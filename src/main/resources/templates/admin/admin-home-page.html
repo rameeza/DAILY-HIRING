@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Admin Home Page</title>
@@ -8,34 +8,247 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
-<link rel="stylesheet" 
-	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
+<link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="style.css">
-  	
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script 
+<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script 
+<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
 
- 
-<body >
 
+<body>
 
-	
 	<div class="container-fluid">
-	
-				
+
+		<br>
+		<h2 style="text-align: center">Add A Certificate</h2>
+		<br>
+
+		<form action="#" th:action="@{/addACertificate}"
+			 method="post">
+
+			<!-- fieldOfWork.name -->
+			<div class="form-group row">
+				<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
+					Field Of Work (*): </label>
+
+				<div class="col-sm-3">
+					<select class="form-control" id="fieldOfWork_name"
+						name="fieldOfWork_name" >
+						<option value="Construction">Construction</option>
+						<option value="Driver">Driver</option>
+						<option value="Painter">Painter</option>
+						<option value="Plumbery">Plumbery</option>
+						<option value="Security">Security</option>
+						<option value="Cook">Cook</option>
+						<option value="Carpenter">Carpenter</option>
+						<option value="Labourer">Labourer</option>
+						<option value="Watchman">Watchman</option>
+					</select>
+				</div>
+
 			</div>
-			
-			<br>
-			
-			
-	
+
+			<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">Certificate Name:</label>
+
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="jobTitle"
+						placeholder="Enter Certificate Name" name="jobTitle"
+						>
+				</div>
+			</div>
+
+
+			<div class="form-group row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary btn-md">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+		
+				<br>
+		<h2 style="text-align: center">Add A Degree</h2>
+		<br>
+
+		<form action="#" th:action="@{/addACertificate}"
+			 method="post">
+
+			<!-- fieldOfWork.name -->
+			<div class="form-group row">
+				<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
+					Field Of Work (*): </label>
+
+				<div class="col-sm-3">
+					<select class="form-control" id="fieldOfWork_name"
+						name="fieldOfWork_name" >
+						<option value="Construction">Construction</option>
+						<option value="Driver">Driver</option>
+						<option value="Painter">Painter</option>
+						<option value="Plumbery">Plumbery</option>
+						<option value="Security">Security</option>
+						<option value="Cook">Cook</option>
+						<option value="Carpenter">Carpenter</option>
+						<option value="Labourer">Labourer</option>
+						<option value="Watchman">Watchman</option>
+					</select>
+				</div>
+
+			</div>
+
+			<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">Degree Name:</label>
+
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="jobTitle"
+						placeholder="Enter Name of Degree" name="jobTitle"
+						>
+				</div>
+			</div>
+
+
+			<div class="form-group row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary btn-md">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+		
+		
+				<br>
+		<h2 style="text-align: center">Add A Diploma</h2>
+		<br>
+
+		<form action="#" th:action="@{/addACertificate}"
+			 method="post">
+
+			<!-- fieldOfWork.name -->
+			<div class="form-group row">
+				<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
+					Field Of Work (*): </label>
+
+				<div class="col-sm-3">
+					<select class="form-control" id="fieldOfWork_name"
+						name="fieldOfWork_name" >
+						<option value="Construction">Construction</option>
+						<option value="Driver">Driver</option>
+						<option value="Painter">Painter</option>
+						<option value="Plumbery">Plumbery</option>
+						<option value="Security">Security</option>
+						<option value="Cook">Cook</option>
+						<option value="Carpenter">Carpenter</option>
+						<option value="Labourer">Labourer</option>
+						<option value="Watchman">Watchman</option>
+					</select>
+				</div>
+
+			</div>
+
+			<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">Diploma Name:</label>
+
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="jobTitle"
+						placeholder="Enter Name of Diploma" name="jobTitle"
+						>
+				</div>
+			</div>
+
+
+			<div class="form-group row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary btn-md">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+		
+		
+				<br>
+		<h2 style="text-align: center">Add A Training</h2>
+		<br>
+
+		<form action="#" th:action="@{/addACertificate}"
+			 method="post">
+
+			<!-- fieldOfWork.name -->
+			<div class="form-group row">
+				<label for="fieldOfWork_name" class="col-sm-2 col-form-label">
+					Field Of Work (*): </label>
+
+				<div class="col-sm-3">
+					<select class="form-control" id="fieldOfWork_name"
+						name="fieldOfWork_name" >
+						<option value="Construction">Construction</option>
+						<option value="Driver">Driver</option>
+						<option value="Painter">Painter</option>
+						<option value="Plumbery">Plumbery</option>
+						<option value="Security">Security</option>
+						<option value="Cook">Cook</option>
+						<option value="Carpenter">Carpenter</option>
+						<option value="Labourer">Labourer</option>
+						<option value="Watchman">Watchman</option>
+					</select>
+				</div>
+
+			</div>
+
+			<!-- jobTitle -->
+			<div class="form-group row">
+				<label for="jobTitle" class="col-sm-2 col-form-label">Training Name:</label>
+
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="jobTitle"
+						placeholder="Enter Name of Training" name="jobTitle"
+						>
+				</div>
+			</div>
+
+
+			<div class="form-group row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary btn-md">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+
+
+
+	<br>
+
+
+
 </body>
 </html>

@@ -125,6 +125,19 @@ public class WorkerController {
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-registration-form";
 		}
+		worker.setRecommendation(10);
+		Double education = 0.0 ;
+		if (!worker.getDegree().getName().equals("None")) {
+			education = 10.0 ;
+		}else if(!worker.getDiploma().getName().equals("None")) {
+			education = 8.0 ;
+		}else if(!worker.getTraining().getName().equals("None")) {
+			education = 5.0;
+		}
+		
+		worker.setCompetencyLevel(education + worker.getexperienceYears() 
+			+ worker.getRecommendation()); 		
+		
 		if (registerWorker(worker) != null) {
 			return "worker/worker-registration-successful";
 		} else {

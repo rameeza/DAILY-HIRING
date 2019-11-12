@@ -217,7 +217,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
 
-			if (nextJobOffer.getValidThrough() != null  && !nextJobOffer.getValidThrough().isEmpty() ) {
+			if (nextJobOffer.getValidThrough() != null && !nextJobOffer.getValidThrough().isEmpty()) {
 
 				try {
 					Date todaysDate = new Date();
@@ -225,8 +225,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 					Date validThroughDate = new SimpleDateFormat("yyyy-MM-dd").parse(nextJobOffer.getValidThrough());
 					validThroughDate.setHours(1);
 					if (validThroughDate.before(todaysDate)) {
-						System.out.print("validThroughDate -> "+validThroughDate);
-						System.out.println(" | todaysDate -> "+todaysDate);
+						System.out.print("validThroughDate -> " + validThroughDate);
+						System.out.println(" | todaysDate -> " + todaysDate);
 						iterator.remove();
 					}
 				} catch (ParseException e) {
@@ -235,6 +235,31 @@ public class JobOfferServiceImpl implements JobOfferService {
 			}
 		}
 		System.out.println("After removing where Job validity has passed -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
+		// Remove Jobs recommendation requirement is not satisfied.
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getRecommendation() != null) {
+				if (nextJobOffer.getRecommendation() > worker.getRecommendation()) {
+					iterator.remove();
+				}
+			}
+		}
+		System.out.println("After removing where recommendation requirement is not satisfied"
+				+ " -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+
+		// Remove Jobs where competency level requirement is not satisfied
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (nextJobOffer.getCompetencyLevel() != null) {
+				if (nextJobOffer.getCompetencyLevel() > worker.getCompetencyLevel()) {
+					iterator.remove();
+				}
+
+			}
+		}
+		System.out.println("After removing where Competency requirement is not satisfied" + " -> jobOffers.isEmpty()"
+				+ jobOffers.isEmpty());
 
 		return jobOffers;
 	}

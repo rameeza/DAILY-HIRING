@@ -31,7 +31,11 @@ public class JobOffer {
 	private String currency; // in which payment wll be made
 	@NotNull
 	private Double experienceYears; // years
-	private Integer recommendation; //
+	
+	// recommendation is out of 10 (it is no. of stars given in feedback)
+	private Integer recommendation;
+	
+	// competencyLevel is out of 30. it is 'recommendation + education + experience' 
 	private Double competencyLevel;
 
 	/*
