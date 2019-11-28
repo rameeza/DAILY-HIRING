@@ -110,9 +110,6 @@ public class WorkerController {
 	public String showWorkerRegistrationForm(Model theModel) {
 		// set initial values in registration form
 		Worker worker = new Worker();
-		worker.setCostPerUnit(200.0);
-		worker.setEducation(new Education());
-		worker.setexperienceYears(1.0);
 		
 		// add worker to model
 		theModel.addAttribute("worker", worker);
@@ -125,18 +122,6 @@ public class WorkerController {
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-registration-form";
 		}
-		worker.setRecommendation(10);
-		Double education = 0.0 ;
-		if (!worker.getDegree().getName().equals("None")) {
-			education = 10.0 ;
-		}else if(!worker.getDiploma().getName().equals("None")) {
-			education = 8.0 ;
-		}else if(!worker.getTraining().getName().equals("None")) {
-			education = 5.0;
-		}
-		
-		worker.setCompetencyLevel(education + worker.getexperienceYears() 
-			+ worker.getRecommendation()); 		
 		
 		if (registerWorker(worker) != null) {
 			return "worker/worker-registration-successful";

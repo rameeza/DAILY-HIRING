@@ -70,14 +70,12 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 	@Override
 	public JobOffer save(@Valid JobOffer jobOffer, int employerId) {
-		Optional<Employer> optionalEmployer = employerRepository.findById(employerId);
-		Employer employer = null;
-		if (optionalEmployer.isPresent()) {
-			employer = optionalEmployer.get();
-			employer.add(jobOffer);
-			employerRepository.save(employer);
-		}
-
+		/*
+		 * Optional<Employer> optionalEmployer =
+		 * employerRepository.findById(employerId); Employer employer = null; if
+		 * (optionalEmployer.isPresent()) { employer = optionalEmployer.get();
+		 * employer.add(jobOffer); employerRepository.save(employer); }
+		 */
 		return jobOffer;
 	}
 
@@ -100,65 +98,55 @@ public class JobOfferServiceImpl implements JobOfferService {
 		System.out.println("After matching field of work -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Certificate
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getCertificate().getName().equals("None")) {
-				continue;
-			}
-			if (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().getName()))) {
-				iterator.remove();
-			}
-		}
-		System.out.println("After matching certificate -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getCertificate().getName().equals("None")) { continue; } if
+		 * (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().
+		 * getName()))) { iterator.remove(); } }
+		 * System.out.println("After matching certificate -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Matching Experience Requirement
-		if (worker.getexperienceYears() != null) {
-			for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-				JobOffer nextJobOffer = iterator.next();
-				if (nextJobOffer.getexperienceYears() > worker.getexperienceYears()) {
-					iterator.remove();
-				}
-			}
-		}
-		System.out.println("After matching experience -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * if (worker.getexperienceYears() != null) { for (Iterator<JobOffer> iterator =
+		 * jobOffers.iterator(); iterator.hasNext();) { JobOffer nextJobOffer =
+		 * iterator.next(); if (nextJobOffer.getexperienceYears() >
+		 * worker.getexperienceYears()) { iterator.remove(); } } }
+		 * System.out.println("After matching experience -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Matching Degree Requirement
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getDegree().getName().equals("None")) {
-				continue;
-			}
-			if (!(nextJobOffer.getDegree().getName().equals(worker.getDegree().getName()))) {
-				iterator.remove();
-			}
-		}
-		System.out.println("After matching degree requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getDegree().getName().equals("None")) { continue; } if
+		 * (!(nextJobOffer.getDegree().getName().equals(worker.getDegree().getName())))
+		 * { iterator.remove(); } }
+		 */		System.out.println("After matching degree requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Matching Diploma Requirement
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getDiploma().getName().equals("None")) {
-				continue;
-			}
-			if (!(nextJobOffer.getDiploma().getName().equals(worker.getDiploma().getName()))) {
-				iterator.remove();
-			}
-		}
-		System.out.println("After matching diploma requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getDiploma().getName().equals("None")) { continue; } if
+		 * (!(nextJobOffer.getDiploma().getName().equals(worker.getDiploma().getName()))
+		 * ) { iterator.remove(); } } System.out.
+		 * println("After matching diploma requirement -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Matching Training Requirement
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getTraining().getName().equals("None")) {
-				continue;
-			}
-
-			if (!(nextJobOffer.getTraining().getName().equals(worker.getTraining().getName()))) {
-				iterator.remove();
-			}
-		}
-		System.out.println("After matching training requirement -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getTraining().getName().equals("None")) { continue; }
+		 * 
+		 * if
+		 * (!(nextJobOffer.getTraining().getName().equals(worker.getTraining().getName()
+		 * ))) { iterator.remove(); } } System.out.
+		 * println("After matching training requirement -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Matching Location to be less than 100 km
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
@@ -182,24 +170,22 @@ public class JobOfferServiceImpl implements JobOfferService {
 		System.out.println("After matching location -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Remove Jobs in which worker has already applied
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-
-			List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn();
-			for (Iterator<JobOffer> jobsAppliedInIterator = jobsAppliedIn.iterator(); jobsAppliedInIterator
-					.hasNext();) {
-				JobOffer nextJobAppliedIn = jobsAppliedInIterator.next();
-
-				if (nextJobOffer.getJobId() == nextJobAppliedIn.getJobId()) {
-					iterator.remove();
-					break;
-				}
-			}
-
-		}
-		System.out.println(
-				"After removing where worker has already applied -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next();
+		 * 
+		 * List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn(); for
+		 * (Iterator<JobOffer> jobsAppliedInIterator = jobsAppliedIn.iterator();
+		 * jobsAppliedInIterator .hasNext();) { JobOffer nextJobAppliedIn =
+		 * jobsAppliedInIterator.next();
+		 * 
+		 * if (nextJobOffer.getJobId() == nextJobAppliedIn.getJobId()) {
+		 * iterator.remove(); break; } }
+		 * 
+		 * } System.out.println(
+		 * "After removing where worker has already applied -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Remove Jobs where all the jobOpenings have been filled (ie
 		// that many workers have already applied)
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
@@ -237,30 +223,27 @@ public class JobOfferServiceImpl implements JobOfferService {
 		System.out.println("After removing where Job validity has passed -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Remove Jobs recommendation requirement is not satisfied.
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getRecommendation() != null) {
-				if (nextJobOffer.getRecommendation() > worker.getRecommendation()) {
-					iterator.remove();
-				}
-			}
-		}
-		System.out.println("After removing where recommendation requirement is not satisfied"
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getRecommendation() != null) { if
+		 * (nextJobOffer.getRecommendation() > worker.getRecommendation()) {
+		 * iterator.remove(); } } }
+		 */		System.out.println("After removing where recommendation requirement is not satisfied"
 				+ " -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Remove Jobs where competency level requirement is not satisfied
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (nextJobOffer.getCompetencyLevel() != null) {
-				if (nextJobOffer.getCompetencyLevel() > worker.getCompetencyLevel()) {
-					iterator.remove();
-				}
-
-			}
-		}
-		System.out.println("After removing where Competency requirement is not satisfied" + " -> jobOffers.isEmpty()"
-				+ jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (nextJobOffer.getCompetencyLevel() != null) { if
+		 * (nextJobOffer.getCompetencyLevel() > worker.getCompetencyLevel()) {
+		 * iterator.remove(); }
+		 * 
+		 * } } System.out.
+		 * println("After removing where Competency requirement is not satisfied" +
+		 * " -> jobOffers.isEmpty()" + jobOffers.isEmpty());
+		 */
 		return jobOffers;
 	}
 

@@ -19,6 +19,7 @@ public class EmployerServiceImpl implements EmployerService {
 
 	@Override
 	public Employer save(Employer employer) {
+		
 		Employer tempEmployer = employerRepository.save(employer);
 		return tempEmployer;
 	}

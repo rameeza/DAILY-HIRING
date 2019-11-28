@@ -6,65 +6,36 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Employer extends Person {
-	
-	private String currency;
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Address address;
 
-	/*
-	@OneToOne
-	private JobOffer jobOffer; // provides this job offer. todo- check if it is one to many
-
-	
-	public JobOffer getJobOffer() {
-		return jobOffer;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
-	}
-	*/
-	
-	// refers to employer property in JobOffer class
-	@OneToMany (mappedBy="employer",
-			cascade= {CascadeType.ALL})
-	private List<JobOffer> jobOffers;
-	
-	public List<JobOffer> getJobOffers() {
-		return jobOffers;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
-	public void setJobOffers(List<JobOffer> jobOffers) {
-		this.jobOffers = jobOffers;
+	public Employer(Address address) {
+		super();
+		this.address = address;
 	}
-
+	
 	public Employer() {
-		
-	}
-	
-	public Employer(String organisation, String firstName, String lastName, Integer age, String gender, String email,
-			String phoneNo, String address, String idProof, String currency ) {
-		super(organisation, firstName, lastName, age, gender, email, phoneNo, address, idProof);
-		this.currency = currency;
+		super();
 	}
 
-	
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	public void add(JobOffer jobOffer) {
-		if (jobOffers == null) {
-			jobOffers = new ArrayList<JobOffer>();
-		}
-		// bidirectional link
-		jobOffers.add(jobOffer);
-		jobOffer.setEmployer(this);
+	public Employer(Double latitude, Double longitude, String name, String gender, String language,
+			String dateOfBirth, String email, String faxNumber, String telephoneNumber, String password,
+			String buildingName, String landmark, String streetAddress, String countryName, String postalCode) {
+		super(latitude, longitude, name, gender, language, dateOfBirth, email, faxNumber, telephoneNumber, password);
+		Address address = new Address(buildingName, landmark, streetAddress, countryName, postalCode);
+		this.setAddress(address);
 	}
 	
 }

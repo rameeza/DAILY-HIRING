@@ -42,50 +42,18 @@
 				 name="longitude" th:field="*{longitude}" value=""> 
 
 
-<!-- organization -->
+
+<!-- name -->
 				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">Organization Name:</label>
+					<label  for="name" class="col-sm-2 col-form-label">Name:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="organization"
-							placeholder="Enter organization name" name="organization" th:field="*{organization}">
+						<input type="text" class="form-control" id="name"
+							placeholder="Enter your Name" name="name" th:field="*{name}">
 					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('organization')}"
-						th:errors="*{organization}">Organization Error</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}">Name Error</div>
 				</div>
 
-<!-- firstName -->
-				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">First Name:</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="firstName"
-							placeholder="Enter firstName" name="firstName" th:field="*{firstName}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">FirstName Error</div>
-				</div>
-
-<!-- lastName -->
-				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">Last Name:</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="lastName"
-							placeholder="Enter lastName" name="lastName" th:field="*{lastName}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('lastName')}"
-						th:errors="*{lastName}">LastName Error</div>
-				</div>
-
-
-<!-- Integer age -->
-				<div class="form-group row">
-					<label  for="age" class="col-sm-2 col-form-label">Age (years):</label>
-					<div class="col-sm-3">
-						<input type="number" class="form-control" id="age"
-							placeholder="Enter age" name="age" th:field="*{age}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('age')}"
-						th:errors="*{age}">Age Error</div>
-				</div>
 
 <!-- gender -->
 			<div class="form-group row">
@@ -101,9 +69,41 @@
 						th:errors="*{gender}">Gender Error</div>
 				</div>
 
+<!-- language -->
+			<div class="form-group row">
+				<label  for="language" class="col-sm-2 col-form-label">Language:</label>
+				<div class="col-sm-3"> 
+				<select 
+					class="form-control" id="language" name="language" th:field="*{language}">
+					<option value="Portuguese">Portuguese</option>
+					<option value="English">English</option>
+					<option value="Hindi">Hindi</option>
+				</select>
+				</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('language')}"
+						th:errors="*{language}">Gender Error</div>
+				</div>
+
+<!-- Todo - add photograph --> 
+
+
+	<!-- dateOfBirth -->	
+				<div class="form-group row">
+					<label for="dateOfBirth" class="col-sm-2 col-form-label">Date Of Birth:</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control" id="dateOfBirth"
+							placeholder="Enter date of birth" name="dateOfBirth" th:field="*{dateOfBirth}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}"
+						th:errors="*{dateOfBirth}">DateOfBirth Error</div>
+				</div>
+
+
+
+
 <!-- email -->
 				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">Email:</label>
+					<label  for="email" class="col-sm-2 col-form-label">Email:</label>
 					<div class="col-sm-3">
 						<input type="email" class="form-control" id="email"
 							placeholder="Enter email" name="email" th:field="*{email}">
@@ -113,41 +113,31 @@
 				</div>
 
 
-
-<!-- phoneNo -->
+<!-- faxNumber -->
 				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">Phone No:</label>
+					<label  for="faxNumber" class="col-sm-2 col-form-label">Fax Number:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="phoneNo"
-							placeholder="Enter phoneNo" name="phoneNo" th:field="*{phoneNo}">
+						<input type="number" class="form-control" id="faxNumber"
+							placeholder="Enter fax Number" name="faxNumber" th:field="*{faxNumber}">
 					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('phoneNo')}"
-						th:errors="*{phoneNo}">PhoneNo Error</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('faxNumber')}"
+						th:errors="*{faxNumber}">Email Error</div>
 				</div>
 
 
-<!-- address -->
-				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">Address:</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="address"
-							placeholder="Enter address" name="address" th:field="*{address}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('address')}"
-						th:errors="*{address}">Address Error</div>
-				</div>
 
 
-<!-- idProof -->
+<!-- telephoneNumber -->
 				<div class="form-group row">
-					<label  for="name" class="col-sm-2 col-form-label">ID Proof/Aadhaar No:</label>
+					<label  for="telephoneNumber" class="col-sm-2 col-form-label">Telephone No:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="idProof"
-							placeholder="Enter idProof/Aadhaar No" name="idProof" th:field="*{idProof}">
+						<input type="text" class="form-control" id="telephoneNumber"
+							placeholder="Enter telephoneNumber" name="telephoneNumber" th:field="*{telephoneNumber}">
 					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('idProof')}"
-						th:errors="*{idProof}">IdProof Error</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('telephoneNumber')}"
+						th:errors="*{telephoneNumber}">TelephoneNumber Error</div>
 				</div>
+
 
 <!-- password -->
 			<div class="form-group row">
@@ -160,6 +150,103 @@
 				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
 					th:errors="*{password}">Password Error</div>
 			</div>
+
+
+<!-- address.buildingName -->
+				<div class="form-group row">
+					<label for="address_buildingName" class="col-sm-2 col-form-label">
+						Building Name:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_buildingName"
+							placeholder="Enter building Name" name="address_buildingName" th:field="*{address.buildingName}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.buildingName')}"
+						th:errors="*{address.buildingName}">Address.BuildingName Error</div>
+				</div>
+
+
+
+<!-- address.landmark -->
+				<div class="form-group row">
+					<label for="address_landmark" class="col-sm-2 col-form-label">
+						Landmark:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_landmark"
+							placeholder="Enter landmark" name="address_landmark" th:field="*{address.landmark}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.landmark')}"
+						th:errors="*{address.landmark}">Address.Landmark Error</div>
+				</div>
+
+
+<!-- address.streetAddress -->
+				<div class="form-group row">
+					<label for="address_streetAddress" class="col-sm-2 col-form-label">
+						streetAddress:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_streetAddress"
+							placeholder="Enter streetAddress" name="address_streetAddress" th:field="*{address.streetAddress}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.streetAddress')}"
+						th:errors="*{address.streetAddress}">Address.StreetAddress Error</div>
+				</div>
+
+
+<!-- address.locality -->
+				<div class="form-group row">
+					<label for="address_locality" class="col-sm-2 col-form-label">
+						locality:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_locality"
+							placeholder="Enter locality" name="address_locality" th:field="*{address.locality}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.locality')}"
+						th:errors="*{address.locality}">Address.Locality Error</div>
+				</div>
+
+<!-- address.state -->
+				<div class="form-group row">
+					<label for="address_state" class="col-sm-2 col-form-label">
+						state:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_state"
+							placeholder="Enter state" name="address_state" th:field="*{address.state}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.state')}"
+						th:errors="*{address.state}">Address.State Error</div>
+				</div>
+<!-- address.countryName -->
+				<div class="form-group row">
+					<label for="address_countryName" class="col-sm-2 col-form-label">
+						countryName:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_countryName"
+							placeholder="Enter countryName" name="address_countryName" th:field="*{address.countryName}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.countryName')}"
+						th:errors="*{address.countryName}">Address.CountryName Error</div>
+				</div>
+				
+<!-- address.postalCode -->
+				<div class="form-group row">
+					<label for="address_postalCode" class="col-sm-2 col-form-label">
+						postalCode:
+					</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="address_postalCode"
+							placeholder="Enter postalCode" name="address_postalCode" th:field="*{address.postalCode}">
+					</div>
+					<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('address.postalCode')}"
+						th:errors="*{address.postalCode}">Address.PostalCode Error</div>
+				</div>
+
+
 
 
 				<div class="form-group row">

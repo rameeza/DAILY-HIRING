@@ -8,50 +8,95 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Person {
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Integer id;
-	private String organization;
+
 	private Double latitude;
 	private Double longitude;
 
-	// 	adding validation here in base class Person, works for child 
-	//	classes Employer and Worker as well. 
+	// adding validation here in base class Person, works for child
+	// classes Employer and Worker as well.
 	// login fails after adding validation. test Login after adding validation.
 	/*
 	 * @NotNull
 	 * 
 	 * @Size( message = "Name must be at least 2 characters long" , min = 2, max =
 	 * 60)
-	 */	
-	private String firstName;
-	private String lastName;
+	 */
 	// login fails after adding validation. test Login after adding validation.
 	/*
 	 * @NotNull
 	 */
-	private Integer age;
+	private String name;
 	private String gender;
+	private String language;
+	// todo - add photograph field
+
+	private String dateOfBirth;
+
 	private String email;
-	private String phoneNo;
-	private String address;
-	private String idProof;
+	private String faxNumber;
+	private String telephoneNumber;
 	private String password;
+
 	public Person() {
 		super();
 	}
 
-	public Person(String organization, String firstName, String lastName, Integer age, String gender, String email,
-			String phoneNo, String address, String idProof) {
+	public Person(Double latitude, Double longitude, String name, String gender, String language, String dateOfBirth,
+			String email, String faxNumber, String telephoneNumber, String password) {
 		super();
-		this.organization = organization;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.name = name;
 		this.gender = gender;
+		this.language = language;
+		this.dateOfBirth = dateOfBirth;
 		this.email = email;
-		this.phoneNo = phoneNo;
-		this.address = address;
-		this.idProof = idProof;
+		this.faxNumber = faxNumber;
+		this.telephoneNumber = telephoneNumber;
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
 	}
 
 	public Integer getId() {
@@ -62,59 +107,21 @@ public class Person {
 		this.id = id;
 	}
 
-	public String getOrganization() {
-		return organization;
-	}
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-	public Integer getAge() {
-		return age;
-	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getIdProof() {
-		return idProof;
-	}
-	public void setIdProof(String idProof) {
-		this.idProof = idProof;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -140,5 +147,5 @@ public class Person {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 }

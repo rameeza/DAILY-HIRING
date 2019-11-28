@@ -57,8 +57,6 @@ public class WorkerServiceImpl implements WorkerService {
 			jobOffer = optionalJobOffer.get();
 		}		
 		
-		worker.applyInThisJob(jobOffer);
-		workerRepository.save(worker);
 		
 		jobOffer.addApplicantWorker(worker);
 		jobOfferRepository.save(jobOffer);

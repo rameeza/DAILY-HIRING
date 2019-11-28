@@ -82,17 +82,19 @@
 			style="width:50%; margin: auto">
 		
 		<tbody>
-	<tr><th> ID </th> <td th:text="${session.employer.id}" /></tr> 	
-	<tr><th>First Name </th> <td th:text="${session.employer.firstName}" /></tr> 
-	<tr><th>Last Name </th> <td th:text="${session.employer.lastName}" /></tr>
-	<tr><th>Organization </th> <td th:text="${session.employer.organization}" /></tr> 
+	<tr><th>Email </th> <td th:text="${session.employer.email}" /></tr> 	
+	<tr><th>Name </th> <td th:text="${session.employer.name}" /></tr> 
 	<tr><th>Latitude </th> <td th:text="${session.employer.latitude}" />  </tr>
 	<tr><th>Longitude </th> <td th:text="${session.employer.longitude}" />  </tr>
-	<tr><th>Age </th> <td th:text="${session.employer.age}" /> </tr>
+	<tr><th>DOB </th> <td th:text="${session.employer.dateOfBirth}" /> </tr>
 	<tr><th>Gender </th> <td th:text="${session.employer.gender}" /></tr>	 
-	<tr><th>Email </th> <td th:text="${session.employer.email}" />  </tr>
-	<tr><th>Phone-No </th> <td th:text="${session.employer.phoneNo}" /> </tr>
-	<tr><th>Address </th> <td th:text="${session.employer.address}" /> </tr>
+	<tr><th>Phone-No </th> <td th:text="${session.employer.telephoneNumber}" /> </tr>
+	<tr><th>Fax-No </th> <td th:text="${session.employer.faxNumber}" /> </tr>
+	<tr><th>Building-Name </th> <td th:text="${session.employer.address.buildingName}" /> </tr>
+	<tr><th>Landmark </th> <td th:text="${session.employer.address.landmark}" /> </tr>
+	<tr><th>Street-Address </th> <td th:text="${session.employer.address.streetAddress}" /> </tr>
+	<tr><th>Country </th> <td th:text="${session.employer.address.countryName}" /> </tr>
+	<tr><th>Postal-Code </th> <td th:text="${session.employer.address.postalCode}" /> </tr>
 			</tbody>
 		</table>
 			

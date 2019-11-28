@@ -1,0 +1,183 @@
+# Can run these queries on Jena Fuseki Web Interface (localhost:3030)
+
+############################### SELECT
+# SPARQL ENDPOINT should be /dh/query
+1)
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?subject ?predicate ?object
+WHERE {
+  ?subject ?predicate ?object
+}
+LIMIT 25
+
+2)
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+SELECT *
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> ?predicate ?object
+}
+
+3)
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf:<http://xlmns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX essglobal:<http://purl.org/essglobal/vocab/>
+PREFIX juso:<http://rdfs.co/juso/>
+
+SELECT *
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> ?predicate ?object
+}
+
+4)
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf:<http://xlmns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX essglobal:<http://purl.org/essglobal/vocab/>
+PREFIX juso:<http://rdfs.co/juso/>
+
+SELECT *
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> <http://xmlns.com/foaf/0.1/name> ?name
+}
+
+
+5)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT *
+WHERE {
+  ?subject foaf:name ?name .
+  ?subject foaf:mbox ?email .
+  ?subject foaf:gender ?gender .
+}
+
+6)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT *
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+}
+
+7)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?name ?email ?gender
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+}
+
+8)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:bday ?dateOfBirth .
+  <http://purl.org/dh/0.1/p1@gmail.com> dc:language ?language . 
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:latitude ?latitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:longitude ?longitude .
+}
+
+9)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:bday ?dateOfBirth .
+  <http://purl.org/dh/0.1/p1@gmail.com> dc:language ?language . 
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:latitude ?latitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:longitude ?longitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:telephone ?telephone .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:faxNumber ?fax .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:password ?password .
+}
+
+10)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX juso:<http://rdfs.co/juso/>
+SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password ?buildingName ?landmark ?streetAddress
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:bday ?dateOfBirth .
+  <http://purl.org/dh/0.1/p1@gmail.com> dc:language ?language . 
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:latitude ?latitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:longitude ?longitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:telephone ?telephone .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:faxNumber ?fax .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:password ?password .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:buildingName ?buildingName .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:landmark ?landmark .
+  <http://purl.org/dh/0.1/p1@gmail.com> juso:full_address ?streetAddress .
+}
+
+11)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX juso:<http://rdfs.co/juso/>
+PREFIX essglobal:<http://purl.org/essglobal/vocab/>
+SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password ?buildingName ?landmark ?streetAddress ?countryName ?postalCode
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:bday ?dateOfBirth .
+  <http://purl.org/dh/0.1/p1@gmail.com> dc:language ?language . 
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:latitude ?latitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:longitude ?longitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:telephone ?telephone .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:faxNumber ?fax .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:password ?password .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:buildingName ?buildingName .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:landmark ?landmark .
+  <http://purl.org/dh/0.1/p1@gmail.com> juso:full_address ?streetAddress .
+  <http://purl.org/dh/0.1/p1@gmail.com> juso:country-name ?countryName .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:postal-code ?postalCode . 
+}
+
+
+
+
+
+############################### DELETE
+# SPARQL ENDPOINT should be /dh/update
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+DELETE
+WHERE {
+  ?subject ?predicate ?object
+}

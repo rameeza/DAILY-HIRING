@@ -11,175 +11,92 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Worker extends Person {
-	private Double costPerUnit;
-	private String currency;
-	// todo- make it unique
-	// private Integer workerId; // it is unique. so, we can use the 'id' field of person class for this.
-	private String jobTitle;
-	private Double experienceYears;	// years
-	private Integer recommendation; // 
-	private Double competencyLevel;
-
+	private Double defaultPayVisit;
 	@OneToOne(cascade = {CascadeType.ALL})
-	private Skill skill;
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Certificate certificate; // todo- see if it will be one to many
-
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Education education; // has this education
-	
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Degree degree; // has this education
-
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Diploma diploma; // has this education
-
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Training training; // has this education
-	
-	
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {CascadeType.DETACH, CascadeType.MERGE,
-					CascadeType.PERSIST, CascadeType.REFRESH})
-	private List<JobOffer> jobsAppliedIn;
+	private Skill skillType;
+	private Double experience;	// years
+	private Double payAmount;	
+	private String typeOfPayAmount;
+	private String locality;
+	private Boolean hasCertificate;
 	
 	public Worker() {
 		super();
 	}
 
-
-	public Worker(Double costPerUnit, String currency, String jobTitle, Double experienceYears,
-			Integer recommendation) {
+	public Worker(Double defaultPayVisit, Skill skillType, Double experience, Double payAmount, String typeOfPayAmount,
+			String locality, Boolean hasCertificate) {
 		super();
-		this.costPerUnit = costPerUnit;
-		this.currency = currency;
-		this.jobTitle = jobTitle;
-		this.experienceYears = experienceYears;
-		this.recommendation = recommendation;
-	}
-
-	public Double getCostPerUnit() {
-		return costPerUnit;
-	}
-	public void setCostPerUnit(Double costPerUnit) {
-		this.costPerUnit = costPerUnit;
-	}
-	public String getCurrency() {
-		return currency;
-	}
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-	public Double getexperienceYears() {
-		return experienceYears;
-	}
-	public void setexperienceYears(Double experienceYears) {
-		this.experienceYears = experienceYears;
-	}
-
-	public Integer getRecommendation() {
-		return recommendation;
-	}
-
-	public void setRecommendation(Integer recommendation) {
-		this.recommendation = recommendation;
+		this.defaultPayVisit = defaultPayVisit;
+		this.skillType = skillType;
+		this.experience = experience;
+		this.payAmount = payAmount;
+		this.typeOfPayAmount = typeOfPayAmount;
+		this.locality = locality;
+		this.hasCertificate = hasCertificate;
 	}
 
 	public Skill getSkill() {
-		return skill;
+		return skillType;
 	}
 	public void setSkill(Skill skill) {
-		this.skill = skill;
-	}
-	public Certificate getCertificate() {
-		return certificate;
-	}
-	public void setCertificate(Certificate certificate) {
-		this.certificate = certificate;
-	}
-	public Education getEducation() {
-		return education;
-	}
-	public void setEducation(Education education) {
-		this.education = education;
+		this.skillType = skill;
 	}
 
-
-	public Double getExperienceYears() {
-		return experienceYears;
+	public Double getDefaultPayVisit() {
+		return defaultPayVisit;
 	}
 
-
-	public void setExperienceYears(Double experienceYears) {
-		this.experienceYears = experienceYears;
+	public void setDefaultPayVisit(Double defaultPayVisit) {
+		this.defaultPayVisit = defaultPayVisit;
 	}
 
-
-	public Double getCompetencyLevel() {
-		if (this.education == null) {
-			return this.recommendation + this.experienceYears;
-		}
-		return this.recommendation + this.experienceYears ;
+	public Skill getSkillType() {
+		return skillType;
 	}
 
-	public void setCompetencyLevel(Double competencyLevel) {
-		this.competencyLevel = competencyLevel;
+	public void setSkillType(Skill skillType) {
+		this.skillType = skillType;
 	}
 
-
-	public List<JobOffer> getJobsAppliedIn() {
-		return jobsAppliedIn;
+	public Double getExperience() {
+		return experience;
 	}
 
-
-	public void setJobsAppliedIn(List<JobOffer> jobsAppliedIn) {
-		this.jobsAppliedIn = jobsAppliedIn;
-	}
-	
-	
-	public Degree getDegree() {
-		return degree;
+	public void setExperience(Double experience) {
+		this.experience = experience;
 	}
 
-
-	public void setDegree(Degree degree) {
-		this.degree = degree;
+	public Double getPayAmount() {
+		return payAmount;
 	}
 
-
-	public Diploma getDiploma() {
-		return diploma;
+	public void setPayAmount(Double payAmount) {
+		this.payAmount = payAmount;
 	}
 
-
-	public void setDiploma(Diploma diploma) {
-		this.diploma = diploma;
+	public String getTypeOfPayAmount() {
+		return typeOfPayAmount;
 	}
 
-
-	public Training getTraining() {
-		return training;
+	public void setTypeOfPayAmount(String typeOfPayAmount) {
+		this.typeOfPayAmount = typeOfPayAmount;
 	}
 
-
-	public void setTraining(Training training) {
-		this.training = training;
+	public String getLocality() {
+		return locality;
 	}
 
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
 
-	// utility method
-	public void applyInThisJob(JobOffer jobOffer) {
-		if (jobsAppliedIn == null) {
-			jobsAppliedIn = new ArrayList<JobOffer>();
-		}
-		jobsAppliedIn.add(jobOffer);
+	public Boolean getHasCertificate() {
+		return hasCertificate;
+	}
+
+	public void setHasCertificate(Boolean hasCertificate) {
+		this.hasCertificate = hasCertificate;
 	}
 	
 }
