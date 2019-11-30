@@ -167,17 +167,20 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 
 			System.out.println(">>>>>>>>>>>>>>> Employee name:" + " " + name + " |  Employee mail:" + " " + email
 					+"| Latitude: " +latitude+ "| Longitude: " +longitude );
-			
-			
-			ret = new Employer(latitude, longitude, name, gender, language, 
-					dateOfBirth, email, faxNumber,telephoneNumber, password, 
-					buildingName, landmark, streetAddress, countryName, postalCode);
-			request.getSession().setAttribute("employer", ret);
+
+			// when passwords match
+			if (password.equals(request.getParameter("password"))) {
+				ret = new Employer(latitude, longitude, name, gender, language, 
+						dateOfBirth, email, faxNumber,telephoneNumber, password, 
+						buildingName, landmark, streetAddress, countryName, postalCode);
+				request.getSession().setAttribute("employer", ret);
+				
+			}
 			
 		} qe3.close();
 
 		
-		System.out.println(">>>>>>>>>>>>> Before ret | Employee name:"  + ret.getName());
+		//System.out.println(">>>>>>>>>>>>> Before ret | Employee name:"  + ret.getName());
 		return ret;
 	}
 

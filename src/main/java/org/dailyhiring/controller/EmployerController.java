@@ -112,6 +112,7 @@ public class EmployerController {
 		EmployerServiceImplUsingJena esj = new EmployerServiceImplUsingJena();
 
 		if (esj.findById(employer.getEmail(), request) != null) {
+			
 
 			request.getSession().setAttribute("employerEmail", employer.getEmail());
 			request.getSession().setAttribute("employerId", employer.getEmail());
