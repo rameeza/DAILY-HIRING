@@ -78,6 +78,15 @@
 					</div>
 				</div>
 		</div>
+				<div class="col-sm-2">
+					<div class="row">
+						<div class="col-sm-6"></div>
+						<a  href="workerProfilePage" class="btn btn-success">Edit Profile</a>
+					</div>
+				</div>
+			
+			<br>
+
 
 		<div style="text-align:center">
 
@@ -85,32 +94,26 @@
 		<h2 >Profile</h2><br>
 		<br>
 		
-		<table class="table table-bordered table-striped table-sm table-dark text-center" 
+		<table class="table table-bordered table-striped table-sm table-dark"
 			style="width:50%; margin: auto">
 		
 		<tbody>
-	<tr><th> ID </th> <td th:text="${session.worker.id}" /></tr> 	
-	<tr><th>First Name </th> <td th:text="${session.worker.firstName}" /></tr> 
-	<tr><th>Last Name </th> <td th:text="${session.worker.lastName}" /></tr>
-	<tr><th>Field Of Work </th> <td th:text="${session.worker.skill.fieldOfWork.name}" /></tr>	
-	<tr><th>Organization </th> <td th:text="${session.worker.organization}" /></tr> 
+	<tr><th>Email </th> <td th:text="${session.worker.email}" /></tr> 	
+	<tr><th>Name </th> <td th:text="${session.worker.name}" /></tr> 
 	<tr><th>Latitude </th> <td th:text="${session.worker.latitude}" />  </tr>
 	<tr><th>Longitude </th> <td th:text="${session.worker.longitude}" />  </tr>
-	<tr><th>Age </th> <td th:text="${session.worker.age}" /> </tr>
+	<tr><th>DOB </th> <td th:text="${session.worker.dateOfBirth}" /> </tr>
 	<tr><th>Gender </th> <td th:text="${session.worker.gender}" /></tr>	 
-	<tr><th>Email </th> <td th:text="${session.worker.email}" />  </tr>
-	<tr><th>Phone-No </th> <td th:text="${session.worker.phoneNo}" /> </tr>
-	<tr><th>Address </th> <td th:text="${session.worker.address}" /> </tr>
-	<tr><th>Degree </th> <td th:text="${session.worker.degree.name}" /> </tr>
-	<tr><th>Diploma </th> <td th:text="${session.worker.diploma.name}" /> </tr>
-	<tr><th>Training </th> <td th:text="${session.worker.training.name}" /> </tr>		
-<!-- 	<tr><th>Education (Years) </th> <td th:text="${session.worker.education}" /> </tr>	 -->
-	<tr><th>Work-Experience (Years) </th> <td th:text="${session.worker.experienceYears}" /> </tr>
-<!-- 	<tr><th>Recommendation </th> <td th:text="${session.worker.recommendation}" /> </tr>
-	<tr><th>Competency-Level </th> <td th:text="${session.worker.competencyLevel}" /> </tr>
- -->	
+	<tr><th>Phone-No </th> <td th:text="${session.worker.telephoneNumber}" /> </tr>
+	<tr><th>Fax-No </th> <td th:text="${session.worker.faxNumber}" /> </tr>
+	<tr><th>Building-Name </th> <td th:text="${session.worker.address.buildingName}" /> </tr>
+	<tr><th>Landmark </th> <td th:text="${session.worker.address.landmark}" /> </tr>
+	<tr><th>Street-Address </th> <td th:text="${session.worker.address.streetAddress}" /> </tr>
+	<tr><th>Country </th> <td th:text="${session.worker.address.countryName}" /> </tr>
+	<tr><th>Postal-Code </th> <td th:text="${session.worker.address.postalCode}" /> </tr>
 			</tbody>
 		</table>
+
 		</div>
 		<hr>
 				 	

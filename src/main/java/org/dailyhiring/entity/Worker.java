@@ -11,92 +11,29 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Worker extends Person {
-	private Double defaultPayVisit;
 	@OneToOne(cascade = {CascadeType.ALL})
-	private Skill skillType;
-	private Double experience;	// years
-	private Double payAmount;	
-	private String typeOfPayAmount;
-	private String locality;
-	private Boolean hasCertificate;
+	private Address address;
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	
 	public Worker() {
 		super();
 	}
 
-	public Worker(Double defaultPayVisit, Skill skillType, Double experience, Double payAmount, String typeOfPayAmount,
-			String locality, Boolean hasCertificate) {
-		super();
-		this.defaultPayVisit = defaultPayVisit;
-		this.skillType = skillType;
-		this.experience = experience;
-		this.payAmount = payAmount;
-		this.typeOfPayAmount = typeOfPayAmount;
-		this.locality = locality;
-		this.hasCertificate = hasCertificate;
+	
+	public Worker(Double latitude, Double longitude, String name, String gender, String language,
+			String dateOfBirth, String email, String faxNumber, String telephoneNumber, String password,
+			String buildingName, String landmark, String streetAddress, String countryName, String postalCode) {
+		super(latitude, longitude, name, gender, language, dateOfBirth, email, faxNumber, telephoneNumber, password);
+		Address address = new Address(buildingName, landmark, streetAddress, countryName, postalCode);
+		this.setAddress(address);
 	}
 
-	public Skill getSkill() {
-		return skillType;
-	}
-	public void setSkill(Skill skill) {
-		this.skillType = skill;
-	}
-
-	public Double getDefaultPayVisit() {
-		return defaultPayVisit;
-	}
-
-	public void setDefaultPayVisit(Double defaultPayVisit) {
-		this.defaultPayVisit = defaultPayVisit;
-	}
-
-	public Skill getSkillType() {
-		return skillType;
-	}
-
-	public void setSkillType(Skill skillType) {
-		this.skillType = skillType;
-	}
-
-	public Double getExperience() {
-		return experience;
-	}
-
-	public void setExperience(Double experience) {
-		this.experience = experience;
-	}
-
-	public Double getPayAmount() {
-		return payAmount;
-	}
-
-	public void setPayAmount(Double payAmount) {
-		this.payAmount = payAmount;
-	}
-
-	public String getTypeOfPayAmount() {
-		return typeOfPayAmount;
-	}
-
-	public void setTypeOfPayAmount(String typeOfPayAmount) {
-		this.typeOfPayAmount = typeOfPayAmount;
-	}
-
-	public String getLocality() {
-		return locality;
-	}
-
-	public void setLocality(String locality) {
-		this.locality = locality;
-	}
-
-	public Boolean getHasCertificate() {
-		return hasCertificate;
-	}
-
-	public void setHasCertificate(Boolean hasCertificate) {
-		this.hasCertificate = hasCertificate;
-	}
 	
 }

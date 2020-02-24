@@ -29,13 +29,13 @@
 		<form action="#" th:action="@{/loginWorker}" th:object="${worker}"
 			method="post">
 			<div class="form-group row">
-				<label style="visibility:hidden" for="id" class="col-sm-2 col-form-label">Worker ID:</label>
+				<label style="visibility:hidden" for="email" class="col-sm-2 col-form-label">Worker Email:</label>
 				<div class="col-sm-3">
-					<input type="number" class="form-control" id="id"
-						placeholder="Enter worker ID" name="id" th:field="*{id}">
+					<input type="email" class="form-control" id="email"
+						placeholder="Enter email ID" name="id" th:field="*{email}">
 				</div>
-				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('id')}"
-					th:errors="*{id}">Id Error</div>
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
+					th:errors="*{email}">Email Error</div>
 			</div>
 
 			<div class="form-group row">

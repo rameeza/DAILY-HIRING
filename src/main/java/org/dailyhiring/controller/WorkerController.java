@@ -11,8 +11,10 @@ import org.dailyhiring.entity.Education;
 import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.entity.Worker;
+import org.dailyhiring.service.EmployerServiceImplUsingJena;
 import org.dailyhiring.service.JobOfferService;
 import org.dailyhiring.service.WorkerService;
+import org.dailyhiring.service.WorkerServiceImplUsingJena;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,29 +47,22 @@ public class WorkerController {
 	@PostMapping("/loginWorker")
 	public String checkWorkerLoginInfo(@Valid Worker worker, 
 			BindingResult bindingResult, HttpServletRequest request) {
+		
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-login-form";
 		}
-		Worker tempWorker= workerService.
-				findById(worker.getId());
-		if (tempWorker == null) {
-			return "worker/worker-login-failure";
-		}
-		if (tempWorker.getPassword().equals(worker.getPassword())) {
-			request.getSession().setAttribute("workerEmail", tempWorker.getEmail());
-			/*
-				put worker in session as once redirected, it can't be 
-				accessed using model. id of worker is required in home page.
-			*/
-			request.getSession().setAttribute("worker", tempWorker);
+
+		WorkerServiceImplUsingJena wsj = new WorkerServiceImplUsingJena();
+
+		if (wsj.findById(worker.getEmail(), request) != null) {
+			request.getSession().setAttribute("workerEmail", worker.getEmail());
+			
 			request.getSession().setMaxInactiveInterval(300); // In seconds
-			/*
-			 PRG(post/redirect/get) pattern -> 
-				redirect to avoid multiple form submissions on page refresh
-			*/	
+
 			return "redirect:/workerHomePage";		
 		}
 		return "worker/worker-login-failure";
+
 	}
 
 
@@ -123,7 +118,8 @@ public class WorkerController {
 			return "worker/worker-registration-form";
 		}
 		
-		if (registerWorker(worker) != null) {
+		WorkerServiceImplUsingJena esj = new WorkerServiceImplUsingJena();
+		if (esj.save(worker) != null) {
 			return "worker/worker-registration-successful";
 		} else {
 			return "registration-failure";

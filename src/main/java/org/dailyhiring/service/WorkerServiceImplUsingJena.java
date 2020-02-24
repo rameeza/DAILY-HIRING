@@ -3,55 +3,59 @@ package org.dailyhiring.service;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Resource;
-
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdfconnection.RDFConnectionFuseki;
 import org.apache.jena.rdfconnection.RDFConnectionRemoteBuilder;
-import org.dailyhiring.dao.EmployerRepository;
-import org.dailyhiring.entity.Employer;
-import org.dailyhiring.entity.Person;
+import org.dailyhiring.dao.JobOfferRepository;
+import org.dailyhiring.dao.WorkerRepository;
+import org.dailyhiring.entity.Worker;
+import org.dailyhiring.entity.Worker;
+import org.dailyhiring.entity.JobOffer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-public class EmployerServiceImplUsingJena implements EmployerService{
-	private EmployerRepository employerRepository;
+public class WorkerServiceImplUsingJena implements WorkerService {
+	private WorkerRepository workerRepository;
 	private static RDFConnectionRemoteBuilder builder = RDFConnectionFuseki.create()
 			.destination("http://localhost:3030/dh");
 
+	
 	@Autowired
-	public EmployerServiceImplUsingJena(EmployerRepository employerRepository) {
-		this.employerRepository = employerRepository;
+	private JobOfferRepository jobOfferRepository;
+
+	public WorkerServiceImplUsingJena() {
+		super();
 	}
 
+	@Autowired
+	public WorkerServiceImplUsingJena(WorkerRepository workerRepository) {
+		this.workerRepository = workerRepository;
+	}
+	
+	
 	@Override
-	public Employer save(Employer employer) {
-		String name = employer.getName();
-		String email = employer.getEmail();
-		String gender = employer.getGender();
-		String dateOfBirth = employer.getDateOfBirth();
-		String language = employer.getLanguage();
-		Double latitude = employer.getLatitude();
-		Double longitude = employer.getLongitude();
-		String password = employer.getPassword();
-		String telephone = employer.getTelephoneNumber();
-		String fax = employer.getFaxNumber();
-		String buildingName = employer.getAddress().getBuildingName();
-		String identifier = "http://purl.org/dh/0.1/"+employer.getEmail();
-		String landmark = employer.getAddress().getLandmark();
-		String streetAddress = employer.getAddress().getStreetAddress();
-		String locality = employer.getAddress().getLocality();
-		String state = employer.getAddress().getState();
-		String countryName = employer.getAddress().getCountryName();
-		String postalCode = employer.getAddress().getPostalCode();
+	public Worker save(Worker worker) {
+		String name = worker.getName();
+		String email = worker.getEmail();
+		String gender = worker.getGender();
+		String dateOfBirth = worker.getDateOfBirth();
+		String language = worker.getLanguage();
+		Double latitude = worker.getLatitude();
+		Double longitude = worker.getLongitude();
+		String password = worker.getPassword();
+		String telephone = worker.getTelephoneNumber();
+		String fax = worker.getFaxNumber();
+		String buildingName = worker.getAddress().getBuildingName();
+		String identifier = "http://purl.org/dh/0.1/"+worker.getEmail();
+		String landmark = worker.getAddress().getLandmark();
+		String streetAddress = worker.getAddress().getStreetAddress();
+		String locality = worker.getAddress().getLocality();
+		String state = worker.getAddress().getState();
+		String countryName = worker.getAddress().getCountryName();
+		String postalCode = worker.getAddress().getPostalCode();
 		System.out.println(latitude);
 		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
 			conn.update("PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>"
@@ -86,30 +90,49 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 			
 			}
 				
-				
-				//employerRepository.save(employer);
-		return new Employer();
-	}
+			//workerRepository.save(worker);
+		return new Worker();
 
-
-	public EmployerServiceImplUsingJena() {
-		super();
+	
+	
 	}
 
 	@Override
-	public Employer findById(int theId) {
-		Employer ret = null;
-		Optional<Employer> optionalEmployer =  employerRepository.
+	public Worker findById(int theId) {
+		Worker ret = null;
+		Optional<Worker> optionalWorker =  workerRepository.
 				findById(theId);
-		if (optionalEmployer.isPresent()) {
-			ret = optionalEmployer.get();
+		if (optionalWorker.isPresent()) {
+			ret = optionalWorker.get();
 		}
 		return ret;
+
 	}
 
-	
-	public Employer findById(String emailId, HttpServletRequest request) {
-		Employer ret = null;
+	@Override
+	public void applyInJob(Integer workerId, Integer theJobId) {
+		Worker worker = null;
+		Optional<Worker> optionalWorker =  workerRepository.
+				findById(workerId);
+		if (optionalWorker.isPresent()) {
+			worker = optionalWorker.get();
+		}
+		
+		JobOffer jobOffer = null;
+		Optional<JobOffer> optionalJobOffer =  jobOfferRepository.
+				findById(theJobId);
+		if (optionalJobOffer.isPresent()) {
+			jobOffer = optionalJobOffer.get();
+		}		
+		
+		
+		jobOffer.addApplicantWorker(worker);
+		jobOfferRepository.save(jobOffer);
+		
+	}
+
+	public Worker findById(String emailId, HttpServletRequest request) {
+		Worker ret = null;
 		String identifier = "<http://purl.org/dh/0.1/"+emailId+">";
 		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query","PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + 
 				"PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n" + 
@@ -157,80 +180,19 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 			String countryName = sln.getLiteral("countryName").toString();
 			String postalCode = sln.getLiteral("postalCode").toString();
 
-			System.out.println(">>>>>>>>>>>>>>> Employee name:" + " " + name + " |  Employee mail:" + " " + email
-					+"| Latitude: " +latitude+ "| Longitude: " +longitude );
 
 			// when passwords match
 			if (password.equals(request.getParameter("password"))) {
-				ret = new Employer(latitude, longitude, name, gender, language, 
+				ret = new Worker(latitude, longitude, name, gender, language, 
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, countryName, postalCode);
-				request.getSession().setAttribute("employer", ret);
+				request.getSession().setAttribute("worker", ret);
 				
 			}
 			
 		} qe3.close();
 
-		
-		//System.out.println(">>>>>>>>>>>>> Before ret | Employee name:"  + ret.getName());
 		return ret;
 	}
-
-
-	public boolean isAuthenticEmployer(@Valid Employer employer) {
-		String email = employer.getEmail();
-		String password = employer.getPassword();
-		String identifier = "http://purl.org/dh/0.1/"+employer.getEmail();
-		boolean ret = false;
-		
-		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
-		//conn.queryResultSet("SELECT ?s WHERE { ?s <http://xmlns.com/foaf/0.1/mbox> '"+email+"' . ?s <http://purl.org/dh/0.1/password> '"+password+"' }", ResultSetFormatter::out);
-		 ret = conn.queryAsk("ASK { ?s <http://xmlns.com/foaf/0.1/mbox> '"+email+"' . ?s <http://purl.org/dailyhire/0.1/password> '"+password+"' }");
-		}
-
-		/*
-		 * try (RDFConnectionFuseki conn2 = (RDFConnectionFuseki)builder.build() ){
-		 * conn2.
-		 * querySelect("SELECT DISTINCT ?name ?email ?gender ?dateOfBirth  ?language ?latitude ?longitude ?telephone ?faxNumber ?password ?buildingName ?landmark ?streetAddress ?locality ?state ?countryName ?postalCode"
-		 * + "WHERE {?s ?p ?o ." +
-		 * "<"+identifier+"> <http://xmlns.com/foaf/0.1/name> ?name . " +
-		 * "<"+identifier+">  <http://xmlns.com/foaf/0.1/mbox> ?email . " +
-		 * "<"+identifier+"> <http://xmlns.com/foaf/0.1/gender> ?gender . " +
-		 * "<"+identifier+">  <http://www.w3.org/2006/vcard/ns#bday> '?dateOfBirth ." +
-		 * "<"+identifier+">  <http://purl.org/dc/terms/language> ?language ." +
-		 * "<"+identifier+">  <http://purl.org/dailyhire/0.1/latitude> ?latitude ." +
-		 * "<"+identifier+">  <http://purl.org/dailyhire/0.1/longitude> ?longitude  ." +
-		 * "<"+identifier+">  <http://schema.org/telephone> ?telephone ." +
-		 * "<"+identifier+">  <http://schema.org/faxNumber> ?faxNumber ." +
-		 * "<"+identifier+">  <http://purl.org/dailyhire/0.1/password> ?password ." +
-		 * "<"+
-		 * identifier+">  <http://purl.org/dailyhire/0.1/buildingName> ?buildingName ."
-		 * + "<"+identifier+">  <http://purl.org/dailyhire/0.1/landmark> ?landmark ." +
-		 * "<"+identifier+">  <http://rdfs.co/juso/full_address> ?streetAddress . " +
-		 * "<"+identifier+">  <http://www.w3.org/2006/vcard/ns#locality> ?locality ." +
-		 * "<"+identifier+">  <http://purl.org/essglobal/vocab/state> ?state ." +
-		 * "<"+identifier+">  <http://rdfs.co/juso/country-name> ?countryName . " + "<"+
-		 * identifier+">  <http://www.w3.org/2006/vcard/ns#postal-code> ?postalCode . }"
-		 * , (qs)->{ Resource objectName = qs.getResource("name");
-		 * System.out.println("Employee name:" +objectName); }); }
-		 */
-		
-		
-
-		try (RDFConnectionFuseki conn2 = (RDFConnectionFuseki)builder.build() ){
-			conn2.querySelect("SELECT DISTINCT ?name"
-					+ "WHERE {?s ?p ?o ."
-					+ "<"+identifier+"> <http://xmlns.com/foaf/0.1/name> ?name . }", (qs)->{
-					Literal objectName = qs.getLiteral("name");
-					
-					System.out.println("Employee name:" +objectName);
-					});
-		}
-		
-		
-		System.out.println("ret is = " + ret);
-		return ret;
-	}
-
 
 }
