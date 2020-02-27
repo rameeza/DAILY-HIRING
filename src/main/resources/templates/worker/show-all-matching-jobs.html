@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>Worker Home Page</title>
+<title>show jobs</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,8 @@
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
 <link rel="stylesheet" 
 	href="bootstrap-4.3.1-dist/css/bootstrap.min.css">	
-<link rel="stylesheet" href="style.css">  	
+<link rel="stylesheet" href="style.css">
+  	
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script 
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -22,8 +23,8 @@
 </head>
 
 <body onload="getLocation()">
+	<p id="demo"></p>
 
-<p id="demo"></p>
 
 	<!-- redirect if session expired -->
 	<div th:if = "${session.workerEmail == null}"> 
@@ -31,7 +32,6 @@
     			window.location.replace("http://localhost:8080/loginWorker");
 			</script>
 	</div>
-
 
 		<!-- Create Menubar-->
 		
@@ -56,15 +56,9 @@
 		    </ul>
 
 		</nav>		
+		
 
-
-	<!-- 
-		following part won't be shown if session has expired. thus, 
-		no exception while rendering session.worker.id  
-	-->
-	
-	<div class="container-fluid" th:if = "${session.workerEmail != null}" >
-	
+	<div class="container-fluid">
 	<!-- show email (of worker logged in) and logout button -->
 
 		<div class="row">
@@ -78,33 +72,46 @@
 					</div>
 				</div>
 		</div>
+	
+			<br>
+			<h2 style="text-align:center">Available jobs</h2><br>
+	<hr>
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Job ID</th>
+				<th>Employer Email</th>
+				<th>Appointment-Description</th>
+				<th>No-Of-Openings</th>
+				<th>Job-Starts</th>
+				<th>Job-Ends</th>
+				<th>Payment-Type</th>
+				<th>Payment-Mode</th>
+				<th>Rating required</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tempJob : ${jobs}">
+			
+				<td th:text="${tempJob.jobIdInFuseki}" />	
+				<td th:text="${tempJob.employerEmail}" />	
+				<td th:text="${tempJob.appointmentDescription}" />	
+				<td th:text="${tempJob.jobOpenings}" />	
+				<td th:text="${tempJob.jobStarts}" />	
+				<td th:text="${tempJob.jobEnds}" />	
+				<td th:text="${tempJob.paymentType}" />	
+				<td th:text="${tempJob.paymentMode}" />	
+				<td th:text="${tempJob.ratingRequired}" />	
+				<td ><a th:href = "@{/applyInThisJob(jobIdInFuseki=${tempJob.jobIdInFuseki})}">Apply</a></td>
+			</tr>
+		</tbody>		
+	</table>
+	
 
-		<div style="text-align:center">
 
-		<br>
-		<h2 >Home Page</h2><br>
-		<br>
-
-
-			<!-- Add button/link to show all Jobs-->
-<!-- 		<a href="showAllJobs" class="btn btn-info btn-sm">
-			show All Jobs
-		</a>
-		<hr>
- -->
-			<!-- Add button/link to show all matching Jobs (certificate, fieldOfWork)
-			and are within 50km distance.-->
-		<a th:href="@{/showAllMatchingJobs(workerEmail=${session.workerEmail})}"
-		   class="btn btn-info btn-sm">
-			Show All Matching Jobs
-		</a>
-		<hr>
-
-
-		
-		</div>		 	
- </div>
- 	<script>
+	</div>
+	<script>
 	var x = document.getElementById("demo");
 	
 	
@@ -151,7 +158,7 @@
 	}
 	
 	</script>
- 
- 
+	
+	
 </body>
 </html>

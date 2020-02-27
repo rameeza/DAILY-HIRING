@@ -11,6 +11,7 @@ import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.service.EmployerService;
 import org.dailyhiring.service.EmployerServiceImplUsingJena;
 import org.dailyhiring.service.JobOfferService;
+import org.dailyhiring.service.JobOfferServiceImplUsingJena;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.dailyhiring.entity.Employer;
+
 @Controller
 public class EmployerController {
 	@Autowired
 	private JobOfferService jobOfferService;
 
+	@Autowired
+	private JobOfferService jobOfferServiceForJena;
+	
 	@Autowired
 	private EmployerService employerService;
 
@@ -56,9 +62,13 @@ public class EmployerController {
 	@GetMapping("/employerPostedJobsPage")
 	public String showEmployerPostedJobsPage(HttpServletRequest request, Model theModel) {
 
-		List<JobOffer> theJobOffers = jobOfferService
-				.findAllJobsPostedBy(((Employer) request.getSession().getAttribute("employer")).getId());
+		//List<JobOffer> theJobOffers = jobOfferService
+			//	.findAllJobsPostedBy(((Employer) request.getSession().getAttribute("employer")).getId());
 
+		Employer employer = (Employer) request.getSession().getAttribute("employer");
+		JobOfferServiceImplUsingJena jOSImplUsingJena = new JobOfferServiceImplUsingJena();
+		List<JobOffer> theJobOffers =  jOSImplUsingJena.findAllJobsPostedBy(employer, request);
+		
 		// add jobs to the spring model
 		theModel.addAttribute("jobs", theJobOffers);
 		return "employer/employer-posted-jobs-page";
@@ -140,6 +150,7 @@ public class EmployerController {
 		return "employer/employer-registration-form";
 	}
 
+	
 	@PostMapping("/registerEmployer")
 	public String checkEmployerRegistrationInfo(@Valid Employer employer, BindingResult bindingResult) {
 		System.out.println("\t\t>>>>>>>>>>>>" + this.getClass());
@@ -156,6 +167,8 @@ public class EmployerController {
 		}
 	}
 
+	
+	
 	private Object registerEmployer(@Valid Employer employer) {
 		Employer retEmployer = employerService.save(employer);
 		log.info("----------------User saved : " + retEmployer + "---------------");

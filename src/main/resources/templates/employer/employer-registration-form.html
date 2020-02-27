@@ -55,6 +55,32 @@
 				</div>
 
 
+
+<!-- email -->
+				<div class="form-group row">
+					<label  for="email" class="col-sm-2 col-form-label">Email:</label>
+					<div class="col-sm-3">
+						<input type="email" class="form-control" id="email"
+							placeholder="Enter email" name="email" th:field="*{email}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
+						th:errors="*{email}">Email Error</div>
+				</div>
+
+<!-- password -->
+			<div class="form-group row">
+				<label   for="password" class="col-sm-2 col-form-label">Password:</label>
+				<div class="col-sm-3">
+					<input type="password" class="form-control" id="password"
+						placeholder="Enter password" name="password"
+						th:field="*{password}">
+				</div>
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}">Password Error</div>
+			</div>
+
+
+
 <!-- gender -->
 			<div class="form-group row">
 				<label  for="gender" class="col-sm-2 col-form-label">Gender:</label>
@@ -101,18 +127,6 @@
 
 
 
-<!-- email -->
-				<div class="form-group row">
-					<label  for="email" class="col-sm-2 col-form-label">Email:</label>
-					<div class="col-sm-3">
-						<input type="email" class="form-control" id="email"
-							placeholder="Enter email" name="email" th:field="*{email}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
-						th:errors="*{email}">Email Error</div>
-				</div>
-
-
 <!-- faxNumber -->
 				<div class="form-group row">
 					<label  for="faxNumber" class="col-sm-2 col-form-label">Fax Number:</label>
@@ -138,18 +152,6 @@
 						th:errors="*{telephoneNumber}">TelephoneNumber Error</div>
 				</div>
 
-
-<!-- password -->
-			<div class="form-group row">
-				<label   for="password" class="col-sm-2 col-form-label">Password:</label>
-				<div class="col-sm-3">
-					<input type="password" class="form-control" id="password"
-						placeholder="Enter password" name="password"
-						th:field="*{password}">
-				</div>
-				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
-					th:errors="*{password}">Password Error</div>
-			</div>
 
 
 <!-- address.buildingName -->

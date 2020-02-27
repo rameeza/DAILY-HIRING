@@ -170,6 +170,39 @@ WHERE {
 }
 
 
+12)
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+SELECT *
+WHERE {
+  ?jobId foaf:mbox ?employerEmail .
+  ?jobId dh:appointmentDescription ?appointmentDescription .
+  ?jobId dh:jobOpenings ?jobOpenings .
+  ?jobId dh:jobStarts ?jobStarts . 
+  ?jobId dh:jobEnds ?jobEnds .
+  ?jobId dh:ratingRequired ?ratingRequired .
+  ?jobId dh:paymentType ?paymentType .
+  ?jobId dh:paymentMode ?paymentMode .
+}
+
+13)
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+SELECT *
+WHERE {
+  ?jobId dh:jobOfferId ?jobIdInFuseki .
+  ?jobId foaf:mbox ?employerEmail .
+  ?jobId dh:appointmentDescription ?appointmentDescription .
+  ?jobId dh:jobOpenings ?jobOpenings .
+  ?jobId dh:jobOpeningsAlreadyFilled ?jobOpeningsAlreadyFilled .
+  ?jobId dh:jobStarts ?jobStarts . 
+  ?jobId dh:jobEnds ?jobEnds .
+  ?jobId dh:ratingRequired ?ratingRequired .
+  ?jobId dh:paymentType ?paymentType .
+  ?jobId dh:paymentMode ?paymentMode .
+}
 
 
 

@@ -18,25 +18,29 @@ public class JobOffer {
 	@Id
 	@GeneratedValue
 	private Integer jobId;
-	private String jobTitle;
-	private String responsibility; // refers to all responsibilities associated with job.
+	
+	private Integer jobIdInFuseki;
+	private String employerEmail;
+	private String appointmentDescription;
+
+	private static Integer jobOfferId = (int)(Math.random()*100000); 
+	
 	@NotNull
 	private Integer jobOpenings;
 	private Integer jobOpeningsAlreadyFilled;	
 	private String datePosted; // date on which job was posted
 	@NotNull
-	private Double workHours; // no. of hours of work required per day.
-	@NotNull
-	private String validThrough; // date up to which the job is valid
-	private String currency; // in which payment wll be made
-	@NotNull
-	private Double experienceYears; // years
+	private String jobStarts; // date when the job starts
 	
-	// recommendation is out of 10 (it is no. of stars given in feedback)
-	private Integer recommendation;
+	@NotNull
+	private String jobEnds; // date when the job starts
+
+	private String paymentType; 
+	private String paymentMode; // in which payment will be made
 	
-	// competencyLevel is out of 30. it is 'recommendation + education + experience' 
-	private Double competencyLevel;
+	@NotNull
+	private Double ratingRequired; // 0 - 5 
+	
 
 	/*
 	 * @OneToOne (mappedBy = "jobOffer") private Employer employer; // todo - make
@@ -45,9 +49,31 @@ public class JobOffer {
 	 * public Employer getEmployer() { return employer; } public void
 	 * setEmployer(Employer employer) { this.employer = employer; }
 	 */
+	
+	
+	
+	
 
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	private Employer employer;
+
+	
+	// Constructor used by Service implementation using Fuseki
+	public JobOffer(Integer jobIdInFuseki, String appointmentDescription, @NotNull Integer jobOpenings,
+			Integer jobOpeningsAlreadyFilled, @NotNull String jobStarts, @NotNull String jobEnds, String paymentMode,
+			String paymentType, String employerEmail, @NotNull Double ratingRequired) {
+		super();
+		this.jobIdInFuseki = jobIdInFuseki;
+		this.appointmentDescription = appointmentDescription;
+		this.jobOpenings = jobOpenings;
+		this.jobOpeningsAlreadyFilled = jobOpeningsAlreadyFilled;
+		this.jobStarts = jobStarts;
+		this.jobEnds = jobEnds;
+		this.paymentMode = paymentMode;
+		this.paymentType = paymentType;
+		this.employerEmail = employerEmail;
+		this.ratingRequired = ratingRequired;
+	}
 
 	public Employer getEmployer() {
 		return employer;
@@ -83,6 +109,31 @@ public class JobOffer {
 		this.degree = degree;
 	}
 
+	
+	public String getEmployerEmail() {
+		return employerEmail;
+	}
+
+	public void setEmployerEmail(String employerEmail) {
+		this.employerEmail = employerEmail;
+	}
+
+	public Double getRatingRequired() {
+		return ratingRequired;
+	}
+
+	public void setRatingRequired(Double ratingRequired) {
+		this.ratingRequired = ratingRequired;
+	}
+
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+
 	public Diploma getDiploma() {
 		return diploma;
 	}
@@ -114,41 +165,31 @@ public class JobOffer {
 
 	public JobOffer() {
 		super();
+		this.jobIdInFuseki = this.jobOfferId++; 
 
 	}
 
-	public JobOffer(String jobTitle, String responsibility, Integer jobOpenings, String datePosted, Double workHours,
-			String validThrough, String currency, Double experienceYears, Integer recommendation,
+	public JobOffer(String appointmentDescription, String responsibility, Integer jobOpenings, String datePosted, Double workHours,
+			String validThrough, String paymentType, Double ratingRequired, Integer recommendation,
 			Double competencyLevel, Education education) {
 		super();
-		this.jobTitle = jobTitle;
-		this.responsibility = responsibility;
+		this.appointmentDescription = appointmentDescription;
 		this.jobOpenings = jobOpenings;
 		this.datePosted = datePosted;
-		this.workHours = workHours;
-		this.validThrough = validThrough;
-		this.currency = currency;
-		this.experienceYears = experienceYears;
-		this.recommendation = recommendation;
-		this.competencyLevel = competencyLevel;
+		this.jobStarts = validThrough;
+		this.paymentType = paymentType;
+		this.ratingRequired = ratingRequired;
 		this.education = education;
 	}
 
-	public String getJobTitle() {
-		return jobTitle;
+	public String getAppointmentDescription() {
+		return appointmentDescription;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setAppointmentDescription(String appointmentDescription) {
+		this.appointmentDescription = appointmentDescription;
 	}
 
-	public String getResponsibility() {
-		return responsibility;
-	}
-
-	public void setResponsibility(String responsibility) {
-		this.responsibility = responsibility;
-	}
 
 	public Integer getJobOpenings() {
 		return jobOpenings;
@@ -166,28 +207,31 @@ public class JobOffer {
 		this.datePosted = datePosted;
 	}
 
-	public Double getWorkHours() {
-		return workHours;
+
+	
+	
+	public Integer getJobIdInFuseki() {
+		return jobIdInFuseki;
 	}
 
-	public void setWorkHours(Double workHours) {
-		this.workHours = workHours;
+	public void setJobIdInFuseki(Integer jobIdInFuseki) {
+		this.jobIdInFuseki = jobIdInFuseki;
 	}
 
-	public String getCurrency() {
-		return currency;
+	public static Integer getJobOfferId() {
+		return jobOfferId;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
+	public static void setJobOfferId(Integer jobOfferId) {
+		JobOffer.jobOfferId = jobOfferId;
 	}
 
-	public Double getexperienceYears() {
-		return experienceYears;
+	public String getPaymentType() {
+		return paymentType;
 	}
 
-	public void setexperienceYears(Double experienceYears) {
-		this.experienceYears = experienceYears;
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
 	public FieldOfWork getFieldOfWork() {
@@ -222,36 +266,29 @@ public class JobOffer {
 		this.jobId = jobId;
 	}
 
-	public String getValidThrough() {
-		return validThrough;
+	
+	public String getJobStarts() {
+		return jobStarts;
 	}
 
-	public void setValidThrough(String validThrough) {
-		this.validThrough = validThrough;
+	public void setJobStarts(String jobStarts) {
+		this.jobStarts = jobStarts;
+	}
+
+	public String getJobEnds() {
+		return jobEnds;
+	}
+
+	public void setJobEnds(String jobEnds) {
+		this.jobEnds = jobEnds;
 	}
 
 	public Double getExperienceYears() {
-		return experienceYears;
+		return ratingRequired;
 	}
 
-	public void setExperienceYears(Double experienceYears) {
-		this.experienceYears = experienceYears;
-	}
-
-	public Integer getRecommendation() {
-		return recommendation;
-	}
-
-	public void setRecommendation(Integer recommendation) {
-		this.recommendation = recommendation;
-	}
-
-	public Double getCompetencyLevel() {
-		return competencyLevel;
-	}
-
-	public void setCompetencyLevel(Double competencyLevel) {
-		this.competencyLevel = competencyLevel;
+	public void setExperienceYears(Double ratingRequired) {
+		this.ratingRequired = ratingRequired;
 	}
 
 	public List<Worker> getApplicantWorkers() {

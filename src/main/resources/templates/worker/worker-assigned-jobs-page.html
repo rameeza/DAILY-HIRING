@@ -82,47 +82,38 @@
 		<div style="text-align:center">
 
 		<br>
-		<h2 >Jobs Assigned to Me</h2><br>
+		<h2 >Jobs I have Applied In</h2><br>
 	
-		<hr>
+	<hr>
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
 				<th>Job ID</th>
-				<th>Employer ID</th>
-				<th>Field of work</th>
-				<th>Title</th>
-				<th>Responsibility</th>
-				<th>Openings</th>
-				<th>Work Hours</th>
-				<th>Experience required</th>
-				<th>Certificate required</th>
-				<th>Degree required</th>
-				<th>Diploma required</th>
-				<th>Training required</th>
-
+				<th>Employer Email</th>
+				<th>Appointment-Description</th>
+				<th>No-Of-Openings</th>
+				<th>Job-Starts</th>
+				<th>Job-Ends</th>
+				<th>Payment-Type</th>
+				<th>Payment-Mode</th>
+				<th>Rating required</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="tempJob : ${jobs}">
 			
-				<td th:text="${tempJob.jobId}" />	
-				<td th:text="${tempJob.employer.id}" />	
-				<td th:text="${tempJob.fieldOfWork.name}" />	
-				<td th:text="${tempJob.jobTitle}" />	
-				<td th:text="${tempJob.responsibility}" />	
+				<td th:text="${tempJob.jobIdInFuseki}" />	
+				<td th:text="${tempJob.employerEmail}" />	
+				<td th:text="${tempJob.appointmentDescription}" />	
 				<td th:text="${tempJob.jobOpenings}" />	
-				<td th:text="${tempJob.workHours}" />	
-				<td th:text="${tempJob.experienceYears}" />	
-				<td th:text="${tempJob.certificate.name}" />	
-				<td th:text="${tempJob.degree.name}" />
-				<td th:text="${tempJob.diploma.name}" />
-				<td th:text="${tempJob.training.name}" />
-
+				<td th:text="${tempJob.jobStarts}" />	
+				<td th:text="${tempJob.jobEnds}" />	
+				<td th:text="${tempJob.paymentType}" />	
+				<td th:text="${tempJob.paymentMode}" />	
+				<td th:text="${tempJob.ratingRequired}" />	
 			</tr>
 		</tbody>		
 	</table>
-			
 
 		
 		</div>		 	

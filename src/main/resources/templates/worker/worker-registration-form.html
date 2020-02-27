@@ -54,6 +54,138 @@
 				</div>
 
 
+<!-- email -->
+				<div class="form-group row">
+					<label  for="email" class="col-sm-2 col-form-label">Email:</label>
+					<div class="col-sm-3">
+						<input type="email" class="form-control" id="email"
+							placeholder="Enter email" name="email" th:field="*{email}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
+						th:errors="*{email}">Email Error</div>
+				</div>
+
+
+<!-- password -->
+			<div class="form-group row">
+				<label   for="password" class="col-sm-2 col-form-label">Password:</label>
+				<div class="col-sm-3">
+					<input type="password" class="form-control" id="password"
+						placeholder="Enter password" name="password"
+						th:field="*{password}">
+				</div>
+				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}">Password Error</div>
+			</div>
+
+
+<!-- defaultPayVisit -->
+				<div class="form-group row">
+					<label  for="defaultPayVisit" class="col-sm-2 col-form-label">DefaultPayVisit (per day):</label>
+					<div class="col-sm-3">
+						<input type="number" class="form-control" id="defaultPayVisit"
+							placeholder="Enter Default-Pay-Visit" name="defaultPayVisit" th:field="*{defaultPayVisit}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('defaultPayVisit')}"
+						th:errors="*{defaultPayVisit}">DefaultPayVisit Error</div>
+				</div>
+
+<!-- skillType -->
+				<div class="form-group row">
+					<label for="skillType" class="col-sm-2 col-form-label">
+						Skill-Type (*):
+					</label>
+
+				<div class="col-sm-3"> 
+				<select
+					class="form-control" id="skillType" name="skillType" 
+						th:field="*{skillType}">
+					<option value="Construction">Construction</option>
+					<option value="Driver">Driver</option>
+					<option value="Painter">Painter</option>
+					<option value="Plumbery">Plumbery</option>
+					<option value="Security">Security</option>
+					<option value="Cook">Cook</option>
+					<option value="Carpenter">Carpenter</option>
+					<option value="Labourer">Labourer</option>
+					<option value="Watchman">Watchman</option>
+				</select>
+				</div>
+
+				<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('skillType')}"
+					th:errors="*{skillType}">SkillType Error</div>
+				</div>
+
+<!-- experience -->
+				<div class="form-group row">
+					<label for="experience" class="col-sm-2 col-form-label">
+							Experience in Yrs:</label>
+					<div class="col-sm-3">
+						<input type="number" placeholder="1.00" step="0.01" min="0" max="100" 
+							class="form-control" id="experience"
+							 name="experience" th:field="*{experience}">
+					</div>
+					<div class="col-sm-5"  style="color:red"  th:if="${#fields.hasErrors('experience')}"
+						th:errors="*{experience}">Experience Error</div>
+				</div>
+
+<!-- payAmount -->
+				<div class="form-group row">
+					<label  for="payAmount" class="col-sm-2 col-form-label">Pay-Amount (per day):</label>
+					<div class="col-sm-3">
+						<input type="number" class="form-control" id="payAmount"
+							placeholder="Enter Pay-Amount" name="payAmount" th:field="*{payAmount}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('payAmount')}"
+						th:errors="*{payAmount}">PayAmount Error</div>
+				</div>
+
+
+<!-- typeOfPayAmount -->
+				<div class="form-group row">
+					<label for="typeOfPayAmount" class="col-sm-2 col-form-label">
+						Type-of-pay-Amount:
+					</label>
+
+				<div class="col-sm-3"> 
+				<select
+					class="form-control" id="typeOfPayAmount" name="typeOfPayAmount" 
+						th:field="*{typeOfPayAmount}">
+					<option value="Hourly">Hourly</option>
+					<option value="Daily">Daily</option>
+					<option value="Monthly">Monthly</option>
+				</select>
+				</div>
+
+				<div class="col-sm-5"  style="color:red" th:if="${#fields.hasErrors('typeOfPayAmount')}"
+					th:errors="*{typeOfPayAmount}">TypeOfPayAmount Error</div>
+				</div>
+
+<!-- certificate -->
+				<div class="form-group row">
+					<label  for="certificate" class="col-sm-2 col-form-label">Certificate:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="certificate"
+							placeholder="Enter certificate" name="certificate" th:field="*{certificate}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('certificate')}"
+						th:errors="*{certificate}">Certificate Error</div>
+				</div>
+
+<!-- placePreference -->
+				<div class="form-group row">
+					<label  for="placePreference" class="col-sm-2 col-form-label">Place Preference:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="placePreference"
+							placeholder="Enter placePreference" name="placePreference" 
+							th:field="*{placePreference}">
+					</div>
+					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('placePreference')}"
+						th:errors="*{placePreference}">PlacePreference Error</div>
+				</div>
+
+
+
 <!-- gender -->
 			<div class="form-group row">
 				<label  for="gender" class="col-sm-2 col-form-label">Gender:</label>
@@ -100,17 +232,6 @@
 
 
 
-<!-- email -->
-				<div class="form-group row">
-					<label  for="email" class="col-sm-2 col-form-label">Email:</label>
-					<div class="col-sm-3">
-						<input type="email" class="form-control" id="email"
-							placeholder="Enter email" name="email" th:field="*{email}">
-					</div>
-					<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('email')}"
-						th:errors="*{email}">Email Error</div>
-				</div>
-
 
 <!-- faxNumber -->
 				<div class="form-group row">
@@ -137,18 +258,6 @@
 						th:errors="*{telephoneNumber}">TelephoneNumber Error</div>
 				</div>
 
-
-<!-- password -->
-			<div class="form-group row">
-				<label   for="password" class="col-sm-2 col-form-label">Password:</label>
-				<div class="col-sm-3">
-					<input type="password" class="form-control" id="password"
-						placeholder="Enter password" name="password"
-						th:field="*{password}">
-				</div>
-				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
-					th:errors="*{password}">Password Error</div>
-			</div>
 
 
 <!-- address.buildingName -->

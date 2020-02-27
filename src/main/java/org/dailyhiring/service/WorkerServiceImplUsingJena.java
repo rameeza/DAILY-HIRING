@@ -40,12 +40,22 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 	public Worker save(Worker worker) {
 		String name = worker.getName();
 		String email = worker.getEmail();
+		String password = worker.getPassword();
+
+		Integer defaultPayVisit = worker.getDefaultPayVisit();
+		String skillType = worker.getSkillType();
+		Double experience = worker.getExperience();
+		Integer payAmount = worker.getPayAmount();
+		String typeOfPayAmount = worker.getTypeOfPayAmount();
+		String certificate = worker.getCertificate();
+		String placePreference = worker.getPlacePreference();
+		
 		String gender = worker.getGender();
-		String dateOfBirth = worker.getDateOfBirth();
 		String language = worker.getLanguage();
+		String dateOfBirth = worker.getDateOfBirth();
 		Double latitude = worker.getLatitude();
 		Double longitude = worker.getLongitude();
-		String password = worker.getPassword();
+		
 		String telephone = worker.getTelephoneNumber();
 		String fax = worker.getFaxNumber();
 		String buildingName = worker.getAddress().getBuildingName();
@@ -57,6 +67,9 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 		String countryName = worker.getAddress().getCountryName();
 		String postalCode = worker.getAddress().getPostalCode();
 		System.out.println(latitude);
+		
+		
+		
 		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
 			conn.update("PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>"
 					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>"
@@ -66,9 +79,16 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 					+ "PREFIX schema:<http://schema.org/>"
 					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>"
 					+ "PREFIX juso:<http://rdfs.co/juso/>" 
-					
 					+ "INSERT DATA { <"+identifier+"> foaf:name '"+name+"' ."
 					+ " <"+identifier+">  foaf:mbox '"+email+"' ."
+					+ "<"+identifier+">  dh:password '"+password+"' ."
+					+ "<"+identifier+">  dh:defaultPayVisit '"+defaultPayVisit+"'^^xsd:int ."					
+					+ "<"+identifier+">  dh:skillType '"+skillType+"' ."
+					+ " <"+identifier+">  dh:experience '"+experience+"'^^xsd:decimal ."
+					+ "<"+identifier+">  dh:payAmount '"+payAmount+"'^^xsd:int ."
+					+ "<"+identifier+">  dh:typeOfPayAmount '"+typeOfPayAmount+"' ."
+					+ "<"+identifier+">  dh:certificate '"+certificate+"' ."
+					+ "<"+identifier+">  dh:placePreference '"+placePreference+"' ."
 					+ "<"+identifier+"> foaf:gender '"+gender+"' ."
 					+ " <"+identifier+">  vcard:bday '"+dateOfBirth+"'^^xsd:date ."
 					+ " <"+identifier+">  dc:language '"+language+"' ."
@@ -76,7 +96,6 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 					+ "<"+identifier+">  dh:longitude '"+longitude+"'^^xsd:decimal  ."
 					+ "<"+identifier+">  schema:telephone '"+telephone+"' ."
 					+ "<"+identifier+">  schema:faxNumber '"+fax+"' ."
-					+ "<"+identifier+">  dh:password '"+password+"' ."
 					+ "<"+identifier+">  dh:buildingName '"+buildingName+"' ."
 					+ "<"+identifier+">  dh:landmark '"+landmark+"' ."
 					+ "<"+identifier+">  juso:full_address '"+streetAddress+"' ."
@@ -141,10 +160,20 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 				"PREFIX schema:<http://schema.org/>\r\n" + 
 				"PREFIX juso:<http://rdfs.co/juso/>\r\n" + 
 				"PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n" + 
-				"SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password ?buildingName ?landmark ?streetAddress ?countryName ?postalCode\r\n" + 
+				//"SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password ?buildingName ?landmark ?streetAddress ?countryName ?postalCode\r\n" + 
+				
+				
+				"SELECT * \r\n" +
 				"WHERE {\r\n" 
 				+identifier+" foaf:name ?name .\r\n" + 
-				identifier+"  foaf:mbox ?email .\r\n" + 
+				identifier+"  foaf:mbox ?email .\r\n" +
+				identifier+"  dh:defaultPayVisit ?defaultPayVisit .\r\n" +
+				identifier+"  dh:skillType ?skillType .\r\n" +
+				identifier+"  dh:experience ?experience .\r\n" +
+				identifier+"  dh:payAmount ?payAmount .\r\n" +
+				identifier+"  dh:typeOfPayAmount ?typeOfPayAmount .\r\n" +
+				identifier+"  dh:certificate ?certificate .\r\n" +
+				identifier+"  dh:placePreference ?placePreference .\r\n" +
 				identifier+"  foaf:gender ?gender .\r\n" + 
 				identifier+"  vcard:bday ?dateOfBirth .\r\n" + 
 				identifier+"  dc:language ?language . \r\n" + 
@@ -165,6 +194,39 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 			QuerySolution sln = results3.nextSolution();
 			String name = sln.getLiteral("name").toString();
 			String email = sln.getLiteral("email").toString();
+			String password = sln.getLiteral("password").toString();
+
+			// Getting defaultPayVisit 
+			String defaultPayVisitAsString = sln.getLiteral("defaultPayVisit").
+					toString().replace("^^http://www.w3.org/2001/XMLSchema#int", "");
+			Integer defaultPayVisit = null;
+			if (!defaultPayVisitAsString.equals("null") ) {
+				defaultPayVisit = Integer.parseInt(defaultPayVisitAsString);
+			}
+			
+			String skillType = sln.getLiteral("skillType").toString();
+			// Getting experience
+			String experienceAsString = sln.getLiteral("experience").
+					toString().replace("^^http://www.w3.org/2001/XMLSchema#decimal", "");
+			Double experience = null;
+			if (!experienceAsString.equals("null") ) {
+				experience = Double.parseDouble(experienceAsString);
+			}
+
+			
+			// Getting payAmount 
+			String payAmountAsString = sln.getLiteral("payAmount").
+					toString().replace("^^http://www.w3.org/2001/XMLSchema#int", "");
+			Integer payAmount = null;
+			if (!payAmountAsString.equals("null") ) {
+				payAmount = Integer.parseInt(payAmountAsString);
+			}
+			
+			
+			String typeOfPayAmount = sln.getLiteral("typeOfPayAmount").toString();
+			String certificate = sln.getLiteral("certificate").toString();
+			String placePreference = sln.getLiteral("placePreference").toString();
+			
 			String gender = sln.getLiteral("gender").toString();
 			String dateOfBirth = sln.getLiteral("dateOfBirth").toString().replace("^^http://www.w3.org/2001/XMLSchema#date", "");
 			String language = sln.getLiteral("language").toString();
@@ -172,7 +234,6 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 			Double longitude = sln.getLiteral("longitude").getDouble();
 			String telephoneNumber = sln.getLiteral("telephone").toString();
 			String faxNumber = sln.getLiteral("fax").toString();
-			String password = sln.getLiteral("password").toString();
 			String buildingName = sln.getLiteral("buildingName").toString();
 			String landmark = sln.getLiteral("landmark").toString();
 			String streetAddress = sln.getLiteral("streetAddress").toString();
@@ -183,9 +244,17 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 
 			// when passwords match
 			if (password.equals(request.getParameter("password"))) {
+				/*
 				ret = new Worker(latitude, longitude, name, gender, language, 
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, countryName, postalCode);
+				*/
+				ret = new Worker(defaultPayVisit, skillType, experience, payAmount, 
+						typeOfPayAmount, certificate, placePreference, latitude, 
+						longitude, name, gender, language, dateOfBirth, email, 
+						faxNumber, telephoneNumber, password, buildingName, 
+						landmark, streetAddress, countryName, postalCode);
+				
 				request.getSession().setAttribute("worker", ret);
 				
 			}
@@ -193,6 +262,25 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 		} qe3.close();
 
 		return ret;
+	}
+
+	public void applyInJob(String workerEmail, Integer theJobIdInFuseki,
+			org.apache.catalina.servlet4preview.http.HttpServletRequest request) {
+		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
+			conn.update("PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>"
+					+ "PREFIX schema:<http://schema.org/>"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>"
+					+ "PREFIX juso:<http://rdfs.co/juso/>" 
+					+ "INSERT DATA { <"+workerEmail+"> dh:hasAppliedInTheJobWithId '"+theJobIdInFuseki.toString()+"' ."
+					+ "}"
+					 );
+					//conn.queryResultSet("SELECT ?s ?p WHERE { ?s ?p <o:Rameez> }", ResultSetFormatter::out);
+			
+			}
 	}
 
 }

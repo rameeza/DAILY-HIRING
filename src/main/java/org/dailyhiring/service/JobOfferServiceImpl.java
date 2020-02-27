@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.dao.EmployerRepository;
@@ -88,15 +89,16 @@ public class JobOfferServiceImpl implements JobOfferService {
 		System.out.println("\t\t>>>>>>>>> Latitude of worker retrieved from db is : " + worker.getLatitude());
 
 		// Matching field of work
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (!(nextJobOffer.getFieldOfWork().getName().equals(worker.getSkill().getFieldOfWork().getName()))) {
-				iterator.remove();
-			}
-
-		}
-		System.out.println("After matching field of work -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next(); if
+		 * (!(nextJobOffer.getFieldOfWork().getName().equals(worker.getSkill().
+		 * getFieldOfWork().getName()))) { iterator.remove(); }
+		 * 
+		 * } System.out.println("After matching field of work -> jobOffers.isEmpty()" +
+		 * jobOffers.isEmpty());
+		 */
 		// Matching Certificate
 		/*
 		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
@@ -200,28 +202,23 @@ public class JobOfferServiceImpl implements JobOfferService {
 				"After removing where Job openings have been filled -> jobOffers.isEmpty()" + jobOffers.isEmpty());
 
 		// Remove Jobs where Job Valid period (date) has already passed
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-
-			if (nextJobOffer.getValidThrough() != null && !nextJobOffer.getValidThrough().isEmpty()) {
-
-				try {
-					Date todaysDate = new Date();
-					todaysDate.setHours(0);
-					Date validThroughDate = new SimpleDateFormat("yyyy-MM-dd").parse(nextJobOffer.getValidThrough());
-					validThroughDate.setHours(1);
-					if (validThroughDate.before(todaysDate)) {
-						System.out.print("validThroughDate -> " + validThroughDate);
-						System.out.println(" | todaysDate -> " + todaysDate);
-						iterator.remove();
-					}
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("After removing where Job validity has passed -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-
+		/*
+		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
+		 * { JobOffer nextJobOffer = iterator.next();
+		 * 
+		 * if (nextJobOffer.getValidThrough() != null &&
+		 * !nextJobOffer.getValidThrough().isEmpty()) {
+		 * 
+		 * try { Date todaysDate = new Date(); todaysDate.setHours(0); Date
+		 * validThroughDate = new
+		 * SimpleDateFormat("yyyy-MM-dd").parse(nextJobOffer.getValidThrough());
+		 * validThroughDate.setHours(1); if (validThroughDate.before(todaysDate)) {
+		 * System.out.print("validThroughDate -> " + validThroughDate);
+		 * System.out.println(" | todaysDate -> " + todaysDate); iterator.remove(); } }
+		 * catch (ParseException e) { e.printStackTrace(); } } } System.out.
+		 * println("After removing where Job validity has passed -> jobOffers.isEmpty()"
+		 * + jobOffers.isEmpty());
+		 */
 		// Remove Jobs recommendation requirement is not satisfied.
 		/*
 		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
@@ -327,6 +324,13 @@ public class JobOfferServiceImpl implements JobOfferService {
 		System.out.println("findAllJobsAppliedBy() inside " + this.getClass() + " ends!");
 
 		return jobOffers;
+	}
+
+
+	@Override
+	public List<JobOffer> findAllMatchingJobs(String theWorkerEmail, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

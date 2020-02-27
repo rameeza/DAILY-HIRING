@@ -13,6 +13,7 @@ import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.entity.Worker;
 import org.dailyhiring.service.EmployerServiceImplUsingJena;
 import org.dailyhiring.service.JobOfferService;
+import org.dailyhiring.service.JobOfferServiceImplUsingJena;
 import org.dailyhiring.service.WorkerService;
 import org.dailyhiring.service.WorkerServiceImplUsingJena;
 import org.slf4j.Logger;
@@ -80,12 +81,11 @@ public class WorkerController {
 	@GetMapping("/workerAssignedJobsPage")
 	public String showWorkerAssignedJobsPage(HttpServletRequest request, Model theModel) {
 		
-		List<JobOffer> theJobOffers = jobOfferService.findAllJobsAppliedBy(
-				((Worker)request.getSession().getAttribute("worker")).getId());
-
-		// add jobs to the spring model
+		String theWorkerEmail = request.getSession().getAttribute("workerEmail").toString();
+		JobOfferServiceImplUsingJena jOSImplUsingJena = new JobOfferServiceImplUsingJena();
+		List<JobOffer> theJobOffers = jOSImplUsingJena.findAllJobsAWorkerHasAppliedIn(
+				theWorkerEmail, request);
 		theModel.addAttribute("jobs", theJobOffers);
-		
 		return "worker/worker-assigned-jobs-page";
 	}
 	
