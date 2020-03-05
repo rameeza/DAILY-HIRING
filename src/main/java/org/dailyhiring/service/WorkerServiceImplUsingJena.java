@@ -3,6 +3,7 @@ package org.dailyhiring.service;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -14,6 +15,7 @@ import org.dailyhiring.dao.JobOfferRepository;
 import org.dailyhiring.dao.WorkerRepository;
 import org.dailyhiring.entity.Worker;
 import org.dailyhiring.entity.Worker;
+import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.JobOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -184,7 +186,9 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 				identifier+"  dh:password ?password .\r\n" + 
 				identifier+"  dh:buildingName ?buildingName .\r\n" + 
 				identifier+"  dh:landmark ?landmark .\r\n" + 
-				identifier+"  juso:full_address ?streetAddress .\r\n" + 
+				identifier+"  juso:full_address ?streetAddress .\r\n" +
+				identifier+"  vcard:locality ?locality .\r\n"+
+				identifier+"  essglobal:state ?state .\r\n"+
 				identifier+"  juso:country-name ?countryName .\r\n" + 
 				identifier+"  vcard:postal-code ?postalCode . \r\n" + 
 				"}");
@@ -238,6 +242,9 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 			String landmark = sln.getLiteral("landmark").toString();
 			String streetAddress = sln.getLiteral("streetAddress").toString();
 			// todo - add locality and state fields
+			String locality = "";//sln.getLiteral("locality").toString();// gives null pointer exception
+			String state = "";//sln.getLiteral("state").toString();// gives null pointer exception
+
 			String countryName = sln.getLiteral("countryName").toString();
 			String postalCode = sln.getLiteral("postalCode").toString();
 
@@ -249,11 +256,19 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, countryName, postalCode);
 				*/
+				/*
 				ret = new Worker(defaultPayVisit, skillType, experience, payAmount, 
 						typeOfPayAmount, certificate, placePreference, latitude, 
 						longitude, name, gender, language, dateOfBirth, email, 
 						faxNumber, telephoneNumber, password, buildingName, 
 						landmark, streetAddress, countryName, postalCode);
+				*/
+				ret = new Worker(defaultPayVisit, skillType, experience, payAmount, 
+						typeOfPayAmount, certificate, placePreference, latitude, 
+						longitude, name, gender, language, dateOfBirth, email, 
+						faxNumber, telephoneNumber, password, buildingName, 
+						landmark, streetAddress, locality, state, countryName, postalCode);
+				
 				
 				request.getSession().setAttribute("worker", ret);
 				
@@ -281,6 +296,109 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 					//conn.queryResultSet("SELECT ?s ?p WHERE { ?s ?p <o:Rameez> }", ResultSetFormatter::out);
 			
 			}
+	}
+
+	public Worker editProfile(@Valid Worker newWorker, HttpServletRequest request) {
+		Worker worker = (Worker) request.getSession().getAttribute("worker");
+		String name = worker.getName();
+		String email = worker.getEmail();
+		String gender = worker.getGender();
+		String dateOfBirth = worker.getDateOfBirth();
+		String language = worker.getLanguage();
+		Double latitude = worker.getLatitude();
+		Double longitude = worker.getLongitude();
+		String password = worker.getPassword();
+		String telephone = worker.getTelephoneNumber();
+		String fax = worker.getFaxNumber();
+		String buildingName = worker.getAddress().getBuildingName();
+		String identifier = "http://purl.org/dh/0.1/"+worker.getEmail();
+		String landmark = worker.getAddress().getLandmark();
+		String streetAddress = worker.getAddress().getStreetAddress();
+		String locality = worker.getAddress().getLocality();
+		String state = worker.getAddress().getState();
+		String countryName = worker.getAddress().getCountryName();
+		String postalCode = worker.getAddress().getPostalCode();
+		System.out.println(latitude);
+		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
+			/*
+			conn.update("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>"
+					+ "PREFIX schema:<http://schema.org/>"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>"
+					+ "PREFIX juso:<http://rdfs.co/juso/>" 
+					
+					+ "DELETE\r\n" + 
+					"WHERE {\r\n"
+					+ " <"+identifier+"> foaf:name '"+name+"' ."
+					+ " <"+identifier+">  foaf:mbox '"+email+"' ."
+					+ "<"+identifier+"> foaf:gender '"+gender+"' ."
+					+ " <"+identifier+">  vcard:bday '"+dateOfBirth+"'^^xsd:date ."
+					+ " <"+identifier+">  dc:language '"+language+"' ."
+					+ " <"+identifier+">  dh:latitude '"+latitude+"'^^xsd:decimal ."
+					+ "<"+identifier+">  dh:longitude '"+longitude+"'^^xsd:decimal  ."
+					+ "<"+identifier+">  schema:telephone '"+telephone+"' ."
+					+ "<"+identifier+">  schema:faxNumber '"+fax+"' ."
+					+ "<"+identifier+">  dh:password '"+password+"' ."
+					+ "<"+identifier+">  dh:buildingName '"+buildingName+"' ."
+					+ "<"+identifier+">  dh:landmark '"+landmark+"' ."
+					+ "<"+identifier+">  juso:full_address '"+streetAddress+"' ."
+					+ "<"+identifier+">  vcard:locality '"+locality+"' ."
+					+ "<"+identifier+">  essglobal:state '"+state+"' ."
+					+ "<"+identifier+">  juso:country-name '"+countryName+"' ."
+					+ "<"+identifier+">  vcard:postal-code '"+postalCode+"' ."
+					+ "}"
+					 );
+					 */
+			
+			conn.update("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\r\n"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\r\n"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>\r\n"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
+					+ "PREFIX schema:<http://schema.org/>\r\n"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n"
+					+ "PREFIX juso:<http://rdfs.co/juso/>\r\n" 
+					+ "DELETE\r\n" + 
+					"WHERE {\r\n"
+					+" <"+identifier+"> foaf:name ?name ."
+					+ " <"+identifier+">  foaf:mbox ?email ."
+					+ "<"+identifier+">  dh:password ?password ."
+					+ "<"+identifier+">  dh:defaultPayVisit ?defaultPayVisit ."
+					+ "<"+identifier+">  dh:skillType ?skillType ."
+					+ "<"+identifier+">  dh:experience ?experience ."
+					+ "<"+identifier+">  dh:payAmount ?payAmount ."
+					+ "<"+identifier+">  dh:typeOfPayAmount ?typeOfPayAmount ."
+					+ "<"+identifier+">  dh:certificate ?certificate ."
+					+ "<"+identifier+">  dh:placePreference ?placePreference ."
+					+ "<"+identifier+"> foaf:gender ?gender ."
+					+ " <"+identifier+">  vcard:bday ?dob ."
+					+ " <"+identifier+">  dc:language ?language ."
+					+ " <"+identifier+">  dh:latitude ?latitude ."
+					+ "<"+identifier+">  dh:longitude ?longitude ."
+					+ "<"+identifier+">  schema:telephone ?telephone ."
+					+ "<"+identifier+">  schema:faxNumber ?fax ."
+					+ "<"+identifier+">  dh:buildingName ?buildingName ."
+					+ "<"+identifier+">  dh:landmark ?landmark ."
+					+ "<"+identifier+">  juso:full_address ?streetAddress ."
+					+ "<"+identifier+">  vcard:locality ?locality ."
+					+ "<"+identifier+">  essglobal:state ?state ."
+					+ "<"+identifier+">  juso:country-name ?countryName ."
+					+ "<"+identifier+">  vcard:postal-code ?postalCode ."
+					+ "}"
+					 );
+
+			//conn.update("DELETE WHERE {?s ?p ?o}");
+								
+			}
+
+		
+		this.save(newWorker);
+		request.getSession().setAttribute("worker",newWorker);
+		return newWorker;
+
 	}
 
 }

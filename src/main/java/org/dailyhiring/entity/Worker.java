@@ -44,9 +44,11 @@ public class Worker extends Person {
 	}
 
 	public Worker(Integer defaultPayVisit, String skillType, Double experience, Integer payAmount,
-			String typeOfPayAmount, String certificate, String placePreference, Double latitude, Double longitude, String name, String gender, String language,
-			String dateOfBirth, String email, String faxNumber, String telephoneNumber, String password,
-			String buildingName, String landmark, String streetAddress, String countryName, String postalCode) {
+			String typeOfPayAmount, String certificate, String placePreference, Double latitude, 
+			Double longitude, String name, String gender, String language, String dateOfBirth, 
+			String email, String faxNumber, String telephoneNumber, String password,
+			String buildingName, String landmark, String streetAddress, 
+			String countryName, String postalCode) {
 		super(latitude, longitude, name, gender, language, dateOfBirth, email, faxNumber, telephoneNumber, password);
 		Address address = new Address(buildingName, landmark, streetAddress, countryName, postalCode);
 		this.setAddress(address);
@@ -61,6 +63,27 @@ public class Worker extends Person {
 	}
 
 	
+	public Worker(Integer defaultPayVisit, String skillType, Double experience, 
+			Integer payAmount, String typeOfPayAmount, String certificate, 
+			String placePreference, Double latitude, Double longitude, String name, 
+			String gender, String language, String dateOfBirth, String email, 
+			String faxNumber, String telephoneNumber, String password, 
+			String buildingName, String landmark, String streetAddress,
+			String locality, String state, String countryName, String postalCode) {
+		super(latitude, longitude, name, gender, language, dateOfBirth, email, faxNumber, telephoneNumber, password);
+		//Address address = new Address(buildingName, landmark, streetAddress, countryName, postalCode);
+		Address address = new Address(buildingName, landmark, streetAddress, locality, 
+				state, countryName, postalCode);
+		this.setAddress(address);
+		this.defaultPayVisit = defaultPayVisit;
+		this.skillType = skillType;
+		this.experience = experience;
+		this.payAmount = payAmount;
+		this.typeOfPayAmount = typeOfPayAmount;
+		this.certificate = certificate;
+		this.placePreference = placePreference;
+	}
+
 	public Integer getDefaultPayVisit() {
 		return defaultPayVisit;
 	}

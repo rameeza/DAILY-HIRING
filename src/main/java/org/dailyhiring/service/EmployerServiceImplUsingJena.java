@@ -54,6 +54,7 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 		String postalCode = employer.getAddress().getPostalCode();
 		System.out.println(latitude);
 		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
+			
 			conn.update("PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>"
 					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>"
 					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>"
@@ -82,6 +83,8 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 					+ "<"+identifier+">  vcard:postal-code '"+postalCode+"' ."
 					+ "}"
 					 );
+					 
+			
 					//conn.queryResultSet("SELECT ?s ?p WHERE { ?s ?p <o:Rameez> }", ResultSetFormatter::out);
 			
 			}
@@ -111,7 +114,8 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 	public Employer findById(String emailId, HttpServletRequest request) {
 		Employer ret = null;
 		String identifier = "<http://purl.org/dh/0.1/"+emailId+">";
-		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query","PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + 
+		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + 
 				"PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n" + 
 				"PREFIX dc:<http://purl.org/dc/terms/>\r\n" + 
 				"PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n" + 
@@ -132,13 +136,15 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 				identifier+"  dh:password ?password .\r\n" + 
 				identifier+"  dh:buildingName ?buildingName .\r\n" + 
 				identifier+"  dh:landmark ?landmark .\r\n" + 
-				identifier+"  juso:full_address ?streetAddress .\r\n" + 
+				identifier+"  juso:full_address ?streetAddress .\r\n" +
+				identifier+"  vcard:locality ?locality .\r\n"+
+				identifier+"  essglobal:state ?state .\r\n"+
 				identifier+"  juso:country-name ?countryName .\r\n" + 
 				identifier+"  vcard:postal-code ?postalCode . \r\n" + 
 				"}");
 		ResultSet results3 = qe3.execSelect();
 		while (results3.hasNext() ) {
-			System.out.println(">>>>>>>>>>>>>>> QE3 Hurray:");
+			//System.out.println(">>>>>>>>>>>>>>> QE3 Hurray:");
 			QuerySolution sln = results3.nextSolution();
 			String name = sln.getLiteral("name").toString();
 			String email = sln.getLiteral("email").toString();
@@ -154,6 +160,8 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 			String landmark = sln.getLiteral("landmark").toString();
 			String streetAddress = sln.getLiteral("streetAddress").toString();
 			// todo - add locality and state fields
+			String locality = "";//sln.getLiteral("locality").toString();// gives null pointer exception
+			String state = "";//sln.getLiteral("state").toString();// gives null pointer exception
 			String countryName = sln.getLiteral("countryName").toString();
 			String postalCode = sln.getLiteral("postalCode").toString();
 
@@ -162,9 +170,16 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 
 			// when passwords match
 			if (password.equals(request.getParameter("password"))) {
+				/*
 				ret = new Employer(latitude, longitude, name, gender, language, 
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, countryName, postalCode);
+				*/
+				ret = new Employer(latitude, longitude, name, gender, language, 
+						dateOfBirth, email, faxNumber,telephoneNumber, password, 
+						buildingName, landmark, streetAddress, locality,state, 
+						countryName, postalCode);
+				
 				request.getSession().setAttribute("employer", ret);
 				
 			}
@@ -230,6 +245,120 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 		
 		System.out.println("ret is = " + ret);
 		return ret;
+	}
+
+	public Employer editProfile(@Valid Employer newEmployer, HttpServletRequest request) {
+		Employer employer = (Employer) request.getSession().getAttribute("employer");
+		String name = employer.getName();
+		String email = employer.getEmail();
+		String gender = employer.getGender();
+		String dateOfBirth = employer.getDateOfBirth();
+		String language = employer.getLanguage();
+		Double latitude = employer.getLatitude();
+		Double longitude = employer.getLongitude();
+		String password = employer.getPassword();
+		String telephone = employer.getTelephoneNumber();
+		String fax = employer.getFaxNumber();
+		String buildingName = employer.getAddress().getBuildingName();
+		String identifier = "http://purl.org/dh/0.1/"+employer.getEmail();
+		//String identifier = "<http://purl.org/dh/0.1/"+employer.getEmail()+">";
+		String landmark = employer.getAddress().getLandmark();
+		String streetAddress = employer.getAddress().getStreetAddress();
+		String locality = employer.getAddress().getLocality();
+		String state = employer.getAddress().getState();
+		String countryName = employer.getAddress().getCountryName();
+		String postalCode = employer.getAddress().getPostalCode();
+		System.out.println(latitude);
+		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
+			/*
+			conn.update("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\r\n"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\r\n"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>\r\n"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
+					+ "PREFIX schema:<http://schema.org/>\r\n"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n"
+					+ "PREFIX juso:<http://rdfs.co/juso/>\r\n" 
+					+ "DELETE\r\n" + 
+					"WHERE {\r\n"
+					+" <"+identifier+"> foaf:name '"+name+"' ."
+					+ " <"+identifier+">  foaf:mbox '"+email+"' ."
+					+ "<"+identifier+"> foaf:gender '"+gender+"' ."
+					+ " <"+identifier+">  vcard:bday '"+dateOfBirth+"'^^xsd:date ."
+					+ " <"+identifier+">  dc:language '"+language+"' ."
+					+ " <"+identifier+">  dh:latitude '"+latitude+"'^^xsd:decimal ."
+					+ "<"+identifier+">  dh:longitude '"+longitude+"'^^xsd:decimal  ."
+					+ "<"+identifier+">  schema:telephone '"+telephone+"' ."
+					+ "<"+identifier+">  schema:faxNumber '"+fax+"' ."
+					+ "<"+identifier+">  dh:password '"+password+"' ."
+					+ "<"+identifier+">  dh:buildingName '"+buildingName+"' ."
+					+ "<"+identifier+">  dh:landmark '"+landmark+"' ."
+					+ "<"+identifier+">  juso:full_address '"+streetAddress+"' ."
+					+ "<"+identifier+">  vcard:locality '"+locality+"' ."
+					+ "<"+identifier+">  essglobal:state '"+state+"' ."
+					+ "<"+identifier+">  juso:country-name '"+countryName+"' ."
+					+ "<"+identifier+">  vcard:postal-code '"+postalCode+"' ."
+					+ "}"
+					 );
+			*/
+			conn.update("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\r\n"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\r\n"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>\r\n"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
+					+ "PREFIX schema:<http://schema.org/>\r\n"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n"
+					+ "PREFIX juso:<http://rdfs.co/juso/>\r\n" 
+					+ "DELETE\r\n" + 
+					"WHERE {\r\n"
+					+" <"+identifier+"> foaf:name ?name ."
+					+ " <"+identifier+">  foaf:mbox ?email ."
+					+ "<"+identifier+"> foaf:gender ?gender ."
+					+ " <"+identifier+">  vcard:bday ?dob ."
+					+ " <"+identifier+">  dc:language ?language ."
+					+ " <"+identifier+">  dh:latitude ?latitude ."
+					+ "<"+identifier+">  dh:longitude ?longitude ."
+					+ "<"+identifier+">  schema:telephone ?telephone ."
+					+ "<"+identifier+">  schema:faxNumber ?fax ."
+					+ "<"+identifier+">  dh:password ?password ."
+					+ "<"+identifier+">  dh:buildingName ?buildingName ."
+					+ "<"+identifier+">  dh:landmark ?landmark ."
+					+ "<"+identifier+">  juso:full_address ?streetAddress ."
+					+ "<"+identifier+">  vcard:locality ?locality ."
+					+ "<"+identifier+">  essglobal:state ?state ."
+					+ "<"+identifier+">  juso:country-name ?countryName ."
+					+ "<"+identifier+">  vcard:postal-code ?postalCode ."
+					+ "}"
+					 );
+			
+			//conn.update("DELETE WHERE {?s ?p ?o}");
+			/*
+			conn.update("PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + 
+					"DELETE\r\n" + 
+					"WHERE\r\n" + 
+					"{?s ?o ?p}");
+			*/
+			/*
+			conn.update("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\r\n"
+					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\r\n"
+					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n"
+					+ "PREFIX dc:<http://purl.org/dc/terms/>\r\n"
+					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
+					+ "PREFIX schema:<http://schema.org/>\r\n"
+					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n"
+					+ "PREFIX juso:<http://rdfs.co/juso/>\r\n" 
+					+ "DELETE\r\n" + 
+					"WHERE\r\n" + 
+					"{?s ?o ?p}");*/
+			
+			
+			
+			}
+
+		
+		this.save(newEmployer);
+		request.getSession().setAttribute("employer",newEmployer);
+		return newEmployer;
 	}
 
 

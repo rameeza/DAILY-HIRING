@@ -208,9 +208,46 @@ WHERE {
 
 ############################### DELETE
 # SPARQL ENDPOINT should be /dh/update
+
+1)
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 DELETE
 WHERE {
   ?subject ?predicate ?object
 }
+
+2)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+DELETE
+WHERE
+{?s ?o ?p}
+
+3)
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX juso:<http://rdfs.co/juso/>
+PREFIX essglobal:<http://purl.org/essglobal/vocab/>
+DELETE 
+WHERE {
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:name ?name .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:mbox ?email .
+  <http://purl.org/dh/0.1/p1@gmail.com> foaf:gender ?gender .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:bday ?dateOfBirth .
+  <http://purl.org/dh/0.1/p1@gmail.com> dc:language ?language . 
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:latitude ?latitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:longitude ?longitude .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:telephone ?telephone .
+  <http://purl.org/dh/0.1/p1@gmail.com> schema:faxNumber ?fax .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:password ?password .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:buildingName ?buildingName .
+  <http://purl.org/dh/0.1/p1@gmail.com> dh:landmark ?landmark .
+  <http://purl.org/dh/0.1/p1@gmail.com> juso:full_address ?streetAddress .
+  <http://purl.org/dh/0.1/p1@gmail.com> juso:country-name ?countryName .
+  <http://purl.org/dh/0.1/p1@gmail.com> vcard:postal-code ?postalCode . 
+}
+
+

@@ -37,6 +37,18 @@ public class Address {
 		this.postalCode = postalCode;
 	}
 
+	public Address(String buildingName, String landmark, String streetAddress, String locality, String state,
+			String countryName, String postalCode) {
+		super();
+		this.buildingName = buildingName;
+		this.landmark = landmark;
+		this.streetAddress = streetAddress;
+		this.locality = locality;
+		this.state = state;
+		this.countryName = countryName;
+		this.postalCode = postalCode;
+	}
+
 	public Address(Integer id, String buildingName, String landmark, String streetAddress, String locality,
 			String state, String countryName, String postalCode) {
 		super();

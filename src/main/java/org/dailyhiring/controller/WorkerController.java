@@ -39,6 +39,32 @@ public class WorkerController {
 	 * this.workerService = workerService; }
 	 * 
 	 */	
+
+	@GetMapping("/editWorkerProfile")
+	public String editEmployerProfile(Worker worker, HttpServletRequest request,
+			Model theModel) {
+		worker = (Worker)request.getSession().getAttribute("worker");
+		theModel.addAttribute("worker", worker);
+		return "worker/edit-workerProfile-form";
+	}
+	
+	@PostMapping("/editWorkerProfile")
+	public String editWorkerProfile(@Valid Worker worker, 
+			BindingResult bindingResult, HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			return "worker/edit-workerProfile-form";
+		}
+		worker.setEmail(((Worker)request.getSession().getAttribute("worker")).getEmail());
+
+		WorkerServiceImplUsingJena wsj = new WorkerServiceImplUsingJena();
+		if (wsj.editProfile(worker, request) != null) {
+			return "worker/worker-profile-page";
+		} else {
+			return "worker/worker-edit-profile-failure";
+		}
+	}
+
+	
 	
 	@GetMapping("/loginWorker")
 	public String showWorkerLoginForm(Worker worker) {

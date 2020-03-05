@@ -38,4 +38,16 @@ public class Employer extends Person {
 		this.setAddress(address);
 	}
 	
+	public Employer(Double latitude, Double longitude, String name, String gender, String language,
+			String dateOfBirth, String email, String faxNumber, String telephoneNumber, String password,
+			String buildingName, String landmark, String streetAddress, String locality, 
+			String state, String countryName, String postalCode) {
+		super(latitude, longitude, name, gender, language, dateOfBirth, email, faxNumber, telephoneNumber, password);
+		//Address address = new Address(buildingName, landmark, streetAddress, countryName, postalCode);
+		Address address = new Address(buildingName, landmark, streetAddress, locality, state, countryName, postalCode);
+		
+		this.setAddress(address);
+	}
+	
+	
 }

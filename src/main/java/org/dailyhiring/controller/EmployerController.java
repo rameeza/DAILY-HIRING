@@ -59,6 +59,34 @@ public class EmployerController {
 		return "employer/employer-profile-page";
 	}
 
+	@GetMapping("/editEmployerProfile")
+	public String editEmployerProfile(Employer employer, HttpServletRequest request, 
+			Model theModel) {
+		employer = (Employer)request.getSession().getAttribute("employer");
+		//System.out.println("-------------employer.getEmail() is = " + employer.getEmail());
+		//System.out.println("-------------employer.getDateOfBirth() is = " + employer.getDateOfBirth());
+		//System.out.println("-------------employer.getPassword() is = " + employer.getPassword());
+		theModel.addAttribute("employer", employer);
+		return "employer/edit-employerProfile-form";
+	}
+	
+	@PostMapping("/editEmployerProfile")
+	public String editEmployerProfile(@Valid Employer employer, 
+			BindingResult bindingResult, HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			return "employer/edit-employerProfile-form";
+		}
+		employer.setEmail(((Employer)request.getSession().getAttribute("employer")).getEmail());
+		EmployerServiceImplUsingJena esj = new EmployerServiceImplUsingJena();
+		if (esj.editProfile(employer, request) != null) {
+			return "employer/employer-profile-page";
+		} else {
+			return "employer/employer-edit-profile-failure";
+		}
+	}
+
+	
+	
 	@GetMapping("/employerPostedJobsPage")
 	public String showEmployerPostedJobsPage(HttpServletRequest request, Model theModel) {
 
@@ -152,7 +180,8 @@ public class EmployerController {
 
 	
 	@PostMapping("/registerEmployer")
-	public String checkEmployerRegistrationInfo(@Valid Employer employer, BindingResult bindingResult) {
+	public String checkEmployerRegistrationInfo(@Valid Employer employer, 
+			BindingResult bindingResult) {
 		System.out.println("\t\t>>>>>>>>>>>>" + this.getClass());
 		System.out.println("\t\t>>>>>>>>>>>>Latitude of Employer got from form : " + employer.getLatitude());
 		if (bindingResult.hasErrors()) {
