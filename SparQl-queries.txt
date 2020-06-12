@@ -204,6 +204,13 @@ WHERE {
   ?jobId dh:paymentMode ?paymentMode .
 }
 
+14)
+
+SELECT *
+WHERE {
+  ?subject <http://xmlns.com/foaf/0.1/name> ?object
+}
+
 
 
 ############################### DELETE
@@ -251,3 +258,8 @@ WHERE {
 }
 
 
+4)
+DELETE
+WHERE {
+  <http://purl.org/dh/0.1/emp1@gmail.com> ?predicate ?object
+}
