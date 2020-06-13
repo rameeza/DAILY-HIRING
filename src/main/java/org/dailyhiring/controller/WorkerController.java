@@ -101,6 +101,11 @@ public class WorkerController {
 			
 			request.getSession().setAttribute("workerEmail", worker.getEmail());
 			
+			//so that worker can access as employer as well
+			request.getSession().setAttribute("employerProfilePicPath", path);
+			request.getSession().setAttribute("employerEmail", worker.getEmail());
+			request.getSession().setAttribute("employerId", worker.getEmail());
+			
 			request.getSession().setMaxInactiveInterval(300); // In seconds
 
 			return "redirect:/workerHomePage";		

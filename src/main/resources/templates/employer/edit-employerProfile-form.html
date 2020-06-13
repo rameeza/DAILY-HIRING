@@ -38,6 +38,11 @@
 		<!-- Create Menubar-->
 		
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+		<div th:if = "${session.workerEmail != null}"> 
+		<a class="btn btn-outline-primary mr-1 active" href="employer-home-page" role="button">Employer</a>
+		<a class="btn btn-outline-primary mr-1" href="workerHomePage" role="button">Worker</a>
+		</div>
+
 			<a class="navbar-brand" href="#">Daily-Hiring</a>
 
 		    <ul class="navbar-nav">

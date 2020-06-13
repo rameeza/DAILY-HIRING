@@ -270,7 +270,18 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 						landmark, streetAddress, locality, state, countryName, postalCode);
 				
 				
+				
+				
 				request.getSession().setAttribute("worker", ret);
+				
+				// so that worker can access as employer as well 
+				Employer ret2 = new Employer(latitude, longitude, name, gender, language, 
+						dateOfBirth, email, faxNumber,telephoneNumber, password, 
+						buildingName, landmark, streetAddress, locality,state, 
+						countryName, postalCode);
+				request.getSession().setAttribute("employer", ret2);
+
+				
 				
 			}
 			

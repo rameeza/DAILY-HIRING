@@ -191,15 +191,6 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, locality,state, 
 						countryName, postalCode);
-				if (dBFileRepositoryy == null) {
-					System.out.println("RZ >>>>>>>>>>>>>> dBFileRepositoryy is null");
-				}else {
-					System.out.println("RZ >>>>>>>>>>>>>> dBFileRepositoryy is not null");
-				}
-				//dBFileRepository = new DBFileRepository();
-				//DBFile profilePic = dBFileRepositoryy.findByEmail(email);
-				//System.out.println("RZ >>>>>>>>>>>>>> profilePic.getPath() = " + profilePic.getPath());
-				//ret.setProfilepic(profilePic);
 				request.getSession().setAttribute("employer", ret);
 				
 			}
