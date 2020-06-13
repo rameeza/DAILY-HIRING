@@ -31,7 +31,7 @@
 		<h2 style="text-align:center">Worker Registration</h2>
 		<br>
 
-		<form action="#" th:action="@{/registerWorker}" th:object="${worker}"
+		<form action="#" enctype="multipart/form-data" th:action="@{/registerWorker}" th:object="${worker}"
 			method="post">
 
 <!-- Add latitude and longitude -->
@@ -77,6 +77,19 @@
 				<div class="col-sm-5" style="color:red" th:if="${#fields.hasErrors('password')}"
 					th:errors="*{password}">Password Error</div>
 			</div>
+
+
+<!-- profile pic -->
+			<div class="form-group row">
+				<label   for="profilepic" class="col-sm-2 col-form-label">Profile-Picture:</label>
+			<div class="col-sm-3">
+					<input type="file" class="form-control" id="profilepic"
+						placeholder="Enter profilepic" name="profilepic"
+						th:field="*{profilepic.data}">
+			</div>
+			</div>
+
+
 
 
 <!-- defaultPayVisit -->

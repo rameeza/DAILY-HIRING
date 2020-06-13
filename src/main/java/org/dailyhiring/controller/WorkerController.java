@@ -1,12 +1,16 @@
 package org.dailyhiring.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.dailyhiring.Application;
+import org.dailyhiring.dao.DBFileRepository;
+import org.dailyhiring.entity.DBFile;
 import org.dailyhiring.entity.Education;
 import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.JobOffer;
@@ -29,7 +33,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class WorkerController {
 	@Autowired
 	private JobOfferService jobOfferService;
-	
+
+	@Autowired
+	private DBFileRepository dBFileRepository;
+
+
 	@Autowired
 	private WorkerService workerService;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -82,6 +90,15 @@ public class WorkerController {
 		WorkerServiceImplUsingJena wsj = new WorkerServiceImplUsingJena();
 
 		if (wsj.findById(worker.getEmail(), request) != null) {
+			
+			DBFile profilePic = dBFileRepository.findByEmail(worker.getEmail());
+			String path = profilePic.getPath();
+			path = path.substring(path.lastIndexOf("\\")+1);
+			path="profilepics/"+path;
+			System.out.println("RZ >>>>>>>>>>>>>> profilePic.getPath() = " + path);
+			request.getSession().setAttribute("workerProfilePicPath", path);
+			
+			
 			request.getSession().setAttribute("workerEmail", worker.getEmail());
 			
 			request.getSession().setMaxInactiveInterval(300); // In seconds
@@ -143,6 +160,34 @@ public class WorkerController {
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-registration-form";
 		}
+		
+		DBFile profilePic = worker.getProfilepic();
+		
+		/*
+		String filePath = request.getServletContext().getRealPath("/");
+		*/ 
+		
+		try {
+			String fileNameExtension = profilePic.getData().getOriginalFilename().substring(
+					profilePic.getData().getOriginalFilename().lastIndexOf("."));
+			String path = "C:\\Eclipse-Workspaces\\WorkspaceForNITproject\\DAILY-HIRING\\src\\"
+					+ "main\\resources\\static\\profilepics\\"+
+					worker.getEmail().
+					replaceAll("\\.", "_").
+					replaceAll("@", "at")+ fileNameExtension;
+								
+			profilePic.getData().transferTo(new File(path));
+			profilePic.setEmail(worker.getEmail());
+			profilePic.setPath(path);
+			dBFileRepository.save(profilePic);
+			System.out.println("RZ>>>>>>>>>>>>>>>>>>>>>>>> File uploaded successfully");
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 		WorkerServiceImplUsingJena esj = new WorkerServiceImplUsingJena();
 		if (esj.save(worker) != null) {

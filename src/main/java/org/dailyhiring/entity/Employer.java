@@ -12,6 +12,18 @@ import javax.persistence.OneToOne;
 public class Employer extends Person {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Address address;
+	
+	@OneToOne(cascade = {CascadeType.ALL})
+	private DBFile profilepic;
+	
+	
+	public DBFile getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(DBFile profilepic) {
+		this.profilepic = profilepic;
+	}
 
 	public Address getAddress() {
 		return address;

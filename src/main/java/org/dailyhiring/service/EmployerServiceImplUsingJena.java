@@ -16,22 +16,34 @@ import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdfconnection.RDFConnectionFuseki;
 import org.apache.jena.rdfconnection.RDFConnectionRemoteBuilder;
+import org.dailyhiring.dao.DBFileRepository;
 import org.dailyhiring.dao.EmployerRepository;
+import org.dailyhiring.entity.DBFile;
 import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Service("empServiceImplUsingJena")
 public class EmployerServiceImplUsingJena implements EmployerService{
+	@Autowired
 	private EmployerRepository employerRepository;
+
+	@Autowired
+	private DBFileRepository dBFileRepositoryy;
+
+	
 	private static RDFConnectionRemoteBuilder builder = RDFConnectionFuseki.create()
 			.destination("http://localhost:3030/dh");
 
+	/*
 	@Autowired
 	public EmployerServiceImplUsingJena(EmployerRepository employerRepository) {
 		this.employerRepository = employerRepository;
 	}
-
+	*/
+	
+	
 	@Override
 	public Employer save(Employer employer) {
 		String name = employer.getName();
@@ -179,7 +191,15 @@ public class EmployerServiceImplUsingJena implements EmployerService{
 						dateOfBirth, email, faxNumber,telephoneNumber, password, 
 						buildingName, landmark, streetAddress, locality,state, 
 						countryName, postalCode);
-				
+				if (dBFileRepositoryy == null) {
+					System.out.println("RZ >>>>>>>>>>>>>> dBFileRepositoryy is null");
+				}else {
+					System.out.println("RZ >>>>>>>>>>>>>> dBFileRepositoryy is not null");
+				}
+				//dBFileRepository = new DBFileRepository();
+				//DBFile profilePic = dBFileRepositoryy.findByEmail(email);
+				//System.out.println("RZ >>>>>>>>>>>>>> profilePic.getPath() = " + profilePic.getPath());
+				//ret.setProfilepic(profilePic);
 				request.getSession().setAttribute("employer", ret);
 				
 			}

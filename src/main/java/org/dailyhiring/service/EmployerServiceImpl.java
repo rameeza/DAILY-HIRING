@@ -7,7 +7,7 @@ import org.dailyhiring.entity.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("empServiceImpl")
 public class EmployerServiceImpl implements EmployerService {
 	private EmployerRepository employerRepository;
 

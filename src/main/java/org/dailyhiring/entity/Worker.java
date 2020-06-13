@@ -14,6 +14,19 @@ public class Worker extends Person {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Address address;
 	
+	@OneToOne(cascade = {CascadeType.ALL})
+	private DBFile profilepic;
+	
+	
+	public DBFile getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(DBFile profilepic) {
+		this.profilepic = profilepic;
+	}
+
+	
 	private Integer defaultPayVisit; // Default per day pay for the worker according to his skill
 	private String skillType; 
 	private Double experience; // Experience-In-Years
