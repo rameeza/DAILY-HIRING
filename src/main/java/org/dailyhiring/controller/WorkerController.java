@@ -91,7 +91,7 @@ public class WorkerController {
 
 		if (wsj.findById(worker.getEmail(), request) != null) {
 			
-			DBFile profilePic = dBFileRepository.findByEmail(worker.getEmail());
+			DBFile profilePic = dBFileRepository.findByEmail(worker.getEmail()).get(0);
 			String path = profilePic.getPath();
 			path = path.substring(path.lastIndexOf("\\")+1);
 			path="profilepics/"+path;

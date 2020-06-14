@@ -68,6 +68,42 @@ public class JobOfferController {
 		return "worker/show-all-matching-jobs";
 	}
 
+	@PostMapping("/showAllCustomMatchingJobs")
+	public String showAllCustomMatchingJobs(//@RequestParam("distance") Integer theDistance, 
+			Model theModel, HttpServletRequest request) {
+
+		Integer distance = Integer.parseInt(
+				request.getParameter("distance"));
+		
+		Double latitude = 999.0; // an invalid value
+		if (!request.getParameter("latitude").equals("")) {
+			latitude =  Double.parseDouble(
+					request.getParameter("latitude"));
+			
+		}
+		Double longitude = 999.0; // an invalid value
+		if (!request.getParameter("longitude").equals("")) {
+			longitude =  Double.parseDouble(
+					request.getParameter("longitude"));
+		}
+		
+		System.out.println("RZ >>>>>>>>>>>> Distance = " + distance);
+		System.out.println("RZ >>>>>>>>>>>> Latitude = " + latitude);
+		System.out.println("RZ >>>>>>>>>>>> Longitude = " + longitude);
+		
+		JobOfferServiceImplUsingJena jOSImplUsingJena = new JobOfferServiceImplUsingJena();
+		
+		String workerEmail = ((Worker)request.getSession().getAttribute("worker")).getEmail();
+		List<JobOffer> theJobOffers = jOSImplUsingJena.findAllMatchingJobs(workerEmail, request, 
+				distance, latitude, longitude);
+		
+		System.out.println("theJobOffers is going to be added to the model.");
+		theModel.addAttribute("jobs", theJobOffers);
+		
+		return "worker/show-all-custom-matching-jobs";
+	}
+
+	
 	
 	/*
 	 * @GetMapping("/showAllJobs") public String showAllJobs(Model theModel) { //

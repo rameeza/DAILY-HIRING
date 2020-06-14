@@ -4,9 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import org.dailyhiring.dao.WorkerRepository;
 import org.dailyhiring.entity.Employer;
 import org.dailyhiring.entity.JobOffer;
 import org.dailyhiring.entity.Worker;
+import org.dailyhiring.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +46,129 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 		this.jobOfferRepository = jobOfferRepository;
 	}
 
+	// To get information about employer who posted a particular job.
+	public Map<String, Person> getAllRegisteredUsers(){
+		Map<String, Person> persons = new HashMap<String, Person>();
+	
+		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + 
+				"PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>\r\n" + 
+				"PREFIX dc:<http://purl.org/dc/terms/>\r\n" + 
+				"PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n" + 
+				"PREFIX schema:<http://schema.org/>\r\n" + 
+				"PREFIX juso:<http://rdfs.co/juso/>\r\n" + 
+				"PREFIX essglobal:<http://purl.org/essglobal/vocab/>\r\n" + 
+				"SELECT ?name ?email ?gender ?dateOfBirth ?language ?latitude ?longitude ?telephone ?fax ?password ?buildingName ?landmark ?streetAddress ?countryName ?postalCode\r\n" + 
+				"WHERE {\r\n"+ 
+				"?s foaf:name ?name .\r\n" + 
+				"?s foaf:mbox ?email .\r\n" + 
+				"?s foaf:gender ?gender .\r\n" + 
+				"?s vcard:bday ?dateOfBirth .\r\n" + 
+				"?s dc:language ?language . \r\n" + 
+				"?s dh:latitude ?latitude .\r\n" + 
+				"?s dh:longitude ?longitude .\r\n" + 
+				"?s schema:telephone ?telephone .\r\n" + 
+				"?s schema:faxNumber ?fax .\r\n" + 
+				"?s dh:password ?password .\r\n" + 
+				"?s dh:buildingName ?buildingName .\r\n" + 
+				"?s dh:landmark ?landmark .\r\n" + 
+				"?s juso:full_address ?streetAddress .\r\n" +
+				"?s vcard:locality ?locality .\r\n"+
+				"?s essglobal:state ?state .\r\n"+
+				"?s juso:country-name ?countryName .\r\n" + 
+				"?s vcard:postal-code ?postalCode . \r\n" + 
+				"}");
+
+		ResultSet results3 = qe3.execSelect();
+		int i=0;
+		System.out.println("RZ >>>>>>>>>>>>>>> "+ i +" Employers added to persons:");
+		while (results3.hasNext() ) {
+			
+			System.out.println("RZ >>>>>>>>>>>>>>> "+ ++i +" Employers added to persons:");
+			QuerySolution sln = results3.nextSolution();
+			String name = sln.getLiteral("name").toString();
+			String email = sln.getLiteral("email").toString();
+			String gender = sln.getLiteral("gender").toString();
+			String dateOfBirth = sln.getLiteral("dateOfBirth").toString().replace("^^http://www.w3.org/2001/XMLSchema#date", "");
+			String language = sln.getLiteral("language").toString();
+			Double latitude = sln.getLiteral("latitude").getDouble();
+			Double longitude = sln.getLiteral("longitude").getDouble();
+			String telephoneNumber = sln.getLiteral("telephone").toString();
+			String faxNumber = sln.getLiteral("fax").toString();
+			String password = sln.getLiteral("password").toString();
+			String buildingName = sln.getLiteral("buildingName").toString();
+			String landmark = sln.getLiteral("landmark").toString();
+			String streetAddress = sln.getLiteral("streetAddress").toString();
+			// todo - add locality and state fields
+			String locality = "";//sln.getLiteral("locality").toString();// gives null pointer exception
+			String state = "";//sln.getLiteral("state").toString();// gives null pointer exception
+			String countryName = sln.getLiteral("countryName").toString();
+			String postalCode = sln.getLiteral("postalCode").toString();
+
+			Employer temp = new Employer(latitude, longitude, name, gender, language, 
+						dateOfBirth, email, faxNumber,telephoneNumber, password, 
+						buildingName, landmark, streetAddress, locality,state, 
+						countryName, postalCode);
+
+			persons.put(email, temp);
+			
+		} qe3.close();
+		System.out.println("RZ>>>>>>>>>>>>> No of registered users = "+persons.size());
+		return persons;
+	}
+
+	
+	public List<JobOffer> getAllJobsPostedInFuseki() {
+		List<JobOffer> jobOffers = new ArrayList<JobOffer>();
+		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
+						+ "SELECT * \r\n" + "WHERE {\r\n" + "?jobId dh:jobOfferId ?jobIdInFuseki .\r\n"
+						+ "?jobId foaf:mbox ?employerEmail .\r\n"
+						+ "?jobId dh:appointmentDescription ?appointmentDescription .\r\n"
+						+ "?jobId dh:jobOpenings ?jobOpenings .\r\n"
+						+ "?jobId dh:jobOpeningsAlreadyFilled ?jobOpeningsAlreadyFilled .\r\n"
+						+ "?jobId dh:jobStarts ?jobStarts .\r\n" + "?jobId dh:jobEnds ?jobEnds . \r\n"
+						+ "?jobId dh:ratingRequired ?ratingRequired .\r\n" + "?jobId dh:paymentType ?paymentType .\r\n"
+						+ "?jobId dh:paymentMode ?paymentMode .\r\n" + "}");
+		ResultSet results3 = qe3.execSelect();
+		while (results3.hasNext()) {
+			System.out.println(">>>>>>>>>>>>>>> QE3 Hurray : Going to add jobs to the Arraylist");
+			QuerySolution sln = results3.nextSolution();
+			System.out.println(">>>>>>>>>>>>>>> 1");
+			Integer jobIdInFuseki = Integer.parseInt(sln.getLiteral("jobIdInFuseki").toString());
+			System.out.println(">>>>>>>>>>>>>>> 2");
+			String employerEmail = sln.getLiteral("employerEmail").toString();
+			System.out.println(">>>>>>>>>>>>>>> 3");
+			String appointmentDescription = sln.getLiteral("appointmentDescription").toString();
+			Integer jobOpenings = Integer.parseInt(sln.getLiteral("jobOpenings").toString());
+			Integer jobOpeningsAlreadyFilled = Integer.parseInt(sln.getLiteral("jobOpeningsAlreadyFilled").toString());
+			// String dateOfBirth =
+			// sln.getLiteral("dateOfBirth").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
+			// "");
+			String jobStarts = sln.getLiteral("jobStarts").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
+					"");
+			String jobEnds = sln.getLiteral("jobEnds").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
+					"");
+
+			// Double latitude = sln.getLiteral("latitude").getDouble();
+			// Double longitude = sln.getLiteral("longitude").getDouble();
+			Double ratingRequired = sln.getLiteral("ratingRequired").getDouble();
+			String paymentType = sln.getLiteral("paymentType").toString();
+			String paymentMode = sln.getLiteral("paymentMode").toString();
+
+			JobOffer jobOffer = new JobOffer(jobIdInFuseki, appointmentDescription, jobOpenings,
+					jobOpeningsAlreadyFilled, jobStarts, jobEnds, paymentMode, paymentType, employerEmail,
+					ratingRequired);
+
+			jobOffers.add(jobOffer);
+
+		}
+		qe3.close();
+		return jobOffers;
+	}
+
+	
 	public JobOfferServiceImplUsingJena() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -377,77 +501,22 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 	@Override
 	public List<JobOffer> findAllMatchingJobs(String theWorkerEmail, HttpServletRequest request) {
 		Worker worker = (Worker) request.getSession().getAttribute("worker");
-		System.out.println(
-				">>>>>>>>>>>>>>> INSIDE public List<JobOffer> findAllMatchingJobs(String theWorkerEmail) - STARTS ");
-		List<JobOffer> jobOffers = new ArrayList<JobOffer>();
-		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
-				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
-						+ "SELECT * \r\n" + "WHERE {\r\n" + "?jobId dh:jobOfferId ?jobIdInFuseki .\r\n"
-						+ "?jobId foaf:mbox ?employerEmail .\r\n"
-						+ "?jobId dh:appointmentDescription ?appointmentDescription .\r\n"
-						+ "?jobId dh:jobOpenings ?jobOpenings .\r\n"
-						+ "?jobId dh:jobOpeningsAlreadyFilled ?jobOpeningsAlreadyFilled .\r\n"
-						+ "?jobId dh:jobStarts ?jobStarts .\r\n" + "?jobId dh:jobEnds ?jobEnds . \r\n"
-						+ "?jobId dh:ratingRequired ?ratingRequired .\r\n" + "?jobId dh:paymentType ?paymentType .\r\n"
-						+ "?jobId dh:paymentMode ?paymentMode .\r\n" + "}");
-		ResultSet results3 = qe3.execSelect();
-		while (results3.hasNext()) {
-			System.out.println(">>>>>>>>>>>>>>> QE3 Hurray : Going to add jobs to the Arraylist");
-			QuerySolution sln = results3.nextSolution();
-			System.out.println(">>>>>>>>>>>>>>> 1");
-			Integer jobIdInFuseki = Integer.parseInt(sln.getLiteral("jobIdInFuseki").toString());
-			System.out.println(">>>>>>>>>>>>>>> 2");
-			String employerEmail = sln.getLiteral("employerEmail").toString();
-			System.out.println(">>>>>>>>>>>>>>> 3");
-			String appointmentDescription = sln.getLiteral("appointmentDescription").toString();
-			Integer jobOpenings = Integer.parseInt(sln.getLiteral("jobOpenings").toString());
-			Integer jobOpeningsAlreadyFilled = Integer.parseInt(sln.getLiteral("jobOpeningsAlreadyFilled").toString());
-			// String dateOfBirth =
-			// sln.getLiteral("dateOfBirth").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-			// "");
-			String jobStarts = sln.getLiteral("jobStarts").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-					"");
-			String jobEnds = sln.getLiteral("jobEnds").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-					"");
 
-			// Double latitude = sln.getLiteral("latitude").getDouble();
-			// Double longitude = sln.getLiteral("longitude").getDouble();
-			Double ratingRequired = sln.getLiteral("ratingRequired").getDouble();
-			String paymentType = sln.getLiteral("paymentType").toString();
-			String paymentMode = sln.getLiteral("paymentMode").toString();
+		List<JobOffer> jobOffers = getAllJobsPostedInFuseki();
 
-			JobOffer jobOffer = new JobOffer(jobIdInFuseki, appointmentDescription, jobOpenings,
-					jobOpeningsAlreadyFilled, jobStarts, jobEnds, paymentMode, paymentType, employerEmail,
-					ratingRequired);
-
-			jobOffers.add(jobOffer);
-
-		}
-		qe3.close();
-		
 		// Now, jobOffers contain all the jobs inserted in fuseki.
+
 		// Matching appointment Description of Job with Skill Type of worker
-
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
-			if (!(nextJobOffer.
-					getAppointmentDescription().
-					equals(worker.
-							getSkillType()))) {
-				iterator.remove();
-			}
-
-		}
-		// System.out.println("After matching field of work -> jobOffers.isEmpty()" +
-		// jobOffers.isEmpty());
+		this.removeJobsThatDontMatchWorkerSkillType(worker, jobOffers);
+		
 
 		// Matching Certificate
 		/*
 		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
 		 * { JobOffer nextJobOffer = iterator.next(); if
 		 * (nextJobOffer.getCertificate().getName().equals("None")) { continue; } if
-		 * (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().
-		 * getName()))) { iterator.remove(); } }
+		 * (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate())))
+		 * { iterator.remove(); } }
 		 * System.out.println("After matching certificate -> jobOffers.isEmpty()" +
 		 * jobOffers.isEmpty());
 		 */
@@ -461,61 +530,16 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 		 * System.out.println("After matching experience -> jobOffers.isEmpty()" +
 		 * jobOffers.isEmpty());
 		 */
+
 		// Matching Location to be less than 100 km
-		/*
-		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
-		 * { JobOffer nextJobOffer = iterator.next();
-		 * 
-		 * if (!(nextJobOffer.getCertificate().getName().equals(worker.getCertificate().
-		 * getName()))) { iterator.remove(); }
-		 * 
-		 * Double employerLatitude = nextJobOffer.getEmployer().getLatitude(); Double
-		 * employerLongitude = nextJobOffer.getEmployer().getLongitude(); Double
-		 * workerLatitude = worker.getLatitude(); Double workerLongitude =
-		 * worker.getLongitude();
-		 * 
-		 * Double distanceBetweenEmployerAndWorker =
-		 * calculateDistanceUsingLocation(employerLatitude, employerLongitude,
-		 * workerLatitude, workerLongitude, "K"); // System.out.println("Distance
-		 * between Employer and Worker: // "+distanceBetweenEmployerAndWorker + "km");
-		 * if (distanceBetweenEmployerAndWorker > 100) { iterator.remove(); } }
-		 * System.out.println("After matching location -> jobOffers.isEmpty()" +
-		 * jobOffers.isEmpty());
-		 */
+		this.removeJobsWithDistanceGreaterThan(100, jobOffers, worker);
 		
 		// Remove Jobs in which worker has already applied
-		
-		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next();
+		this.removeJobsInWhichWorkerHasAlreadyApplied(theWorkerEmail, jobOffers);
 
-			List<Integer> jobsAppliedIn = this.getJobIdsOfJobsAppliedIn(theWorkerEmail);
-			//List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn();
-			for (Iterator<Integer> jobsAppliedInIterator = jobsAppliedIn.iterator(); jobsAppliedInIterator
-					.hasNext();) {
-				Integer nextJobAppliedIn = jobsAppliedInIterator.next();
-				System.out.println("nextJobOffer.getJobIdInFuseki() is " + nextJobOffer.getJobIdInFuseki() +
-						"and nextJobAppliedIn is "+ nextJobAppliedIn);
-				if (nextJobOffer.getJobIdInFuseki().equals(nextJobAppliedIn)) {
-					System.out.println(">>>>>>>>>>>>>A job being removed from jobOffers");
-					iterator.remove();
-				}
-			}
+		// Remove jobs where all positions have been filled
+		this.removeJobsWhereAllOpeningsHaveBeenFilled(jobOffers);
 
-		}
-		System.out.println(
-				"After removing where worker has already applied -> jobOffers.isEmpty()" + jobOffers.isEmpty());
-		 
-		// Remove Jobs where all the jobOpenings have been filled (ie
-		// that many workers have already applied)
-		/*
-		 * for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();)
-		 * { JobOffer nextJobOffer = iterator.next(); if (nextJobOffer.getJobOpenings()
-		 * == nextJobOffer.getJobOpeningsAlreadyFilled()) { iterator.remove(); break; }
-		 * 
-		 * } System.out.println(
-		 * "After removing where Job openings have been filled -> jobOffers.isEmpty()" +
-		 * jobOffers.isEmpty());
-		 */
 		// Remove Jobs where Job Valid period (date) has already passed
 
 		/*
@@ -539,36 +563,77 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 		return jobOffers;
 	}
 
+
+	private void removeJobsWhereAllOpeningsHaveBeenFilled(List<JobOffer> jobOffers) {
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			int jobOpenings = nextJobOffer.getJobOpenings();
+			int jobOpeningsAlreadyFilled = nextJobOffer.getJobOpeningsAlreadyFilled();
+
+			if (jobOpenings <= jobOpeningsAlreadyFilled) {
+				iterator.remove();
+			}
+		}
+	}
+
+	public void removeJobsInWhichWorkerHasAlreadyApplied(String theWorkerEmail, List<JobOffer> jobOffers) {
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+
+			List<Integer> jobsAppliedIn = this.getJobIdsOfJobsAppliedIn(theWorkerEmail);
+			// List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn();
+			for (Iterator<Integer> jobsAppliedInIterator = jobsAppliedIn.iterator(); jobsAppliedInIterator.hasNext();) {
+				Integer nextJobAppliedIn = jobsAppliedInIterator.next();
+				System.out.println("nextJobOffer.getJobIdInFuseki() is " + nextJobOffer.getJobIdInFuseki()
+						+ "and nextJobAppliedIn is " + nextJobAppliedIn);
+				if (nextJobOffer.getJobIdInFuseki().equals(nextJobAppliedIn)) {
+					System.out.println(">>>>>>>>>>>>>A job being removed from jobOffers");
+					iterator.remove();
+				}
+			}
+
+		}
+	}
+
+
+	public void removeJobsThatDontMatchWorkerSkillType(Worker worker, List<JobOffer> jobOffers) {
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
+			JobOffer nextJobOffer = iterator.next();
+			if (!(nextJobOffer.getAppointmentDescription().equals(worker.getSkillType()))) {
+				iterator.remove();
+			}
+
+		}
+	}
+
+
+
 	private List<Integer> getJobIdsOfJobsAppliedIn(String theWorkerEmail) {
 		List<Integer> jobIdsOfJobsAppliedIn = new ArrayList<Integer>();
 
 		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
-							"PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
-						+ "SELECT * \r\n" + 
-						"WHERE {\r\n" + "?email dh:hasAppliedInTheJobWithId ?jobIdInFuseki .\r\n" + 
-						"}");
-		
+				"PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n" + "SELECT * \r\n" + "WHERE {\r\n"
+						+ "?email dh:hasAppliedInTheJobWithId ?jobIdInFuseki .\r\n" + "}");
+
 		ResultSet results3 = qe3.execSelect();
 		while (results3.hasNext()) {
 			QuerySolution sln = results3.nextSolution();
-			String email = sln.getResource("email").toString().
-					replace("http://server/unset-base/", "");
+			String email = sln.getResource("email").toString().replace("http://server/unset-base/", "");
 			System.out.println("email got using getResource() is ->>>>>>>>>> " + email);
-			
+
 			if (email.equals(theWorkerEmail)) {
 				Integer jobIdInFuseki = Integer.parseInt(sln.getLiteral("jobIdInFuseki").toString());
 				jobIdsOfJobsAppliedIn.add(jobIdInFuseki);
 			}
 		}
 		qe3.close();
-		System.out.println("jobIdsOfJobsAppliedIn before returning is ->>>>>>>>"+
-				jobIdsOfJobsAppliedIn);
+		System.out.println("jobIdsOfJobsAppliedIn before returning is ->>>>>>>>" + jobIdsOfJobsAppliedIn);
 		return jobIdsOfJobsAppliedIn;
-		
+
 	}
 
 	public List<JobOffer> findAllJobsPostedBy(Employer employer, HttpServletRequest request) {
-		
+
 		List<JobOffer> jobOffers = new ArrayList<JobOffer>();
 		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
 				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
@@ -580,7 +645,7 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 						+ "?jobId dh:jobStarts ?jobStarts .\r\n" + "?jobId dh:jobEnds ?jobEnds . \r\n"
 						+ "?jobId dh:ratingRequired ?ratingRequired .\r\n" + "?jobId dh:paymentType ?paymentType .\r\n"
 						+ "?jobId dh:paymentMode ?paymentMode .\r\n" + "}");
-		
+
 		ResultSet results3 = qe3.execSelect();
 		while (results3.hasNext()) {
 			System.out.println(">>>>>>>>>>>>>>> QE3 Hurray : Going to add jobs to the Arraylist");
@@ -616,93 +681,80 @@ public class JobOfferServiceImplUsingJena implements JobOfferService {
 		}
 		qe3.close();
 
-		// Now, jobOffers contain all the jobs inserted in fuseki. 
-		// Removing jobs where employer email is not the same as 
+		// Now, jobOffers contain all the jobs inserted in fuseki.
+		// Removing jobs where employer email is not the same as
 		// that of current logged in employer.
 
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
-			JobOffer nextJobOffer = iterator.next(); 
+			JobOffer nextJobOffer = iterator.next();
 			if (!(nextJobOffer.getEmployerEmail().equals(employer.getEmail()))) {
 				iterator.remove();
 			}
 
 		}
 		return jobOffers;
-		
+
 	}
 
-	public List<JobOffer> findAllJobsAWorkerHasAppliedIn(String theWorkerEmail, HttpServletRequest request) {
+	public List<JobOffer> findAllJobsAWorkerHasAppliedIn(String theWorkerEmail, 
+			HttpServletRequest request) {
 		Worker worker = (Worker) request.getSession().getAttribute("worker");
-		System.out.println(
-				">>>>>>>>>>>>>>> INSIDE public List<JobOffer> findAllMatchingJobs(String theWorkerEmail) - STARTS ");
-		List<JobOffer> jobOffers = new ArrayList<JobOffer>();
-		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
-				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\r\n" + "PREFIX dh:<http://purl.org/dailyhire/0.1/>\r\n"
-						+ "SELECT * \r\n" + "WHERE {\r\n" + "?jobId dh:jobOfferId ?jobIdInFuseki .\r\n"
-						+ "?jobId foaf:mbox ?employerEmail .\r\n"
-						+ "?jobId dh:appointmentDescription ?appointmentDescription .\r\n"
-						+ "?jobId dh:jobOpenings ?jobOpenings .\r\n"
-						+ "?jobId dh:jobOpeningsAlreadyFilled ?jobOpeningsAlreadyFilled .\r\n"
-						+ "?jobId dh:jobStarts ?jobStarts .\r\n" + "?jobId dh:jobEnds ?jobEnds . \r\n"
-						+ "?jobId dh:ratingRequired ?ratingRequired .\r\n" + "?jobId dh:paymentType ?paymentType .\r\n"
-						+ "?jobId dh:paymentMode ?paymentMode .\r\n" + "}");
-		ResultSet results3 = qe3.execSelect();
-		while (results3.hasNext()) {
-			System.out.println(">>>>>>>>>>>>>>> QE3 Hurray : Going to add jobs to the Arraylist");
-			QuerySolution sln = results3.nextSolution();
-			System.out.println(">>>>>>>>>>>>>>> 1");
-			Integer jobIdInFuseki = Integer.parseInt(sln.getLiteral("jobIdInFuseki").toString());
-			System.out.println(">>>>>>>>>>>>>>> 2");
-			String employerEmail = sln.getLiteral("employerEmail").toString();
-			System.out.println(">>>>>>>>>>>>>>> 3");
-			String appointmentDescription = sln.getLiteral("appointmentDescription").toString();
-			Integer jobOpenings = Integer.parseInt(sln.getLiteral("jobOpenings").toString());
-			Integer jobOpeningsAlreadyFilled = Integer.parseInt(sln.getLiteral("jobOpeningsAlreadyFilled").toString());
-			// String dateOfBirth =
-			// sln.getLiteral("dateOfBirth").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-			// "");
-			String jobStarts = sln.getLiteral("jobStarts").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-					"");
-			String jobEnds = sln.getLiteral("jobEnds").toString().replace("^^http://www.w3.org/2001/XMLSchema#date",
-					"");
-
-			// Double latitude = sln.getLiteral("latitude").getDouble();
-			// Double longitude = sln.getLiteral("longitude").getDouble();
-			Double ratingRequired = sln.getLiteral("ratingRequired").getDouble();
-			String paymentType = sln.getLiteral("paymentType").toString();
-			String paymentMode = sln.getLiteral("paymentMode").toString();
-
-			JobOffer jobOffer = new JobOffer(jobIdInFuseki, appointmentDescription, jobOpenings,
-					jobOpeningsAlreadyFilled, jobStarts, jobEnds, paymentMode, paymentType, employerEmail,
-					ratingRequired);
-
-			jobOffers.add(jobOffer);
-
-		}
-		qe3.close();
 		
-		
+		List<JobOffer> jobOffers = getAllJobsPostedInFuseki();
+
 		// Remove Jobs in which worker has not applied
-		
+
 		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();) {
 			JobOffer nextJobOffer = iterator.next();
 
 			List<Integer> jobsAppliedIn = this.getJobIdsOfJobsAppliedIn(theWorkerEmail);
-			if(!jobsAppliedIn.contains(nextJobOffer.getJobIdInFuseki())) {
+			if (!jobsAppliedIn.contains(nextJobOffer.getJobIdInFuseki())) {
 				iterator.remove();
 			}
-			
-			/*
-			 * //List<JobOffer> jobsAppliedIn = worker.getJobsAppliedIn(); for
-			 * (Iterator<Integer> jobsAppliedInIterator = jobsAppliedIn.iterator();
-			 * jobsAppliedInIterator .hasNext();) { Integer nextJobAppliedIn =
-			 * jobsAppliedInIterator.next(); if
-			 * (nextJobOffer.getJobIdInFuseki().equals(nextJobAppliedIn)) {
-			 * iterator.remove(); } }
-			 */
+
 		}
 		return jobOffers;
 
+	}
+
+	public List<JobOffer> findAllMatchingJobs(String theWorkerEmail,
+			org.apache.catalina.servlet4preview.http.HttpServletRequest request, 
+			Integer theDistance, Double latitude, Double longitude) {
+		Worker worker = (Worker) request.getSession().getAttribute("worker");
+		// todo - Modify latitude and longitude of this worker object to current latitude and  longitude values
+		worker.setLatitude(latitude);
+		worker.setLongitude(longitude);
+		List<JobOffer> jobOffers = getAllJobsPostedInFuseki();
+		this.removeJobsThatDontMatchWorkerSkillType(worker, jobOffers);
+		this.removeJobsInWhichWorkerHasAlreadyApplied(theWorkerEmail, jobOffers);
+		this.removeJobsWithDistanceGreaterThan(theDistance, jobOffers, worker);
+		this.removeJobsWhereAllOpeningsHaveBeenFilled(jobOffers);
+
+		return jobOffers;
+	}
+
+
+	public void removeJobsWithDistanceGreaterThan(Integer theDistance, List<JobOffer> jobOffers, Worker worker) {
+		for (Iterator<JobOffer> iterator = jobOffers.iterator(); iterator.hasNext();){ 
+			  JobOffer nextJobOffer = iterator.next();
+			  
+			  
+			  Map<String, Person> allUsers = getAllRegisteredUsers();
+			  
+			  
+			  Double employerLatitude = allUsers.get(nextJobOffer.getEmployerEmail()).getLatitude(); 
+			  Double employerLongitude = allUsers.get(nextJobOffer.getEmployerEmail()).getLongitude();
+			  Double workerLatitude = worker.getLatitude(); 
+			  Double workerLongitude = worker.getLongitude();
+			  
+			  Double distanceBetweenEmployerAndWorker =
+					  calculateDistanceUsingLocation(employerLatitude, employerLongitude,
+					  workerLatitude, workerLongitude, "K"); 
+			  
+			  if (distanceBetweenEmployerAndWorker > theDistance) {
+				  iterator.remove(); 
+			  }
+		}
 	}
 
 }

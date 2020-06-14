@@ -176,8 +176,9 @@ public class EmployerController {
 
 		if (esj.findById(employer.getEmail(), request) != null) {
 
-			DBFile profilePic = dBFileRepository.findByEmail(employer.getEmail());
-			String path = profilePic.getPath();
+			List<DBFile> profilePics = dBFileRepository.findByEmail(employer.getEmail());
+			System.out.println("RZ >>>>>>>>>>>>> " + profilePics.size());
+			String path = profilePics.get(0).getPath();
 			path = path.substring(path.lastIndexOf("\\")+1);
 			path="profilepics/"+path;
 			System.out.println("RZ >>>>>>>>>>>>>> profilePic.getPath() = " + path);

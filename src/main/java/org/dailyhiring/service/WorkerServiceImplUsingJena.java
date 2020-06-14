@@ -280,8 +280,6 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 						buildingName, landmark, streetAddress, locality,state, 
 						countryName, postalCode);
 				request.getSession().setAttribute("employer", ret2);
-
-				
 				
 			}
 			
@@ -292,22 +290,49 @@ public class WorkerServiceImplUsingJena implements WorkerService {
 
 	public void applyInJob(String workerEmail, Integer theJobIdInFuseki,
 			org.apache.catalina.servlet4preview.http.HttpServletRequest request) {
-		try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
-			conn.update("PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>"
-					+ "PREFIX foaf:<http://xmlns.com/foaf/0.1/>"
-					+ "PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>"
-					+ "PREFIX dc:<http://purl.org/dc/terms/>"
-					+ "PREFIX dh:<http://purl.org/dailyhire/0.1/>"
-					+ "PREFIX schema:<http://schema.org/>"
-					+ "PREFIX essglobal:<http://purl.org/essglobal/vocab/>"
-					+ "PREFIX juso:<http://rdfs.co/juso/>" 
-					+ "INSERT DATA { <"+workerEmail+"> dh:hasAppliedInTheJobWithId '"+theJobIdInFuseki.toString()+"' ."
-					+ "}"
-					 );
-					//conn.queryResultSet("SELECT ?s ?p WHERE { ?s ?p <o:Rameez> }", ResultSetFormatter::out);
+		Integer jobOpenings = 0;
+		Integer jobsAlreadyFilled = 0;
+		// Get totalJobOpenings and jobOpeningsAlreadyFilled
+		String identifier = "<http://purl.org/dh/0.1/"+theJobIdInFuseki+">";
+		QueryExecution qe3 = QueryExecutionFactory.sparqlService("http://localhost:3030/dh/query",
+				
+				"SELECT * \r\n" +
+				"WHERE {\r\n"+ 
+				"<http://server/unset-base/"+theJobIdInFuseki+">  <http://purl.org/dailyhire/0.1/jobOpenings> ?jobOpenings .\r\n" +
+				"<http://server/unset-base/"+theJobIdInFuseki+"> <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> ?jobsAlreadyFilled .\r\n" + 
+				"}");
+		ResultSet results3 = qe3.execSelect();
+		while (results3.hasNext() ) {
+			QuerySolution sln = results3.nextSolution();
+			jobOpenings= sln.getLiteral("jobOpenings").getInt();
+			jobsAlreadyFilled = sln.getLiteral("jobsAlreadyFilled").getInt();  
+
+			System.out.println("RZ>>>>>>>>>>>>jobOpenings = " + jobOpenings );
+			System.out.println("RZ>>>>>>>>>>>>jobsAlreadyFilled = " + jobsAlreadyFilled );
+			}qe3.close();
+
+		// Apply 	
+		if (jobOpenings > jobsAlreadyFilled) {
+			try (RDFConnectionFuseki conn = (RDFConnectionFuseki)builder.build() ){
+				conn.update("PREFIX dh:<http://purl.org/dailyhire/0.1/>"
+						+ "INSERT DATA { <"+workerEmail+"> dh:hasAppliedInTheJobWithId '"+theJobIdInFuseki.toString()+"' ."
+						+ "}"  );
+				
+				// update the field <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> for this job
+				
+				conn.update("delete where{ <http://server/unset-base/"+theJobIdInFuseki+ "> <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> ?o }");
+
+				conn.update("PREFIX dh:<http://purl.org/dailyhire/0.1/>"
+						+ "INSERT DATA { <http://server/unset-base/"+theJobIdInFuseki+"> <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> '"+(++jobsAlreadyFilled).toString()+"' }");
+
+				
+				}
 			
-			}
+		}
+			
+
 	}
+	
 
 	public Worker editProfile(@Valid Worker newWorker, HttpServletRequest request) {
 		Worker worker = (Worker) request.getSession().getAttribute("worker");

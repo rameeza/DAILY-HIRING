@@ -170,6 +170,36 @@ WHERE {
 }
 
 
+11)
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard:<http://www.w3.org/2006/vcard/ns#>
+PREFIX dc:<http://purl.org/dc/terms/>
+PREFIX dh:<http://purl.org/dailyhire/0.1/>
+PREFIX schema:<http://schema.org/>
+PREFIX juso:<http://rdfs.co/juso/>
+PREFIX essglobal:<http://purl.org/essglobal/vocab/>
+SELECT *
+WHERE {
+  ?s foaf:name ?name .
+  ?s foaf:mbox ?email .
+  ?s foaf:gender ?gender .
+  ?s vcard:bday ?dateOfBirth .
+  ?s dc:language ?language . 
+  ?s dh:latitude ?latitude .
+  ?s dh:longitude ?longitude .
+  ?s schema:telephone ?telephone .
+  ?s schema:faxNumber ?fax .
+  ?s dh:password ?password .
+  ?s dh:buildingName ?buildingName .
+  ?s dh:landmark ?landmark .
+  ?s juso:full_address ?streetAddress .
+  ?s juso:country-name ?countryName .
+  ?s vcard:postal-code ?postalCode . 
+}
+
+
+
 12)
 
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -210,6 +240,27 @@ SELECT *
 WHERE {
   ?subject <http://xmlns.com/foaf/0.1/name> ?object
 }
+
+
+15)
+select *
+where{
+  <http://server/unset-base/10277> <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> ?jobsAlreadyFilled
+}
+
+select *
+where{
+  <http://server/unset-base/10277> <http://purl.org/dailyhire/0.1/jobOpenings> ?jobOpenings
+}
+
+select *
+where{
+	<http://server/unset-base/10277> <http://purl.org/dailyhire/0.1/jobOpenings> ?jobOpenings .
+	<http://server/unset-base/10277> <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> ?jobsAlreadyFilled
+  
+}
+
+
 
 
 
@@ -262,4 +313,11 @@ WHERE {
 DELETE
 WHERE {
   <http://purl.org/dh/0.1/emp1@gmail.com> ?predicate ?object
+}
+
+5)
+
+delete
+where{
+	?s <http://purl.org/dailyhire/0.1/jobOpeningsAlreadyFilled> ?o
 }
