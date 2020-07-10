@@ -165,6 +165,11 @@ public class WorkerController {
 		if (bindingResult.hasErrors()) {
 			return "worker/worker-registration-form";
 		}
+		if (worker.getLatitude()==null || worker.getLongitude()== null ) {
+			worker.setLatitude(0.0);
+			worker.setLongitude(0.0);
+		}
+
 		
 		DBFile profilePic = worker.getProfilepic();
 		

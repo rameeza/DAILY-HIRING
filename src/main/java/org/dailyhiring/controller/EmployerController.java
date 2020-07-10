@@ -179,6 +179,7 @@ public class EmployerController {
 			List<DBFile> profilePics = dBFileRepository.findByEmail(employer.getEmail());
 			System.out.println("RZ >>>>>>>>>>>>> " + profilePics.size());
 			String path = profilePics.get(0).getPath();
+			
 			path = path.substring(path.lastIndexOf("\\")+1);
 			path="profilepics/"+path;
 			System.out.println("RZ >>>>>>>>>>>>>> profilePic.getPath() = " + path);
@@ -216,39 +217,40 @@ public class EmployerController {
 			HttpServletRequest request,
 			BindingResult bindingResult) {
 		System.out.println("\t\t>>>>>>>>>>>>Latitude of Employer got from form : " + employer.getLatitude());
-
+		if (employer.getLatitude()==null || employer.getLongitude()== null ) {
+			employer.setLatitude(0.0);
+			employer.setLongitude(0.0);
+		}
 		
 		
 		if (bindingResult.hasErrors()) {
 			return "employer/employer-registration-form";
 		}
 		DBFile profilePic = employer.getProfilepic();
-		
+		System.out.println("\t\t>>>>>>>>>>>>Profile pic info from form : " + profilePic.getData().getOriginalFilename());
 		/*
 		String filePath = request.getServletContext().getRealPath("/");
 		*/ 
-		
-		try {
-			String fileNameExtension = profilePic.getData().getOriginalFilename().substring(
-					profilePic.getData().getOriginalFilename().lastIndexOf("."));
-			String path = "C:\\Eclipse-Workspaces\\WorkspaceForNITproject\\DAILY-HIRING\\src\\"
-					+ "main\\resources\\static\\profilepics\\"+
-					employer.getEmail().
-					replaceAll("\\.", "_").
-					replaceAll("@", "at")+ fileNameExtension;
-			
-			profilePic.getData().transferTo(new File(path));
-			profilePic.setEmail(employer.getEmail());
-			profilePic.setPath(path);
-			dBFileRepository.save(profilePic);
-			System.out.println("RZ>>>>>>>>>>>>>>>>>>>>>>>> File uploaded successfully");
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
+		if (profilePic.getData().getOriginalFilename().lastIndexOf(".") != -1) {
+			try {
+				String fileNameExtension = profilePic.getData().getOriginalFilename()
+						.substring(profilePic.getData().getOriginalFilename().lastIndexOf("."));
+				String path = "C:\\Eclipse-Workspaces\\WorkspaceForNITproject\\DAILY-HIRING\\src\\"
+						+ "main\\resources\\static\\profilepics\\"
+						+ employer.getEmail().replaceAll("\\.", "_").replaceAll("@", "at") + fileNameExtension;
+
+				profilePic.getData().transferTo(new File(path));
+				profilePic.setEmail(employer.getEmail());
+				profilePic.setPath(path);
+				dBFileRepository.save(profilePic);
+				System.out.println("RZ>>>>>>>>>>>>>>>>>>>>>>>> File uploaded successfully");
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}		
 		
 		/*
 		System.out.println("RZ>>>>>>>>>>>>>>>>>>>>>>>> .getContentType()"+profilePic.getData().getContentType());
